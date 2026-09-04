@@ -1,3 +1,6 @@
+import csv
+import io
+
 from .constants import DTC_PATTERN
 from .models import RawRow
 
@@ -5,39 +8,53 @@ FIELD_COUNT = 9
 
 
 def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str]]:
+    """Parse the raw tab-separated export into RawRow records.
+
+    Real production exports quote cell values that contain embedded tabs
+    and/or newlines using standard CSV/TSV quoting rules (RFC4180-style,
+    `quotechar='"'`). We rely on Python's csv module to recover the correct
+    logical fields for each record, including fields whose content spans
+    multiple physical lines.
+
+    A record is considered valid (and turned into a RawRow) only if its
+    2nd field (index 1) matches DTC_PATTERN. Any csv-parsed record that
+    fails this check is reported as an orphan and dropped -- this remains
+    the safety net for the rare residual case where quoting is broken in
+    the source data and csv parsing does not recover a clean record.
+    """
+    normalized_lines = [line.rstrip("\r\n") for line in lines]
+    text = "\n".join(normalized_lines)
+    reader = csv.reader(io.StringIO(text), delimiter="\t")
+
     rows: list[RawRow] = []
     orphans: list[str] = []
-    current_fields: list[str] | None = None
+    consumed = 0
 
-    for raw_line in lines:
-        line = raw_line.rstrip("\n").rstrip("\r")
-        if not line:
+    for fields in reader:
+        start, consumed = consumed, reader.line_num
+
+        if not fields or (len(fields) == 1 and fields[0] == ""):
+            # Blank physical line outside of any quoted field.
             continue
-        parts = line.split("\t")
-        if len(parts) >= 2 and DTC_PATTERN.match(parts[1].strip()):
-            if current_fields is not None:
-                rows.append(_fields_to_row(current_fields))
-            current_fields = _normalize_fields(parts)
-        else:
-            if current_fields is None:
-                orphans.append(line)
-            else:
-                current_fields[-1] = f"{current_fields[-1]} {line.strip()}"
 
-    if current_fields is not None:
-        rows.append(_fields_to_row(current_fields))
+        if len(fields) >= 2 and DTC_PATTERN.match(fields[1].strip()):
+            rows.append(_fields_to_row(_normalize_fields(fields)))
+        else:
+            orphans.append("\n".join(normalized_lines[start:consumed]))
 
     return rows, orphans
 
 
-def _normalize_fields(parts: list[str]) -> list[str]:
-    if len(parts) == FIELD_COUNT:
-        return list(parts)
-    if len(parts) > FIELD_COUNT:
-        head = parts[: FIELD_COUNT - 1]
-        tail = "\t".join(parts[FIELD_COUNT - 1 :])
+def _normalize_fields(fields: list[str]) -> list[str]:
+    if len(fields) == FIELD_COUNT:
+        return list(fields)
+    if len(fields) > FIELD_COUNT:
+        # Defensive fallback: csv already resolves quoted tabs/newlines, so
+        # this path should be rare in practice (an unquoted stray tab).
+        head = fields[: FIELD_COUNT - 1]
+        tail = "\t".join(fields[FIELD_COUNT - 1 :])
         return head + [tail]
-    return parts + [""] * (FIELD_COUNT - len(parts))
+    return fields + [""] * (FIELD_COUNT - len(fields))
 
 
 def _fields_to_row(fields: list[str]) -> RawRow:

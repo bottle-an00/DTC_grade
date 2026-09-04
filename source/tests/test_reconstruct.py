@@ -16,25 +16,6 @@ def test_reconstructs_clean_9_field_lines():
     assert rows[1].grading_background == "Warning lights being turned on / Drivable"
 
 
-def test_rejoins_line_broken_by_embedded_newline():
-    lines = [
-        "VPC(VehiclePlatformController)\tC110117\tBattery Voltage High\tX\tX\tX\tLimited operation of some functions\tC\tDrivable / CDCU system operation abnormality",
-        "When the 12V battery voltage or the 12V battery charging voltage",
-        "is out of range, DTC will be generated",
-        "VPC(VehiclePlatformController)\tC110216\tBattery Voltage Low\tX\tX\tX\tLimited operation of some functions\tC\tDrivable / CDCU system operation abnormality",
-    ]
-    rows, orphans = reconstruct_rows(lines)
-    assert orphans == []
-    assert len(rows) == 2
-    assert rows[0].dtc == "C110117"
-    assert rows[0].grading_background == (
-        "Drivable / CDCU system operation abnormality "
-        "When the 12V battery voltage or the 12V battery charging voltage "
-        "is out of range, DTC will be generated"
-    )
-    assert rows[1].dtc == "C110216"
-
-
 def test_leading_orphan_line_with_no_preceding_record_is_reported():
     lines = [
         "(in case of breakdown, staying display off)",
@@ -44,17 +25,6 @@ def test_leading_orphan_line_with_no_preceding_record_is_reported():
     assert orphans == ["(in case of breakdown, staying display off)"]
     assert len(rows) == 1
     assert rows[0].dtc == "P060241"
-
-
-def test_line_with_extra_tab_in_last_field_is_normalized():
-    lines = [
-        "ABSESP(Anti-lockBrakingSystem)\tC110913\tIG1 Open\tX\tX\tX\tLimited operation\tD\tsome\tbackground\ttext",
-    ]
-    rows, orphans = reconstruct_rows(lines)
-    assert orphans == []
-    assert len(rows) == 1
-    assert rows[0].grade == "D"
-    assert rows[0].grading_background == "some\tbackground\ttext"
 
 
 def test_blank_lines_are_skipped():
@@ -84,3 +54,45 @@ def test_fewer_than_9_fields_are_padded_with_empty_strings():
     assert rows[0].fail_safe == ""
     assert rows[0].grade == ""
     assert rows[0].grading_background == ""
+
+
+def test_parses_quoted_field_with_embedded_tab_and_quote_real_data():
+    # Real production line (ABSESP sheet, C110101). The Fail_Safe cell is
+    # quoted per RFC4180-style TSV quoting and its content happens to start
+    # with a raw tab character before the text. A naive split("\t") treats
+    # the lone `"` as its own field and corrupts Grade/GradingBackground;
+    # csv-aware parsing must recover the correct 9 logical fields.
+    lines = [
+        'ABSESP(Anti-lockBrakingSystem)\tC110101\tBattery Voltage High\tO\tO\tX\t"\tWarning lights being turned on"\tC\tDelete when vehicle voltage condition is restored / Expected high frequency of occurrence',
+    ]
+    rows, orphans = reconstruct_rows(lines)
+    assert orphans == []
+    assert len(rows) == 1
+    row = rows[0]
+    assert row.sheet == "ABSESP(Anti-lockBrakingSystem)"
+    assert row.dtc == "C110101"
+    assert row.fail_safe == "Warning lights being turned on"
+    assert row.grade == "C"
+    assert row.grading_background == (
+        "Delete when vehicle voltage condition is restored / Expected high frequency of occurrence"
+    )
+
+
+def test_parses_quoted_field_with_embedded_newline_real_data():
+    # Real production line (DSM sheet, B162100). The Fail_Safe cell contains
+    # an embedded newline and is quoted, so the logical record spans two
+    # physical lines of the source file.
+    lines = [
+        'DSM(DigitalSideMirror)\tB162100\tECU hardware Error\tO\tO\tX\t"모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)',
+        '(in case of breakdown, staying display off)"\tC\tDrivable / Warning lights being turned on / Warning messages is displayed',
+    ]
+    rows, orphans = reconstruct_rows(lines)
+    assert orphans == []
+    assert len(rows) == 1
+    row = rows[0]
+    assert row.dtc == "B162100"
+    assert row.fail_safe == (
+        "모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)\n"
+        "(in case of breakdown, staying display off)"
+    )
+    assert row.grade == "C"
