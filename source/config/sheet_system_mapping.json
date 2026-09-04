@@ -277,12 +277,16 @@
   "MFSW(MultifunctionSwitch)": {
     "confidence": 0.2,
     "hits": 10,
-    "system": "IBU-BCM,IBU-IMMO,IBU-SMK,IBU-TPMS"
+    "system": "MFSW",
+    "source": "manual",
+    "note": "auto-inferred value (20% confidence, only 10 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MFSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
   },
   "MKBD(MultimediaKeyboard)": {
     "confidence": 0.1111111111111111,
     "hits": 9,
-    "system": "ADAS_PRK,ADAS_PRK_MCU"
+    "system": "MKBD",
+    "source": "manual",
+    "note": "auto-inferred value (11% confidence, only 9 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MKBD' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
   },
   "MLM(MoodLampModule)": {
     "confidence": 1.0,
@@ -302,7 +306,9 @@
   "OMSW(OutsideMirrorSwitch)": {
     "confidence": 0.07692307692307693,
     "hits": 13,
-    "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
+    "system": "OMSW",
+    "source": "manual",
+    "note": "auto-inferred value (7.7% confidence, only 13 hits, dominated by an unrelated mega-list of seat/door System codes) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'OMSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
   },
   "PCM(PowerTransferCommunicationM": {
     "confidence": 0.4,
@@ -317,7 +323,9 @@
   "PDCex(PDCExtended)": {
     "confidence": 0.16,
     "hits": 25,
-    "system": "PDC"
+    "system": "PDCEX",
+    "source": "manual",
+    "note": "auto-inferred value 'PDC' (16% confidence) was the parent controller's own code, not this extended-variant sheet's code. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'PDCEX' as a separate, real System value distinct from 'PDC' for the shared generic DTCs this sheet contains (self-matching the sheet name)."
   },
   "PSB(PreSafeSeatbelt)": {
     "confidence": 0.8490566037735849,
@@ -397,7 +405,9 @@
   "SR_CMR(SVMCamera)": {
     "confidence": 0.25,
     "hits": 4,
-    "system": "CCIC,CCNC"
+    "system": "SR_CMR",
+    "source": "manual",
+    "note": "auto-inferred value (25% confidence, only 4 hits -- too little data to be reliable) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'SR_CMR' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
   },
   "SWRC(SteeringWheelRemoconSW)": {
     "confidence": 0.23076923076923078,
