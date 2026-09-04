@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw/protected source data and generated outputs - not versioned
+docs/*.xlsx
+docs/*.txt
+docs/*.sqlite
+docs/mail_history/
+docs/dtc_master_km_output.sqlite
+docs/dtc_master_run_report.txt
