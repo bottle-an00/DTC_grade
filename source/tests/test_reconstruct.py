@@ -80,10 +80,12 @@ def test_parses_quoted_field_with_embedded_tab_and_quote_real_data():
 
 def test_parses_quoted_field_with_embedded_newline_real_data():
     # Real production line (DSM sheet, B162100). The Fail_Safe cell contains
-    # an embedded newline and is quoted, so the logical record spans two
-    # physical lines of the source file.
+    # an embedded newline and is quoted, so the logical record spans three
+    # physical lines of the source file (verbatim from lines 2397-2399 of
+    # the real production export).
     lines = [
         'DSM(DigitalSideMirror)\tB162100\tECU hardware Error\tO\tO\tX\t"모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)',
+        'Try to reset Monitor/Camera',
         '(in case of breakdown, staying display off)"\tC\tDrivable / Warning lights being turned on / Warning messages is displayed',
     ]
     rows, orphans = reconstruct_rows(lines)
@@ -93,6 +95,7 @@ def test_parses_quoted_field_with_embedded_newline_real_data():
     assert row.dtc == "B162100"
     assert row.fail_safe == (
         "모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)\n"
+        "Try to reset Monitor/Camera\n"
         "(in case of breakdown, staying display off)"
     )
     assert row.grade == "C"
