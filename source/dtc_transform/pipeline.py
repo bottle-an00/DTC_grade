@@ -1,8 +1,11 @@
 import argparse
 
+from collections import Counter
+
 from .dedup import dedup
 from .expand import expand_trailing_zeros
 from .db_writer import write_sqlite
+from .grade_filter import filter_invalid_grades
 from .mapping import SheetSystemMapping, attach_system
 from .reconstruct import reconstruct_rows
 
@@ -15,11 +18,14 @@ def run_pipeline(input_path: str, mapping_path: str, output_path: str, report_pa
     rows, unmapped_sheets = attach_system(raw_rows, mapping)
 
     deduped = dedup(rows)
-    expanded = expand_trailing_zeros(deduped)
+    valid_grade_rows, excluded_rows = filter_invalid_grades(deduped)
+    expanded = expand_trailing_zeros(valid_grade_rows)
 
     write_sqlite(expanded, output_path)
 
     low_confidence = mapping.low_confidence_sheets(threshold=0.5)
+
+    excluded_breakdown = dict(Counter(row.grade for row in excluded_rows))
 
     stats = {
         "raw_row_count": len(raw_rows),
@@ -28,6 +34,8 @@ def run_pipeline(input_path: str, mapping_path: str, output_path: str, report_pa
         "after_expand_count": len(expanded),
         "unmapped_sheets": unmapped_sheets,
         "low_confidence_sheets": low_confidence,
+        "excluded_invalid_grade_count": len(excluded_rows),
+        "excluded_invalid_grade_breakdown": excluded_breakdown,
     }
 
     _write_report(report_path, stats, orphans)
@@ -40,6 +48,10 @@ def _write_report(report_path: str, stats: dict, orphans: list[str]) -> None:
         f"unrecoverable_orphan_lines: {stats['unrecoverable_orphan_lines']}",
         f"after_dedup_count: {stats['after_dedup_count']}",
         f"after_expand_count: {stats['after_expand_count']}",
+        "",
+        f"excluded_invalid_grade_count: {stats['excluded_invalid_grade_count']}",
+        "excluded_invalid_grade_breakdown:",
+        *[f"  - {grade!r}: {count}" for grade, count in stats["excluded_invalid_grade_breakdown"].items()],
         "",
         "unmapped_sheets:",
         *[f"  - {sheet}" for sheet in stats["unmapped_sheets"]],
@@ -69,6 +81,7 @@ def main() -> None:
         report_path=args.report,
     )
     print(f"raw={stats['raw_row_count']} dedup={stats['after_dedup_count']} "
+          f"excluded_invalid_grade={stats['excluded_invalid_grade_count']} "
           f"expanded={stats['after_expand_count']} "
           f"unmapped={len(stats['unmapped_sheets'])}")
 
