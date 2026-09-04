@@ -1,0 +1,101 @@
+{
+  "name": "DTC Master Excel to SQLite",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "/data/dtc_master/incoming",
+        "events": ["add", "change"]
+      },
+      "id": "1",
+      "name": "Watch Incoming Folder",
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/dtc_master/source && python -m dtc_transform.pipeline --input \"{{$json[\"path\"]}}\" --mapping config/sheet_system_mapping.json --output /data/dtc_master/output/dtc_master_km.sqlite --report /data/dtc_master/output/run_report.txt"
+      },
+      "id": "2",
+      "name": "Run Transform Pipeline",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json[\"exitCode\"]}}",
+              "operation": "equal",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "Succeeded?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "command": "cp /data/dtc_master/output/dtc_master_km.sqlite /data/dtc_master/publish/dtc_master_km.sqlite"
+      },
+      "id": "4",
+      "name": "Publish Output",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dtc-pipeline@example.com",
+        "toEmail": "dtc-pipeline-owners@example.com",
+        "subject": "DTC Master 변환 완료",
+        "text": "={{$node[\"Run Transform Pipeline\"].json[\"stdout\"]}}",
+        "options": {
+          "attachments": "/data/dtc_master/output/run_report.txt"
+        }
+      },
+      "id": "5",
+      "name": "Notify Success",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dtc-pipeline@example.com",
+        "toEmail": "dtc-pipeline-owners@example.com",
+        "subject": "DTC Master 변환 실패",
+        "text": "={{$node[\"Run Transform Pipeline\"].json[\"stderr\"]}}"
+      },
+      "id": "6",
+      "name": "Notify Failure",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [900, 400]
+    }
+  ],
+  "connections": {
+    "Watch Incoming Folder": {
+      "main": [[{ "node": "Run Transform Pipeline", "type": "main", "index": 0 }]]
+    },
+    "Run Transform Pipeline": {
+      "main": [[{ "node": "Succeeded?", "type": "main", "index": 0 }]]
+    },
+    "Succeeded?": {
+      "main": [
+        [{ "node": "Publish Output", "type": "main", "index": 0 }],
+        [{ "node": "Notify Failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "Publish Output": {
+      "main": [[{ "node": "Notify Success", "type": "main", "index": 0 }]]
+    }
+  }
+}
