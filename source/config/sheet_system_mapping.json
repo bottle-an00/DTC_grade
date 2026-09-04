@@ -462,6 +462,8 @@
   "i-TPMS(indirectTPMS)": {
     "confidence": 0.5012224938875306,
     "hits": 409,
-    "system": "ABSESC,ABSESP,ABSVDC"
+    "system": "i-TPMS,TPMS",
+    "source": "manual",
+    "note": "auto-inferred value 'ABSESC,ABSESP,ABSVDC' (50.12% confidence, just above the 50% review threshold) was wrong -- generic 'Battery Voltage High/Low' DTCs shared with ABSESC/FR_RADAR outnumbered i-TPMS-specific codes in the majority vote. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists C110101/C110201 under System='i-TPMS,TPMS' (self-matching the sheet name)."
   }
 }
