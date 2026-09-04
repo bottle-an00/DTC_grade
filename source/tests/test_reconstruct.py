@@ -66,3 +66,21 @@ def test_blank_lines_are_skipped():
     rows, orphans = reconstruct_rows(lines)
     assert len(rows) == 1
     assert orphans == []
+
+
+def test_fewer_than_9_fields_are_padded_with_empty_strings():
+    lines = [
+        "4WD(4WheelDrive)\tP060241\tControl Module Programming Error\tX\tX",
+    ]
+    rows, orphans = reconstruct_rows(lines)
+    assert orphans == []
+    assert len(rows) == 1
+    assert rows[0].sheet == "4WD(4WheelDrive)"
+    assert rows[0].dtc == "P060241"
+    assert rows[0].description == "Control Module Programming Error"
+    assert rows[0].warning_light == "X"
+    assert rows[0].warning_message == "X"
+    assert rows[0].limp_home == ""
+    assert rows[0].fail_safe == ""
+    assert rows[0].grade == ""
+    assert rows[0].grading_background == ""
