@@ -1499,6 +1499,69 @@ git commit -m "feat: add importable n8n workflow for the DTC master pipeline"
 
 ---
 
+## 사후 보정 (Task 9 실데이터 검증 중 발견, 2026-09-04)
+
+Task 9의 실데이터 수동 검증에서 파이프라인이 크래시했다. 원인 조사 결과 두 가지 이슈가 발견되어 아래 두 작업을 추가한다. 스펙 문서(`docs/superpowers/specs/2026-09-04-dtc-master-pipeline-design.md`)의 "입력 데이터 형식"/"1단계"/"4.5단계" 섹션이 이미 갱신되었다.
+
+### Task 2-Fix: reconstruct.py를 csv 모듈 기반으로 재구현
+
+**Files:**
+- Modify: `source/dtc_transform/reconstruct.py`
+- Modify: `source/tests/test_reconstruct.py` (기존 6개 테스트를 실제 데이터의 인용 규칙에 맞게 재작성)
+
+**배경**: 실데이터는 셀 내부 개행/따옴표가 있는 필드를 표준 CSV 인용 규칙(`"..."`)으로 감싼다. 기존 커스텀 휴리스틱(DTC 패턴으로 새 레코드 시작을 감지하고, 나머지는 마지막 필드에 이어붙임)은 셀 내부에 **탭 문자와 따옴표가 함께 있는 경우**(예: Fail_Safe 컬럼이 `"Warning lights being turned on"`처럼 따옴표로 감싸진 경우)를 처리하지 못해, 293개 라인에서 Grade/Fail_Safe 컬럼이 뒤섞이는 오염이 발생했다.
+
+**실측 예시 (그대로 재현 가능)**:
+```
+ABSESP(Anti-lockBrakingSystem)	C110101	Battery Voltage High	O	O	X	"	Warning lights being turned on"	C	Delete when vehicle voltage condition is restored / Expected high frequency of occurrence
+```
+이 줄은 실제로는 Fail_Safe 컬럼 값이 `Warning lights being turned on`(따옴표로 감싸짐)이고 그 다음 Grade가 `C`여야 하는데, 기존 로직은 Grade를 `Warning lights being turned on"`으로, GradingBackground를 `C\tDelete when...`으로 잘못 파싱한다.
+
+**실데이터 개행-분리 예시 (인용 규칙 확인용, 실제 파일 2397~2399번째 줄 그대로 — 3개 물리적 줄에 걸쳐 있음, 가운데 줄을 누락하지 말 것)**:
+```
+DSM(DigitalSideMirror)	B162100	ECU hardware Error	O	O	X	"모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)
+Try to reset Monitor/Camera
+(in case of breakdown, staying display off)"	C	Drivable / Warning lights being turned on / Warning messages is displayed
+```
+
+- [ ] **Step 1**: `source/tests/test_reconstruct.py`를 다음 실제 사례를 검증하도록 재작성한다 (합성 예제 대신 위 두 실측 사례를 그대로 사용):
+  1. 위 "C110101" 예시를 파싱했을 때 `fail_safe == "Warning lights being turned on"`, `grade == "C"`, `grading_background == "Delete when vehicle voltage condition is restored / Expected high frequency of occurrence"`가 되는지
+  2. 위 "B162100" 예시(3개 물리적 줄)를 파싱했을 때 `fail_safe`가 세 구간을 `\n`으로 이어붙인 하나의 문자열(`"모니터/카메라 자체 Reset(영구 고장시 Display OFF 상태 유지)\nTry to reset Monitor/Camera\n(in case of breakdown, staying display off)"`, 따옴표는 제거된 상태)이 되고 `grade == "C"`가 되는지
+  3. 기존 6개 테스트 중 여전히 유효한 것(정상 9필드 라인, blank line skip, leading-orphan-no-preceding-record)은 유지하고, "extra tab in last field"처럼 실제로는 인용 규칙 위반이 아니었던 합성 테스트는 제거하거나 실제 인용 형태로 고친다.
+- [ ] **Step 2**: 테스트 실행해서 실패 확인 (`cd source && python -m pytest tests/test_reconstruct.py -v`)
+- [ ] **Step 3**: `reconstruct.py`를 `csv.reader(lines, delimiter="\t")` 기반으로 재작성한다. `RawRow`를 만들기 전 필드 1이 DTC_PATTERN에 매치하는지 검증해 orphan을 걸러내는 로직은 유지한다. 공개 인터페이스(`reconstruct_rows(lines) -> tuple[list[RawRow], list[str]]`)는 변경하지 않는다 — Task 7/8/9가 이미 이 시그니처에 의존한다.
+- [ ] **Step 4**: 테스트 실행해서 통과 확인
+- [ ] **Step 5**: 전체 스위트 실행해서 회귀 없는지 확인 (`cd source && python -m pytest tests/ -v`)
+- [ ] **Step 6**: Commit (`fix: parse raw export with csv module to handle quoted tab/newline fields`)
+
+### Task 9-Follow-up: 비A~D 등급 필터링 + 실데이터 재검증
+
+**Files:**
+- Create: `source/dtc_transform/grade_filter.py`
+- Test: `source/tests/test_grade_filter.py`
+- Modify: `source/dtc_transform/pipeline.py` (dedup 이후, expand 이전에 필터 삽입, stats/리포트에 제외 건수 추가)
+- Modify: `source/tests/test_pipeline.py` (필터링이 파이프라인에 실제로 연결됐는지 검증하는 케이스 추가)
+
+**배경**: 2026-09-04 사용자 승인 — Grade가 `{A,B,C,D}`가 아닌 행(실측: E/-/공백 등)은 최종 출력에서 완전히 제외한다.
+
+- [ ] **Step 1**: 실패하는 테스트 작성 — `source/tests/test_grade_filter.py`에 `filter_invalid_grades(rows: list[Row]) -> tuple[list[Row], list[Row]]` (첫 번째: 유효한 행, 두 번째: 제외된 행)에 대해 (a) A/B/C/D는 모두 통과, (b) `"E"`, `"-"`, `""`는 모두 제외, (c) 빈 리스트 입력 시 빈 결과.
+- [ ] **Step 2**: 테스트 실패 확인
+- [ ] **Step 3**: `source/dtc_transform/grade_filter.py` 구현 (기존 `dtc_transform.constants`의 유효 등급 집합 `{"A","B","C","D"}`를 재사용 — `GRADE_SEVERITY.keys()`로 참조해 이중 관리 방지).
+- [ ] **Step 4**: 테스트 통과 확인
+- [ ] **Step 5**: `pipeline.py`의 `run_pipeline`에서 `dedup(...)` 다음, `expand_trailing_zeros(...)` 이전에 `filter_invalid_grades`를 호출하도록 연결. 반환된 stats 딕셔너리에 `excluded_invalid_grade_count: int`와 `excluded_invalid_grade_breakdown: dict[str,int]`(등급값별 건수)를 추가. `_write_report`에도 이 정보를 사람이 읽을 수 있는 형태로 추가.
+- [ ] **Step 6**: `test_pipeline.py`의 기존 end-to-end 테스트에 A/B/C/D가 아닌 grade를 가진 raw row를 하나 추가해, 최종 sqlite에 해당 DTC가 나타나지 않고 `excluded_invalid_grade_count`에 반영되는지 검증하는 케이스를 추가.
+- [ ] **Step 7**: 전체 스위트 실행
+- [ ] **Step 8**: Commit (`feat: exclude non-A-D grade rows from pipeline output`)
+- [ ] **Step 9**: (Task 2-Fix 완료 후) 실제 데이터로 재검증 — 절대경로 사용:
+  ```
+  cd source && python -m dtc_transform.pipeline \
+    --input "C:\Users\GIT\git_ws\DTC_grade\docs\260331_DTC Master_영문 (글로벌 지원) (1).txt" \
+    --mapping config/sheet_system_mapping.json \
+    --output "C:\Users\GIT\git_ws\DTC_grade\docs\dtc_master_km_output.sqlite" \
+    --report "C:\Users\GIT\git_ws\DTC_grade\docs\dtc_master_run_report.txt"
+  ```
+  이번에는 크래시 없이 끝까지 실행되어야 한다. 결과 sqlite의 행 수를 기존 `docs/dtc_master_km 3.sqlite`(10,987행)와 비교하고, TCU 예시(`AT,CVT,AMT,IMT,DCT`) 등 몇 건을 육안으로 대조한다.
+
 ## 최종 확인 (전체 계획 완료 후)
 
 - [ ] `cd source && python -m pytest tests/ -v` 전체 통과 확인
