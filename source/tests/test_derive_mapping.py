@@ -1,5 +1,5 @@
 from dtc_transform.models import RawRow
-from tools.derive_mapping import derive_mapping
+from tools.derive_mapping import count_sheet_candidates, derive_mapping
 
 
 def make_raw(sheet, dtc, description="desc"):
@@ -74,3 +74,30 @@ def test_manual_entry_in_existing_is_preserved_even_if_fresh_data_disagrees():
     result = derive_mapping(raw_rows, reference_rows, existing=existing)
 
     assert result["MFSW(MultifunctionSwitch)"] == existing["MFSW(MultifunctionSwitch)"]
+
+
+def test_count_sheet_candidates_exposes_full_vote_breakdown():
+    raw_rows = [
+        make_raw("TCU(TransmissionControlUnit)", "P060241", "err a"),
+        make_raw("TCU(TransmissionControlUnit)", "P172546", "err c"),
+    ]
+    reference_rows = [
+        ("P060241", "err a", "AT,CVT,AMT,IMT,DCT"),
+        ("P172546", "err c", "ENGINE"),
+    ]
+
+    result = count_sheet_candidates(raw_rows, reference_rows)
+
+    assert result["TCU(TransmissionControlUnit)"]["AT,CVT,AMT,IMT,DCT"] == 1
+    assert result["TCU(TransmissionControlUnit)"]["ENGINE"] == 1
+
+
+def test_count_sheet_candidates_excludes_given_sheets():
+    raw_rows = [make_raw("MFSW(MultifunctionSwitch)", "P200000", "generic desc")]
+    reference_rows = [("P200000", "generic desc", "WRONG_SYSTEM")]
+
+    result = count_sheet_candidates(
+        raw_rows, reference_rows, exclude_sheets=frozenset({"MFSW(MultifunctionSwitch)"})
+    )
+
+    assert "MFSW(MultifunctionSwitch)" not in result

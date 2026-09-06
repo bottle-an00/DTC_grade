@@ -9,6 +9,35 @@ from dtc_transform.models import RawRow
 from dtc_transform.reconstruct import reconstruct_rows
 
 
+def count_sheet_candidates(
+    raw_rows: list[RawRow],
+    reference_rows: list[tuple[str, str, str]],
+    exclude_sheets: frozenset[str] = frozenset(),
+) -> dict[str, Counter]:
+    """Tally, per sheet, how many raw rows' (DTC, Description) matched each
+    candidate System value in reference_rows.
+
+    This is the raw voting data behind `derive_mapping`'s majority-vote
+    pick -- exposed separately so other tools (e.g. the AI-review context
+    builder) can see the full candidate breakdown, not just the winner.
+    """
+    key_to_systems: dict[tuple[str, str], Counter] = defaultdict(Counter)
+    for dtc, description, system in reference_rows:
+        key_to_systems[(dtc.upper(), description.strip())][system] += 1
+
+    sheet_hits: dict[str, Counter] = defaultdict(Counter)
+    for row in raw_rows:
+        if row.sheet in exclude_sheets:
+            continue
+        systems = key_to_systems.get((row.dtc, row.description))
+        if not systems:
+            continue
+        for system, count in systems.items():
+            sheet_hits[row.sheet][system] += count
+
+    return dict(sheet_hits)
+
+
 def derive_mapping(
     raw_rows: list[RawRow],
     reference_rows: list[tuple[str, str, str]],
@@ -27,19 +56,7 @@ def derive_mapping(
         sheet: entry for sheet, entry in existing.items() if entry.get("source") == "manual"
     }
 
-    key_to_systems: dict[tuple[str, str], Counter] = defaultdict(Counter)
-    for dtc, description, system in reference_rows:
-        key_to_systems[(dtc.upper(), description.strip())][system] += 1
-
-    sheet_hits: dict[str, Counter] = defaultdict(Counter)
-    for row in raw_rows:
-        if row.sheet in manual_entries:
-            continue
-        systems = key_to_systems.get((row.dtc, row.description))
-        if not systems:
-            continue
-        for system, count in systems.items():
-            sheet_hits[row.sheet][system] += count
+    sheet_hits = count_sheet_candidates(raw_rows, reference_rows, exclude_sheets=frozenset(manual_entries))
 
     result = {}
     for sheet, counter in sheet_hits.items():
