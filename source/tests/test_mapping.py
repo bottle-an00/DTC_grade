@@ -43,6 +43,35 @@ def test_low_confidence_sheets_returns_entries_below_threshold(tmp_path):
     assert low == [("B", 0.3)]
 
 
+def test_low_confidence_sheets_excludes_manually_corrected_entries(tmp_path):
+    # Even if a manual entry somehow carried a low confidence value, it must
+    # never be flagged as needing review again -- source: "manual" always
+    # wins, as defense-in-depth on top of setting confidence to 1.0.
+    path = tmp_path / "mapping.json"
+    path.write_text(
+        json.dumps(
+            {
+                "A": {"system": "SYS_A", "confidence": 0.9, "hits": 10},
+                "B": {"system": "SYS_B", "confidence": 0.3, "hits": 5},
+                "MANUAL(Sheet)": {
+                    "system": "SYS_C",
+                    "confidence": 0.1,
+                    "hits": 3,
+                    "source": "manual",
+                    "note": "verified manually",
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    mapping = SheetSystemMapping.load(str(path))
+
+    low = mapping.low_confidence_sheets(threshold=0.5)
+    assert low == [("B", 0.3)]
+    assert "MANUAL(Sheet)" not in dict(low)
+
+
 def test_attach_system_fills_known_sheets_and_reports_unmapped(tmp_path):
     path = tmp_path / "mapping.json"
     path.write_text(

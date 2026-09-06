@@ -21,7 +21,7 @@ class SheetSystemMapping:
         return sorted(
             (sheet, entry["confidence"])
             for sheet, entry in self._data.items()
-            if entry.get("confidence", 1.0) < threshold
+            if entry.get("source") != "manual" and entry.get("confidence", 1.0) < threshold
         )
 
 
