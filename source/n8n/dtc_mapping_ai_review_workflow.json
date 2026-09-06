@@ -1,0 +1,195 @@
+{
+  "name": "DTC Mapping Regeneration + AI Review",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [180, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/dtc_master/source && python -m tools.derive_mapping --raw-input /data/dtc_master/incoming/dtc_master.txt --reference-db /data/dtc_master/reference/dtc_master_km.sqlite --output config/sheet_system_mapping.json --review-report config/sheet_system_mapping_review.csv"
+      },
+      "id": "2",
+      "name": "Regenerate Mapping",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [380, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/dtc_master/source && python -m tools.review_context --raw-input /data/dtc_master/incoming/dtc_master.txt --reference-db /data/dtc_master/reference/dtc_master_km.sqlite --review-csv config/sheet_system_mapping_review.csv --output config/mapping_review_context.json && cat config/mapping_review_context.json"
+      },
+      "id": "3",
+      "name": "Build Review Context",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [580, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const context = JSON.parse($input.first().json.stdout);\nreturn context.map((entry) => ({ json: entry }));"
+      },
+      "id": "4",
+      "name": "Split Sheets For Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=다음은 자동차 진단기 DTC 마스터 데이터의 Excel 시트명을 진단기 System 코드로 매핑하는 자동 추론 결과인데, 신뢰도가 낮아 검토가 필요합니다.\n\n시트명: {{ $json.sheet }}\n\n후보 System 값과 득표수 (기존 산출물과 대조한 결과, 많은 순):\n{{ JSON.stringify($json.top_candidates) }}\n\n이 시트에 속한 실제 DTC/설명 예시:\n{{ JSON.stringify($json.samples) }}\n\n위 후보들과 예시 DTC 내용을 보고, 어떤 System 값이 이 시트에 맞는지 판단하세요. 시트명 자체와 후보 System 값의 철자/약어가 비슷한 경우(자기참조)는 강한 단서입니다. 확신이 없으면 top_candidates의 1순위를 그대로 제안해도 됩니다.\n\n반드시 아래 JSON 형식으로만 답하세요 (다른 설명 텍스트 없이 JSON 하나만):\n{\"suggested_system\": \"...\", \"reasoning\": \"한 줄 근거\"}",
+        "options": {}
+      },
+      "id": "5",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "model": "claude-sonnet-5",
+        "options": {}
+      },
+      "id": "6",
+      "name": "Chat Model (swap as needed)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1,
+      "position": [980, 480]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const sheet = $('Split Sheets For Review').item.json.sheet;\nlet parsed;\ntry {\n  const text = $json.output ?? $json.text ?? '';\n  parsed = JSON.parse(text);\n} catch (e) {\n  parsed = { suggested_system: '', reasoning: 'AI 응답을 JSON으로 파싱하지 못함: ' + String($json.output ?? $json.text ?? '') };\n}\nreturn { json: { sheet, suggested_system: parsed.suggested_system || '', reasoning: parsed.reasoning || '' } };"
+      },
+      "id": "7",
+      "name": "Parse AI Suggestion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const suggestions = $input.all().map((item) => item.json);\nreturn [{ json: { fileContent: JSON.stringify(suggestions, null, 2) } }];"
+      },
+      "id": "8",
+      "name": "Collect Suggestions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1380, 300]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/data/dtc_master/source/config/ai_suggestions.json",
+        "dataPropertyName": "fileContent"
+      },
+      "id": "9",
+      "name": "Write Suggestions File",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [1580, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /data/dtc_master/source && python -m tools.apply_ai_suggestions --review-csv config/sheet_system_mapping_review.csv --ai-suggestions config/ai_suggestions.json --output config/sheet_system_mapping_review.csv"
+      },
+      "id": "10",
+      "name": "Apply AI Suggestions",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json[\"exitCode\"]}}",
+              "operation": "equal",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "11",
+      "name": "Succeeded?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1980, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://REPLACE-WITH-YOUR-TEAMS-INCOMING-WEBHOOK-URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ \"@type\": \"MessageCard\", \"@context\": \"http://schema.org/extensions\", \"summary\": \"DTC 매핑 AI 검토 완료\", \"title\": \"DTC 매핑 AI 검토 완료\", \"text\": (\"검토된 시트 수: \" + $('Split Sheets For Review').all().length + \"건\\n\\n상위 제안 미리보기:\\n\" + $('Collect Suggestions').first().json.fileContent.slice(0, 500) + \"\\n\\n전체 결과: config/sheet_system_mapping_review.csv (ai_suggestion / ai_reasoning 컬럼 확인)\") }) }}"
+      },
+      "id": "12",
+      "name": "Notify Teams Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://REPLACE-WITH-YOUR-TEAMS-INCOMING-WEBHOOK-URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ \"@type\": \"MessageCard\", \"@context\": \"http://schema.org/extensions\", \"summary\": \"DTC 매핑 AI 검토 실패\", \"title\": \"DTC 매핑 AI 검토 실패\", \"text\": (\"apply_ai_suggestions 실행 실패:\\n\" + ($json.stderr || $json.stdout || '알 수 없는 오류')) }) }}"
+      },
+      "id": "13",
+      "name": "Notify Teams Failure",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1980, 460]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Regenerate Mapping", "type": "main", "index": 0 }]]
+    },
+    "Regenerate Mapping": {
+      "main": [[{ "node": "Build Review Context", "type": "main", "index": 0 }]]
+    },
+    "Build Review Context": {
+      "main": [[{ "node": "Split Sheets For Review", "type": "main", "index": 0 }]]
+    },
+    "Split Sheets For Review": {
+      "main": [[{ "node": "AI Agent", "type": "main", "index": 0 }]]
+    },
+    "Chat Model (swap as needed)": {
+      "ai_languageModel": [[{ "node": "AI Agent", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "AI Agent": {
+      "main": [[{ "node": "Parse AI Suggestion", "type": "main", "index": 0 }]]
+    },
+    "Parse AI Suggestion": {
+      "main": [[{ "node": "Collect Suggestions", "type": "main", "index": 0 }]]
+    },
+    "Collect Suggestions": {
+      "main": [[{ "node": "Write Suggestions File", "type": "main", "index": 0 }]]
+    },
+    "Write Suggestions File": {
+      "main": [[{ "node": "Apply AI Suggestions", "type": "main", "index": 0 }]]
+    },
+    "Apply AI Suggestions": {
+      "main": [[{ "node": "Succeeded?", "type": "main", "index": 0 }]]
+    },
+    "Succeeded?": {
+      "main": [
+        [{ "node": "Notify Teams Success", "type": "main", "index": 0 }],
+        [{ "node": "Notify Teams Failure", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}
