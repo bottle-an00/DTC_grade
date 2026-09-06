@@ -1,0 +1,185 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="DTC 매핑 AI 검토 시퀀스" id="dtc-ai-review-sequence">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Lifelines -->
+        <mxCell id="ll-operator" style="endArrow=none;html=1;strokeColor=#888780;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="92" y="84" as="sourcePoint" />
+            <mxPoint x="92" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll-n8n" style="endArrow=none;html=1;strokeColor=#888780;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="84" as="sourcePoint" />
+            <mxPoint x="212" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll-python" style="endArrow=none;html=1;strokeColor=#888780;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="332" y="84" as="sourcePoint" />
+            <mxPoint x="332" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll-agent" style="endArrow=none;html=1;strokeColor=#888780;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="452" y="84" as="sourcePoint" />
+            <mxPoint x="452" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ll-teams" style="endArrow=none;html=1;strokeColor=#888780;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="572" y="84" as="sourcePoint" />
+            <mxPoint x="572" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Top actor boxes -->
+        <mxCell id="top-operator" value="사용자" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top-n8n" value="n8n" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;fontColor=#04342C;" vertex="1" parent="1">
+          <mxGeometry x="160" y="40" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top-python" value="Python" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;fontColor=#04342C;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top-agent" value="AI Agent" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=14;fontStyle=1;fontColor=#4A1B0C;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top-teams" value="Teams" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=14;fontStyle=1;fontColor=#4A1B0C;" vertex="1" parent="1">
+          <mxGeometry x="520" y="40" width="104" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- Bottom actor boxes -->
+        <mxCell id="bot-operator" value="사용자" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="810" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="bot-n8n" value="n8n" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;fontColor=#04342C;" vertex="1" parent="1">
+          <mxGeometry x="160" y="810" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="bot-python" value="Python" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontSize=14;fontStyle=1;fontColor=#04342C;" vertex="1" parent="1">
+          <mxGeometry x="280" y="810" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="bot-agent" value="AI Agent" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=14;fontStyle=1;fontColor=#4A1B0C;" vertex="1" parent="1">
+          <mxGeometry x="400" y="810" width="104" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="bot-teams" value="Teams" style="rounded=1;arcSize=15;whiteSpace=wrap;html=1;fillColor=#FAECE7;strokeColor=#993C1D;fontSize=14;fontStyle=1;fontColor=#4A1B0C;" vertex="1" parent="1">
+          <mxGeometry x="520" y="810" width="104" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- M1 사용자 -> n8n -->
+        <mxCell id="m1" value="수동 실행" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="92" y="140" as="sourcePoint" />
+            <mxPoint x="212" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M2 n8n -> Python -->
+        <mxCell id="m2" value="매핑 재생성" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="195" as="sourcePoint" />
+            <mxPoint x="332" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M3 n8n -> Python -->
+        <mxCell id="m3" value="검토 컨텍스트" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="250" as="sourcePoint" />
+            <mxPoint x="332" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Loop4 n8n self loop -->
+        <mxCell id="loop4" value="시트 분리" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="290" as="sourcePoint" />
+            <mxPoint x="212" y="325" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="242" y="290" />
+              <mxPoint x="242" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M5 n8n -> AI Agent -->
+        <mxCell id="m5" value="제안 요청" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="375" as="sourcePoint" />
+            <mxPoint x="452" y="375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Loop6 AI Agent self loop -->
+        <mxCell id="loop6" value="제안 생성" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="452" y="415" as="sourcePoint" />
+            <mxPoint x="452" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="482" y="415" />
+              <mxPoint x="482" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M7 AI Agent -> n8n dashed -->
+        <mxCell id="m7" value="제안 전달" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="452" y="500" as="sourcePoint" />
+            <mxPoint x="212" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M8 n8n -> Python -->
+        <mxCell id="m8" value="제안 적용" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="550" as="sourcePoint" />
+            <mxPoint x="332" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- alt block -->
+        <mxCell id="alt-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#5F5E5A;dashed=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="180" y="572" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="alt-tab" value="alt" style="shape=note;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#5F5E5A;fontSize=12;size=6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="180" y="572" width="46" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="alt-divider" style="endArrow=none;html=1;strokeColor=#5F5E5A;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="670" as="sourcePoint" />
+            <mxPoint x="600" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m-success" value="성공 알림" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="625" as="sourcePoint" />
+            <mxPoint x="572" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="m-failure" value="실패 알림" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="212" y="705" as="sourcePoint" />
+            <mxPoint x="572" y="705" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- M9 Teams -> 사용자 dashed -->
+        <mxCell id="m9" value="알림 확인" style="endArrow=block;html=1;fontSize=12;strokeColor=#2C2C2A;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="572" y="780" as="sourcePoint" />
+            <mxPoint x="92" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
