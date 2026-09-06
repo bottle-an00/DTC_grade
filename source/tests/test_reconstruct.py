@@ -6,9 +6,10 @@ def test_reconstructs_clean_9_field_lines():
         "4WD(4WheelDrive)\tP060241\tControl Module Programming Error\tX\tX\tX\tX\tD\t(no information)",
         "4WD(4WheelDrive)\tP172546\tEEPROM checksum fault\tO\tX\tX\tAWD not working\tC\tWarning lights being turned on / Drivable",
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert orphans == []
     assert len(rows) == 2
+    assert anomalous_field_count == 0
     assert rows[0].sheet == "4WD(4WheelDrive)"
     assert rows[0].dtc == "P060241"
     assert rows[0].grade == "D"
@@ -21,7 +22,7 @@ def test_leading_orphan_line_with_no_preceding_record_is_reported():
         "(in case of breakdown, staying display off)",
         "4WD(4WheelDrive)\tP060241\tControl Module Programming Error\tX\tX\tX\tX\tD\t(no information)",
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert orphans == ["(in case of breakdown, staying display off)"]
     assert len(rows) == 1
     assert rows[0].dtc == "P060241"
@@ -33,7 +34,7 @@ def test_blank_lines_are_skipped():
         "4WD(4WheelDrive)\tP060241\tControl Module Programming Error\tX\tX\tX\tX\tD\t(no information)",
         "",
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert len(rows) == 1
     assert orphans == []
 
@@ -42,9 +43,10 @@ def test_fewer_than_9_fields_are_padded_with_empty_strings():
     lines = [
         "4WD(4WheelDrive)\tP060241\tControl Module Programming Error\tX\tX",
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert orphans == []
     assert len(rows) == 1
+    assert anomalous_field_count == 1
     assert rows[0].sheet == "4WD(4WheelDrive)"
     assert rows[0].dtc == "P060241"
     assert rows[0].description == "Control Module Programming Error"
@@ -56,6 +58,18 @@ def test_fewer_than_9_fields_are_padded_with_empty_strings():
     assert rows[0].grading_background == ""
 
 
+def test_more_than_9_fields_are_merged_and_counted_as_anomalous():
+    lines = [
+        "4WD(4WheelDrive)\tP060241\tControl\tModule\tError\tX\tX\tX\tX\tD\t(no information)",
+    ]
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
+    assert orphans == []
+    assert len(rows) == 1
+    assert anomalous_field_count == 1
+    assert rows[0].sheet == "4WD(4WheelDrive)"
+    assert rows[0].dtc == "P060241"
+
+
 def test_parses_quoted_field_with_embedded_tab_and_quote_real_data():
     # Real production line (ABSESP sheet, C110101). The Fail_Safe cell is
     # quoted per RFC4180-style TSV quoting and its content happens to start
@@ -65,9 +79,10 @@ def test_parses_quoted_field_with_embedded_tab_and_quote_real_data():
     lines = [
         'ABSESP(Anti-lockBrakingSystem)\tC110101\tBattery Voltage High\tO\tO\tX\t"\tWarning lights being turned on"\tC\tDelete when vehicle voltage condition is restored / Expected high frequency of occurrence',
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert orphans == []
     assert len(rows) == 1
+    assert anomalous_field_count == 0
     row = rows[0]
     assert row.sheet == "ABSESP(Anti-lockBrakingSystem)"
     assert row.dtc == "C110101"
@@ -88,9 +103,10 @@ def test_parses_quoted_field_with_embedded_newline_real_data():
         'Try to reset Monitor/Camera',
         '(in case of breakdown, staying display off)"\tC\tDrivable / Warning lights being turned on / Warning messages is displayed',
     ]
-    rows, orphans = reconstruct_rows(lines)
+    rows, orphans, anomalous_field_count = reconstruct_rows(lines)
     assert orphans == []
     assert len(rows) == 1
+    assert anomalous_field_count == 0
     row = rows[0]
     assert row.dtc == "B162100"
     assert row.fail_safe == (

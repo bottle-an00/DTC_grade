@@ -7,7 +7,7 @@ from .models import RawRow
 FIELD_COUNT = 9
 
 
-def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str]]:
+def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str], int]:
     """Parse the raw tab-separated export into RawRow records.
 
     Real production exports quote cell values that contain embedded tabs
@@ -21,6 +21,12 @@ def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str]]:
     fails this check is reported as an orphan and dropped -- this remains
     the safety net for the rare residual case where quoting is broken in
     the source data and csv parsing does not recover a clean record.
+
+    Returns a 3-tuple ``(rows, orphans, anomalous_field_count)``. Records
+    whose field count is not exactly FIELD_COUNT (9) are still recovered
+    via padding/merging in `_normalize_fields`, but per spec ("1단계") this
+    is an anomaly that must be visible, not silently absorbed -- callers
+    should surface `anomalous_field_count` in their reports.
     """
     normalized_lines = [line.rstrip("\r\n") for line in lines]
     text = "\n".join(normalized_lines)
@@ -28,6 +34,7 @@ def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str]]:
 
     rows: list[RawRow] = []
     orphans: list[str] = []
+    anomalous_field_count = 0
     consumed = 0
 
     for fields in reader:
@@ -38,11 +45,13 @@ def reconstruct_rows(lines: list[str]) -> tuple[list[RawRow], list[str]]:
             continue
 
         if len(fields) >= 2 and DTC_PATTERN.match(fields[1].strip()):
+            if len(fields) != FIELD_COUNT:
+                anomalous_field_count += 1
             rows.append(_fields_to_row(_normalize_fields(fields)))
         else:
             orphans.append("\n".join(normalized_lines[start:consumed]))
 
-    return rows, orphans
+    return rows, orphans, anomalous_field_count
 
 
 def _normalize_fields(fields: list[str]) -> list[str]:
