@@ -1,6 +1,7 @@
 import argparse
 import csv
 import json
+import os
 import sqlite3
 from collections import Counter, defaultdict
 
@@ -9,14 +10,31 @@ from dtc_transform.reconstruct import reconstruct_rows
 
 
 def derive_mapping(
-    raw_rows: list[RawRow], reference_rows: list[tuple[str, str, str]]
+    raw_rows: list[RawRow],
+    reference_rows: list[tuple[str, str, str]],
+    existing: dict[str, dict] | None = None,
 ) -> dict[str, dict]:
+    """Derive a sheet-to-System mapping by majority vote against reference_rows.
+
+    If `existing` is given and contains a sheet whose entry has
+    `"source": "manual"`, that entry is preserved byte-for-byte in the
+    result instead of being recomputed -- manually-corrected mappings (see
+    config/sheet_system_mapping.json) must never be silently overwritten by
+    re-running this tool against fresh raw/reference data.
+    """
+    existing = existing or {}
+    manual_entries = {
+        sheet: entry for sheet, entry in existing.items() if entry.get("source") == "manual"
+    }
+
     key_to_systems: dict[tuple[str, str], Counter] = defaultdict(Counter)
     for dtc, description, system in reference_rows:
         key_to_systems[(dtc.upper(), description.strip())][system] += 1
 
     sheet_hits: dict[str, Counter] = defaultdict(Counter)
     for row in raw_rows:
+        if row.sheet in manual_entries:
+            continue
         systems = key_to_systems.get((row.dtc, row.description))
         if not systems:
             continue
@@ -32,6 +50,10 @@ def derive_mapping(
             "confidence": top_count / total,
             "hits": total,
         }
+
+    for sheet, entry in manual_entries.items():
+        result[sheet] = entry
+
     return result
 
 
@@ -55,10 +77,16 @@ def main() -> None:
     args = parser.parse_args()
 
     with open(args.raw_input, encoding="utf-8", errors="replace") as f:
-        raw_rows, _orphans = reconstruct_rows(f.readlines())
+        raw_rows, _orphans, _anomalous_field_count = reconstruct_rows(f.readlines())
 
     reference_rows = _load_reference_rows(args.reference_db)
-    mapping = derive_mapping(raw_rows, reference_rows)
+
+    existing: dict[str, dict] | None = None
+    if os.path.exists(args.output):
+        with open(args.output, encoding="utf-8") as f:
+            existing = json.load(f)
+
+    mapping = derive_mapping(raw_rows, reference_rows, existing=existing)
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(mapping, f, ensure_ascii=False, indent=2, sort_keys=True)
@@ -67,6 +95,11 @@ def main() -> None:
         writer = csv.writer(f)
         writer.writerow(["sheet", "system", "confidence", "hits"])
         for sheet, entry in sorted(mapping.items()):
+            if entry.get("source") == "manual":
+                # Verified by a human already -- not an open review item, and
+                # listing it here would contradict the shipped config and
+                # invite an operator to "fix" it back to the wrong value.
+                continue
             if entry["confidence"] < args.confidence_threshold:
                 writer.writerow([sheet, entry["system"], f"{entry['confidence']:.2f}", entry["hits"]])
 

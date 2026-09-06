@@ -46,3 +46,31 @@ def test_confidence_is_one_when_all_hits_agree():
     result = derive_mapping(raw_rows, reference_rows)
 
     assert result["AVN(AudioVideoNavigation)"]["confidence"] == 1.0
+
+
+def test_manual_entry_in_existing_is_preserved_even_if_fresh_data_disagrees():
+    # Fresh raw/reference data would compute "WRONG_SYSTEM" as the majority
+    # vote for this sheet, but the existing mapping already has a manually
+    # verified (and different) value for it. Re-running the tool must not
+    # silently clobber that manual correction.
+    raw_rows = [
+        make_raw("MFSW(MultifunctionSwitch)", "P200000", "generic desc"),
+        make_raw("MFSW(MultifunctionSwitch)", "P200001", "generic desc 2"),
+    ]
+    reference_rows = [
+        ("P200000", "generic desc", "WRONG_SYSTEM"),
+        ("P200001", "generic desc 2", "WRONG_SYSTEM"),
+    ]
+    existing = {
+        "MFSW(MultifunctionSwitch)": {
+            "confidence": 1.0,
+            "hits": 10,
+            "system": "MFSW",
+            "source": "manual",
+            "note": "manually corrected, verified against reference sqlite",
+        }
+    }
+
+    result = derive_mapping(raw_rows, reference_rows, existing=existing)
+
+    assert result["MFSW(MultifunctionSwitch)"] == existing["MFSW(MultifunctionSwitch)"]

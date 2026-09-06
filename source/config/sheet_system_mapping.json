@@ -145,8 +145,8 @@
     "system": "ENGINE"
   },
   "EMS-GasolineEngine": {
-    "confidence": 0.9242144177449169,
-    "hits": 1623,
+    "confidence": 0.923125,
+    "hits": 1600,
     "system": "ENGINE"
   },
   "ESU(EthernetSwitchUnit)": {
@@ -275,18 +275,18 @@
     "system": "EPS"
   },
   "MFSW(MultifunctionSwitch)": {
-    "confidence": 0.2,
+    "confidence": 1.0,
     "hits": 10,
-    "system": "MFSW",
+    "note": "auto-inferred value (20% confidence, only 10 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MFSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value (20% confidence, only 10 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MFSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
+    "system": "MFSW"
   },
   "MKBD(MultimediaKeyboard)": {
-    "confidence": 0.1111111111111111,
+    "confidence": 1.0,
     "hits": 9,
-    "system": "MKBD",
+    "note": "auto-inferred value (11% confidence, only 9 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MKBD' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value (11% confidence, only 9 hits) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'MKBD' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
+    "system": "MKBD"
   },
   "MLM(MoodLampModule)": {
     "confidence": 1.0,
@@ -304,11 +304,11 @@
     "system": "OCS,ODS"
   },
   "OMSW(OutsideMirrorSwitch)": {
-    "confidence": 0.07692307692307693,
+    "confidence": 1.0,
     "hits": 13,
-    "system": "OMSW",
+    "note": "auto-inferred value (7.7% confidence, only 13 hits, dominated by an unrelated mega-list of seat/door System codes) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'OMSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value (7.7% confidence, only 13 hits, dominated by an unrelated mega-list of seat/door System codes) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'OMSW' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
+    "system": "OMSW"
   },
   "PCM(PowerTransferCommunicationM": {
     "confidence": 0.4,
@@ -321,11 +321,11 @@
     "system": "PDC"
   },
   "PDCex(PDCExtended)": {
-    "confidence": 0.16,
+    "confidence": 1.0,
     "hits": 25,
-    "system": "PDCEX",
+    "note": "auto-inferred value 'PDC' (16% confidence) was the parent controller's own code, not this extended-variant sheet's code. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'PDCEX' as a separate, real System value distinct from 'PDC' for the shared generic DTCs this sheet contains (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value 'PDC' (16% confidence) was the parent controller's own code, not this extended-variant sheet's code. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'PDCEX' as a separate, real System value distinct from 'PDC' for the shared generic DTCs this sheet contains (self-matching the sheet name)."
+    "system": "PDCEX"
   },
   "PSB(PreSafeSeatbelt)": {
     "confidence": 0.8490566037735849,
@@ -403,11 +403,11 @@
     "system": "SCU"
   },
   "SR_CMR(SVMCamera)": {
-    "confidence": 0.25,
+    "confidence": 1.0,
     "hits": 4,
-    "system": "SR_CMR",
+    "note": "auto-inferred value (25% confidence, only 4 hits -- too little data to be reliable) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'SR_CMR' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value (25% confidence, only 4 hits -- too little data to be reliable) was wrong. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists 'SR_CMR' as a real System value for the shared generic DTCs this sheet contains (self-matching the sheet name)."
+    "system": "SR_CMR"
   },
   "SWRC(SteeringWheelRemoconSW)": {
     "confidence": 0.23076923076923078,
@@ -470,10 +470,10 @@
     "system": "WD_RR_CMR,RVM"
   },
   "i-TPMS(indirectTPMS)": {
-    "confidence": 0.5012224938875306,
+    "confidence": 1.0,
     "hits": 409,
-    "system": "i-TPMS,TPMS",
+    "note": "auto-inferred value 'ABSESC,ABSESP,ABSVDC' (50.12% confidence, just above the 50% review threshold) was wrong -- generic 'Battery Voltage High/Low' DTCs shared with ABSESC/FR_RADAR outnumbered i-TPMS-specific codes in the majority vote. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists C110101/C110201 under System='i-TPMS,TPMS' (self-matching the sheet name).",
     "source": "manual",
-    "note": "auto-inferred value 'ABSESC,ABSESP,ABSVDC' (50.12% confidence, just above the 50% review threshold) was wrong -- generic 'Battery Voltage High/Low' DTCs shared with ABSESC/FR_RADAR outnumbered i-TPMS-specific codes in the majority vote. Corrected 2026-09-04 after cross-checking docs/dtc_master_km 3.sqlite, which lists C110101/C110201 under System='i-TPMS,TPMS' (self-matching the sheet name)."
+    "system": "i-TPMS,TPMS"
   }
 }
