@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from collections import Counter
 
@@ -12,7 +13,7 @@ from .reconstruct import reconstruct_rows
 
 def run_pipeline(input_path: str, mapping_path: str, output_path: str, report_path: str) -> dict:
     with open(input_path, encoding="utf-8", errors="replace") as f:
-        raw_rows, orphans = reconstruct_rows(f.readlines())
+        raw_rows, orphans, anomalous_field_count = reconstruct_rows(f.readlines())
 
     mapping = SheetSystemMapping.load(mapping_path)
     rows, unmapped_sheets = attach_system(raw_rows, mapping)
@@ -36,6 +37,7 @@ def run_pipeline(input_path: str, mapping_path: str, output_path: str, report_pa
         "low_confidence_sheets": low_confidence,
         "excluded_invalid_grade_count": len(excluded_rows),
         "excluded_invalid_grade_breakdown": excluded_breakdown,
+        "anomalous_field_count_lines": anomalous_field_count,
     }
 
     _write_report(report_path, stats, orphans)
@@ -48,6 +50,7 @@ def _write_report(report_path: str, stats: dict, orphans: list[str]) -> None:
         f"unrecoverable_orphan_lines: {stats['unrecoverable_orphan_lines']}",
         f"after_dedup_count: {stats['after_dedup_count']}",
         f"after_expand_count: {stats['after_expand_count']}",
+        f"anomalous_field_count_lines: {stats['anomalous_field_count_lines']}",
         "",
         f"excluded_invalid_grade_count: {stats['excluded_invalid_grade_count']}",
         "excluded_invalid_grade_breakdown:",
@@ -84,6 +87,16 @@ def main() -> None:
           f"excluded_invalid_grade={stats['excluded_invalid_grade_count']} "
           f"expanded={stats['after_expand_count']} "
           f"unmapped={len(stats['unmapped_sheets'])}")
+
+    if stats["unmapped_sheets"]:
+        print(
+            "ERROR: unmapped sheets found -- these rows were written with an "
+            "empty System and must not be auto-published:",
+            file=sys.stderr,
+        )
+        for sheet in stats["unmapped_sheets"]:
+            print(f"  - {sheet}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
