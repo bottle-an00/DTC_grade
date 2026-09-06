@@ -1,6 +1,12 @@
 # DTC Master n8n 워크플로우 import 가이드
 
-이 폴더에는 워크플로우 2개가 있다: 자동 반복 실행되는 메인 변환 파이프라인(`dtc_master_workflow.json`)과, 사람이 필요할 때 수동으로 돌리는 매핑 재생성 + AI 검토 워크플로우(`dtc_mapping_ai_review_workflow.json`). 둘 다 self-hosted n8n 전용이다 (Execute Command, Local File Trigger를 쓰므로 n8n Cloud 관리형 환경에서는 동작하지 않는다).
+이 폴더에는 워크플로우 3개가 있다:
+
+- `dtc_master_workflow.json` — 자동 반복 실행되는 메인 변환 파이프라인
+- `dtc_mapping_ai_review_workflow.json` — 매핑 재생성 + AI 검토를 n8n이 처음부터 끝까지 전부 담당하는 버전
+- `dtc_mapping_ai_review_cloud_workflow.json` — 위와 같은 AI 검토 기능이지만, Python 실행 부분은 로컬 스크립트(`tools.run_ai_review`)가 담당하고 n8n은 AI Agent 호출만 대행하는 버전
+
+**앞의 두 워크플로우는 self-hosted n8n 전용이다** (`Execute Command`, `Local File Trigger`를 쓰므로 n8n Cloud 관리형 환경에서는 노드 자체가 없어서 동작하지 않는다 — import하면 해당 노드가 물음표 아이콘으로 뜨고 연결도 끊긴 것처럼 보인다). self-hosted n8n 서버가 없다면 (예: n8n Cloud 트라이얼만 있는 경우) **`dtc_mapping_ai_review_cloud_workflow.json`을 대신 쓴다** — 이건 `Webhook`/`Respond to Webhook`/AI Agent 노드만 쓰므로 n8n Cloud에서도 정상 동작한다.
 
 ## 워크플로우 1: 메인 변환 파이프라인 (`dtc_master_workflow.json`)
 
@@ -123,3 +129,51 @@ Success       Failure
 - n8n에 LangChain 노드(`@n8n/n8n-nodes-langchain.*`)가 활성화되어 있어야 함 (최신 n8n은 기본 포함)
 - 사용할 LLM의 API 키
 - Teams 채널의 Incoming Webhook URL
+
+## 워크플로우 3: AI 검토 (n8n Cloud 호환, `dtc_mapping_ai_review_cloud_workflow.json`)
+
+워크플로우 2와 목적은 같지만(낮은 신뢰도 매핑에 AI 제안 붙이기), self-hosted 서버 없이 **n8n Cloud만으로** 동작하도록 역할을 나눴다:
+
+- **로컬 Python** (`python -m tools.run_ai_review`, [source/README.md](../README.md#ai-검토-자동화-n8n-서버-없이) 참고) 이 매핑 재계산, 검토 컨텍스트 생성, CSV 갱신, Teams 알림까지 전부 담당
+- **n8n**은 그 중 "AI Agent 호출"만 대행 — Webhook으로 받은 시트별 컨텍스트를 AI Agent에 넘기고, 결과를 동기 응답(Respond to Webhook)으로 돌려줄 뿐 파일이나 셸 명령을 전혀 건드리지 않는다
+
+이 워크플로우에는 `Execute Command`, `Local File Trigger`, `Manual Trigger`가 전혀 없다 — 그래서 n8n Cloud에서도 물음표 노드 없이 그대로 동작한다.
+
+### 흐름
+
+```
+(로컬 Python: tools.run_ai_review)
+   │  POST 시트별 컨텍스트
+   ▼
+Webhook
+   ↓
+Split Sheets For Review
+   ↓
+AI Agent (Chat Model 연결 필요) ──▶ 시트별 제안 생성
+   ↓
+Parse AI Suggestion → Collect Suggestions
+   ↓
+Respond to Webhook  ──▶ (로컬 Python이 응답을 받아 CSV/Teams 알림 처리)
+```
+
+### 설치 절차
+
+1. **Workflows > Import from File**로 `dtc_mapping_ai_review_cloud_workflow.json`을 불러온다.
+2. **Chat Model (swap as needed)** 노드에 실제 사용할 LLM credential을 연결한다 (워크플로우 2와 동일한 절차 — 위 3번 참고).
+3. **Webhook** 노드를 열어 URL(Production URL)을 복사해둔다 — 이게 `tools.run_ai_review --n8n-webhook-url`에 넣을 값이다.
+4. (권장) **Webhook** 노드의 Authentication을 `Header Auth`로 설정하고 임의의 토큰 credential을 만든다 — 기본값(`None`)은 URL만 알면 누구나 호출할 수 있는 공개 엔드포인트다. Header Auth를 켰다면 `tools.run_ai_review`가 그 헤더를 실어 보내도록 별도로 스크립트를 조정해야 한다.
+5. 워크플로우를 **Active**로 전환한다 (Webhook은 활성화 상태여야 Production URL이 응답한다).
+
+### 테스트
+
+1. `source/README.md`의 `tools.run_ai_review` 명령을 `--n8n-webhook-url`에 3번에서 복사한 URL을 넣어 직접 실행한다.
+2. n8n의 **Executions** 탭에서 Webhook 실행이 기록되고 AI Agent까지 정상적으로 지나갔는지 확인한다.
+3. 로컬에서 지정한 `--review-csv` 파일에 `ai_suggestion`/`ai_reasoning` 컬럼이 채워졌는지, Teams 채널에 완료 메시지가 왔는지 확인한다.
+
+### 환경 요구사항 (워크플로우 3)
+
+- n8n Cloud 계정 (무료/트라이얼로도 충분 — Execute Command류 노드를 쓰지 않음)
+- n8n에 LangChain 노드가 활성화되어 있어야 함 (n8n Cloud는 기본 포함)
+- 사용할 LLM의 API 키
+- `tools.run_ai_review`를 실행할 로컬 PC의 Python 환경 (워크플로우 1과 동일)
+- Teams 채널의 Incoming Webhook URL (n8n이 아니라 Python이 직접 호출)

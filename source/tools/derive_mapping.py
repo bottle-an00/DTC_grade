@@ -74,6 +74,29 @@ def derive_mapping(
     return result
 
 
+def low_confidence_rows(mapping: dict[str, dict], confidence_threshold: float) -> list[dict]:
+    """Pick the mapping entries that need human/AI review: below the
+    confidence threshold and not already a manually-verified entry.
+
+    Shared by this tool's own CLI report and by tools.run_ai_review, so the
+    two never drift on what counts as "needs review".
+    """
+    rows = []
+    for sheet, entry in sorted(mapping.items()):
+        if entry.get("source") == "manual":
+            continue
+        if entry["confidence"] < confidence_threshold:
+            rows.append(
+                {
+                    "sheet": sheet,
+                    "system": entry["system"],
+                    "confidence": f"{entry['confidence']:.2f}",
+                    "hits": entry["hits"],
+                }
+            )
+    return rows
+
+
 def _load_reference_rows(reference_db_path: str) -> list[tuple[str, str, str]]:
     con = sqlite3.connect(reference_db_path)
     try:
@@ -109,16 +132,9 @@ def main() -> None:
         json.dump(mapping, f, ensure_ascii=False, indent=2, sort_keys=True)
 
     with open(args.review_report, "w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["sheet", "system", "confidence", "hits"])
-        for sheet, entry in sorted(mapping.items()):
-            if entry.get("source") == "manual":
-                # Verified by a human already -- not an open review item, and
-                # listing it here would contradict the shipped config and
-                # invite an operator to "fix" it back to the wrong value.
-                continue
-            if entry["confidence"] < args.confidence_threshold:
-                writer.writerow([sheet, entry["system"], f"{entry['confidence']:.2f}", entry["hits"]])
+        writer = csv.DictWriter(f, fieldnames=["sheet", "system", "confidence", "hits"])
+        writer.writeheader()
+        writer.writerows(low_confidence_rows(mapping, args.confidence_threshold))
 
 
 if __name__ == "__main__":

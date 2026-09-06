@@ -1,5 +1,5 @@
 from dtc_transform.models import RawRow
-from tools.derive_mapping import count_sheet_candidates, derive_mapping
+from tools.derive_mapping import count_sheet_candidates, derive_mapping, low_confidence_rows
 
 
 def make_raw(sheet, dtc, description="desc"):
@@ -101,3 +101,37 @@ def test_count_sheet_candidates_excludes_given_sheets():
     )
 
     assert "MFSW(MultifunctionSwitch)" not in result
+
+
+def test_low_confidence_rows_includes_sheets_below_threshold():
+    mapping = {
+        "LOW(Sheet)": {"system": "X", "confidence": 0.2, "hits": 5},
+        "HIGH(Sheet)": {"system": "Y", "confidence": 0.9, "hits": 10},
+    }
+
+    result = low_confidence_rows(mapping, confidence_threshold=0.5)
+
+    assert result == [{"sheet": "LOW(Sheet)", "system": "X", "confidence": "0.20", "hits": 5}]
+
+
+def test_low_confidence_rows_excludes_manual_entries_even_if_below_threshold():
+    mapping = {
+        "MANUAL(Sheet)": {
+            "system": "X", "confidence": 0.1, "hits": 5, "source": "manual", "note": "verified",
+        },
+    }
+
+    result = low_confidence_rows(mapping, confidence_threshold=0.5)
+
+    assert result == []
+
+
+def test_low_confidence_rows_sorted_by_sheet_name():
+    mapping = {
+        "B(Sheet)": {"system": "Y", "confidence": 0.1, "hits": 1},
+        "A(Sheet)": {"system": "X", "confidence": 0.1, "hits": 1},
+    }
+
+    result = low_confidence_rows(mapping, confidence_threshold=0.5)
+
+    assert [row["sheet"] for row in result] == ["A(Sheet)", "B(Sheet)"]
