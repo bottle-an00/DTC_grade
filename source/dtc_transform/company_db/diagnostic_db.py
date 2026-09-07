@@ -31,6 +31,10 @@ def build_diagnostic_index(root_dir: str) -> dict[str, list[str]]:
                 continue
 
             stem = os.path.splitext(filename)[0]
+            # The last 2 characters are the region/version suffix checked by
+            # is_target_file (D0/A0); vehicle_info's ecucode matches the
+            # remaining 4-character "document title" prefix, not the full stem.
+            document_title = stem[:-2]
             try:
                 systemid = read_systemid(os.path.join(dirpath, filename))
             except ET.ParseError:
@@ -43,6 +47,6 @@ def build_diagnostic_index(root_dir: str) -> dict[str, list[str]]:
             except ValueError:
                 continue
 
-            index.setdefault(compare_code, []).append(stem)
+            index.setdefault(compare_code, []).append(document_title)
 
     return index

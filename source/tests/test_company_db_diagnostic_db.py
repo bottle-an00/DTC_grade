@@ -44,10 +44,13 @@ def test_build_diagnostic_index_skips_non_target_files_without_parsing_them(tmp_
 
     index = build_diagnostic_index(str(tmp_path))
 
-    assert sorted(index["6101"]) == ["0010D0"]
-    assert index["8888"] == ["0011A0"]
-    assert "0012N0" not in [f for files in index.values() for f in files]
-    assert "0013D0" not in [f for files in index.values() for f in files]
+    # The stored "document title" is the 4-char prefix, with the D0/A0
+    # region suffix stripped off -- that's what vehicle_info's ecucode
+    # matches against, not the full 6-char filename.
+    assert sorted(index["6101"]) == ["0010"]
+    assert index["8888"] == ["0011"]
+    assert "0012" not in [f for files in index.values() for f in files]
+    assert "0013" not in [f for files in index.values() for f in files]
 
 
 def test_build_diagnostic_index_walks_nested_region_folders(tmp_path):
@@ -58,4 +61,4 @@ def test_build_diagnostic_index_walks_nested_region_folders(tmp_path):
 
     index = build_diagnostic_index(str(tmp_path))
 
-    assert sorted(index["1234"]) == ["0020D0", "0020D0"]
+    assert sorted(index["1234"]) == ["0020", "0020"]
