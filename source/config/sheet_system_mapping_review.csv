@@ -1,46 +1,1007 @@
-sheet,system,confidence,hits
-AVN(AudioVideoNavigation),AVN,0.36,77
-BLTN_CAM(Built-inCam),BLTN_CAM,0.44,36
-CCU(CentralCommunicationUnit),"CCU_CGW,CCU_CCNF,CCU2",0.39,79
-CDM(ChargeDoorModule),CDM,0.43,21
-CcIC(ConnectedCarIntegratedCoc,"CCIC,CCNC",0.37,128
-CcRC(ConnectedCarRearCockpit),CCRC,0.39,36
-DAU(DriverDoorAreaUnit),"DAU,DDM",0.23,13
-DSM(DigitalSideMirror),"DSM_L,DSM_R",0.23,22
-DriverLumbarBolsterCushionU,"3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R",0.08,13
-E-Shift,"ESHIFTER,ESHIFTER (SBW),ESHIFTER_BS",0.32,128
-E-shift(29bit),"ESHIFTER,ESHIFTER (SBW),ESHIFTER_BS",0.25,83
-EMCU(EngineMountingControlU,EMCU,0.21,67
-ETCS(ElectricTollCollectSystem),ETCS,0.27,11
-FPM(FingerPrintModule),FPM,0.22,23
-FRU(FaceRecognitionUnit),FRU,0.29,35
-FR_CMR(FrontViewCamera),"FR_CMR,LDWS,MFC",0.39,216
-FR_RDR(FrontRadar),FR_RADAR,0.47,326
-F_MCU(FrontMotorControlUnit,"MCU_F,MCU",0.44,472
-HCULDC(HybridControlUnit_LowDC,"HCULDC,HCU",0.32,189
-HUD(HeadUpDisplay),HUD,0.24,21
-HeadUnit,HU,0.45,174
-IAU(IdentityAuthenticationUnit,IAU,0.47,90
-IBU(IntegratedBodyUnit,"IBU-BCM,IBU-IMMO,IBU-SMK,IBU-TPMS",0.48,154
-IMS(IntegratedMemorySystem),"APSM,PSM,RLPSM,RRPSM,SCM,IMS",0.24,38
-MDPS(MotorDrivenPowerSteering),EPS,0.26,222
-OBC(OnBoardCharger),OBC,0.44,138
-PCM(PowerTransferCommunicationM,PCM,0.40,40
-PTGM(PowerTailGateModule),"PTG,PTM",0.47,47
-PTM(PowerTrunkModule),"PTG,PTM",0.37,30
-RCM(RoofControlModule),RCM,0.37,19
-RDC(RearDoorCurtain),RDC,0.16,19
-ROA(RearOccupantAlert),"ROA,ROA_M,ROA_S",0.43,7
-RR_C_RDR(RearCornerRadar),"C_RADAR,RR_C_RADAR,RR_C_RADAR_L,RR_C_RADAR_R",0.45,163
-RWS(RearWheelSteering),RWS,0.32,165
-R_MCU(RearMotorControlUnit),MCU_R,0.37,395
-RearLeftHeaterVentilationUn,"3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R",0.08,13
-RearRightHeaterVentilationU,"3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R",0.08,13
-SCU(SBWControlUnit),SCU,0.44,221
-SWRC(SteeringWheelRemoconSW),SWRC,0.23,13
-SeatSystem,"3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R",0.24,34
-VCMS(VehicleChargingManageme,VCMS,0.44,81
-VDCU(VehicleDomainCU),VDCU,0.34,272
-VPC(VehiclePlatformController),VPC,0.34,358
-WPC(WirelessPowerCharger),"WPC,RWPC",0.15,27
-WideRearViewCamera,"WD_RR_CMR,RVM",0.22,41
+sheet,reason,candidates
+System Group,bad_doc_code,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+PDC(Powernet Domain Controller),no_match,PDCE
+CCM(Charging Communcation Module),no_match,3320;3320
+PDC(Powernet Domain Controller),no_match,PDCB;PDCB
+PDCex (Powernet Domain Controller Extended),no_match,
+PDIO (Power Door IO),no_match,D9X0;D9X0
+PDIO (Power Door IO),no_match,D8X0;D8X0
+HeadUnit,no_match,8020;8022;8020;8022
+FR_CMR (Front View Camera),no_match,C4P0
+E-Shift,no_match,B6L9;B6L9
+ALDC (Autonomous Driving Load DC/DC Converter),no_match,5952;5952
+LDC (Low DC/DC Converter),no_match,E0L0;E0L0
+E-Shift,no_match,B6LF;B6LF
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+LSD (Limited Slip Differential),no_match,
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+RCU (Redundancy Control Unit),no_match,
+RCU (Redundancy Control Unit),no_match,
+PDC(Powernet Domain Controller),no_match,PDCE
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+BDC (Body Domain Controller),no_match,II13;II13
+PDIO (Power Door IO),no_match,DBX0;DBX0
+PDIO (Power Door IO),no_match,DAX0;DAX0
+LSS_R2 (Load Shedding Switch_R2),no_match,1DX0;1DX0
+LSS (Load Shedding Switch),no_match,1CX0;1CX0
+EGW (External Gateway),no_match,A153;A153
+EGW (External Gateway),no_match,2770;2770
+EMS-Gasoline (Engine Management System),no_match,
+EMS-Gasoline (Engine Management System),no_match,
+EMS-Gasoline (Engine Management System),no_match,
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4P0
+VPC (Vehicle Platform Controller),no_match,VPCF
+VPC (Vehicle Platform Controller),no_match,VPCF
+BDC (Body Domain Controller),no_match,II13;II13
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+WPC (Wireless Power Charger),no_match,
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6LF;B6LF
+PDC(Powernet Domain Controller),no_match,PDCE
+BCU (Body and Connectivity Unit),no_match,BUI0;BUI1;BUI2;BUI0;BUI1;BUI2
+BCU (Body and Connectivity Unit),no_match,BUT0;BUT1;BUT2;BUT3;BUT4;BUT0;BUT1;BUT2;BUT3;BUT4
+E-Shift,no_match,
+EMS-Gasoline (Engine Management System),no_match,
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+Seat System,no_match,A317;A315;A317
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+BCU (Body and Connectivity Unit),no_match,BU02;BU02
+IVI (In vehicle Infotainment),no_match,D2X0;D2X0
+AD (Autonomous Driving),no_match,D3X0;D3X0
+AD (Autonomous Driving),no_match,D1X0;D1X0
+GCS (Generic Control Star),no_match,E4X0;E4X0
+GCS (Generic Control Star),no_match,E3X0;E3X0
+GCS (Generic Control Star),no_match,E2X0;E2X0
+F_MCU (Front Motor Control Unit),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+DDU (Dog Clutch Drive Unit),no_match,
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+BCU (Body and Connectivity Unit),no_match,BII0
+EMS-Gasoline (Engine Management System),no_match,
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+AALC(Advanced headlamp Auto-Levelling Controller),no_match,3AX0;3AX0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+PDC(Powernet Domain Controller),no_match,PDCE
+PDC(Powernet Domain Controller),no_match,PDCE
+BCU (Body and Connectivity Unit),no_match,BUS0;BUS1;BUS3;BUS4;BUS0;BUS1;BUS3;BUS4
+DDU (Dog Clutch Drive Unit),no_match,
+BCU (Body and Connectivity Unit),no_match,BUB0;BUB0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+PDCex (Powernet Domain Controller Extended),no_match,7412;7412
+BCU (Body and Connectivity Unit),no_match,BII0
+BCU (Body and Connectivity Unit),no_match,BUT0;BUT1;BUT2;BUT3;BUT4;BUT0;BUT1;BUT2;BUT3;BUT4
+BCU (Body and Connectivity Unit),no_match,BUS0;BUS1;BUS3;BUS4;BUS0;BUS1;BUS3;BUS4
+BCU (Body and Connectivity Unit),no_match,BUB0;BUB0
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4515;4515
+PDC(Powernet Domain Controller),no_match,PDC9;PDC9
+PDC(Powernet Domain Controller),no_match,PDCE
+E-Shift,no_match,B6L9;B6L9
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4515;4515
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,
+BCU (Body and Connectivity Unit),no_match,BU02;BU02
+BCU (Body and Connectivity Unit),no_match,BU20;BU20
+BCU (Body and Connectivity Unit),no_match,BU20;BU20
+PDC(Powernet Domain Controller),no_match,PDC9;PDC9
+R_MCU (Rear Motor Control Unit),no_match,
+SBCM (Side Body zone Control Module),no_match,SBRW;SBRW
+SBCM (Side Body zone Control Module),no_match,SBLW;SBLW
+SBCM (Side Body zone Control Module),no_match,SBAW;SBAW
+SBCM (Side Body zone Control Module),no_match,SBDW;SBDW
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+BMS (Battery Management System),no_match,
+SWRC_RH (Steering Wheel Remote Control RH),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+CCM(Charging Communcation Module),no_match,3320;3320
+PDC(Powernet Domain Controller),no_match,PDC9;PDC9
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+PTGM (Power Tail Gate Module),no_match,770W;770W
+VPC (Vehicle Platform Controller),no_match,VPCD;VPCD
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+Seat System,no_match,ALU0;ALU0
+FR_CMR (Front View Camera),no_match,C4P0
+BMS (Battery Management System),no_match,
+LV_BMS_R2 (Low Voltage Battery Management System R2),no_match,1FX0;1FX0
+LV_BMS (Low Voltage Battery Management System),no_match,1EX0;1EX0
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+VC (Vehicle Computer),no_match,E1X0;E1X0
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+RGW (Redundant Gateway),no_match,A152;A152
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+FR_CMR (Front View Camera),no_match,C4P0
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+BMS (Battery Management System),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+PDC(Powernet Domain Controller),no_match,PDC9;PDC9
+TMD (Thermal Management Driver),no_match,EBX0;EBX0
+RR_C_RDR (Rear Corner Radar),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+RR_C_RDR (Rear Corner Radar),no_match,
+BMS (Battery Management System),no_match,
+SWRC_RH (Steering Wheel Remote Control RH),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+RGW (Redundant Gateway),no_match,A151;A151
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+HeadUnit,no_match,8020;8022;8020;8022
+BMS (Battery Management System),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+LBM (Lithium Battery Module),no_match,LBM5;LBM5
+Seat System,no_match,ALU0;ALU0
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+ICCU (Integrated Charge Control Unit),no_match,E51E;E51E
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+CCM(Charging Communcation Module),no_match,3320;3320
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+GCS (Generic Control Star),no_match,E4X0;E4X0
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+PDC(Powernet Domain Controller),no_match,PDCE
+F_MCU (Front Motor Control Unit),no_match,
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+PDIO (Power Door IO),no_match,DBX0;DBX0
+PDIO (Power Door IO),no_match,DAX0;DAX0
+PDIO (Power Door IO),no_match,D9X0;D9X0
+PDIO (Power Door IO),no_match,D8X0;D8X0
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+E-Shift,no_match,B6L9;B6L9
+E-Shift,no_match,B6L9;B6L9
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+TPMS (Tire Pressure Management System),no_match,
+TPMS (Tire Pressure Management System),no_match,
+MCU (Motor Control Unit),no_match,
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+VPC (Vehicle Platform Controller),no_match,
+VPC (Vehicle Platform Controller),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+VPC (Vehicle Platform Controller),no_match,VPCE;VPCE
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D11J;D11J
+E-Shift,no_match,B6L9;B6L9
+Seat System (29bit),no_match,E6X0;E6X0
+E-Shift,no_match,B6LF;B6LF
+VPC (Vehicle Platform Controller),no_match,
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+Seat System,no_match,A317;A315;A317
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+IVI (In vehicle Infotainment),no_match,D2X0;D2X0
+AD (Autonomous Driving),no_match,D3X0;D3X0
+AD (Autonomous Driving),no_match,D1X0;D1X0
+GCS (Generic Control Star),no_match,E3X0;E3X0
+GCS (Generic Control Star),no_match,E2X0;E2X0
+VC (Vehicle Computer),no_match,E1X0;E1X0
+VPC (Vehicle Platform Controller),no_match,
+VPC (Vehicle Platform Controller),no_match,VPCD;VPCD
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1E3;D1E3
+MPLC (Micro Pixel Light Controller),no_match,16X0;15X0
+MPLC (Micro Pixel Light Controller),no_match,15X0;16X0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+TPMS (Tire Pressure Managment System),no_match,GTC3
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+E-Shift,no_match,B6LF;B6LF
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+HeadUnit,no_match,8020;8022;8020;8022
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+VPC (Vehicle Platform Controller),no_match,
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4516;4516
+VPC (Vehicle Platform Controller),no_match,
+VPC (Vehicle Platform Controller),no_match,VPCD;VPCD
+VPC (Vehicle Platform Controller),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ECS (Electronic Controlled Suspension),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+E-Shift,no_match,B6L9;B6L9
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+ADAS_PRK_Master (ADAS Parking ECU_Master) (29bit),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+VPC (Vehicle Platform Controller),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+PDC_R2(Powernet Domain Controller R2),no_match,20X0;20X0
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+Seat System,no_match,A317;A315;A317
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+VPC (Vehicle Platform Controller),no_match,
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+MPLC (Micro Pixel Light Controller),no_match,16X0;15X0
+MPLC (Micro Pixel Light Controller),no_match,15X0;16X0
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+MPLC (Micro Pixel Light Controller),no_match,16X0;15X0
+MPLC (Micro Pixel Light Controller),no_match,15X0;16X0
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+MPLC (Micro Pixel Light Controller),no_match,16X0;15X0
+MPLC (Micro Pixel Light Controller),no_match,15X0;16X0
+MDPS/EPS (Motor Driven Power Steering),no_match,D4T5;D4T5
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+BDC (Body Domain Controller),no_match,II13;II13
+TPMS (Tire Pressure Management System),no_match,
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+SCU (SBW Control Unit),no_match,
+F_MCU (Front Motor Control Unit),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+F_MCU (Front Motor Control Unit),no_match,
+TCU (Transmission Control Unit),no_match,
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+E-Shift,no_match,B6L9;B6L9
+MDPS/EPS (Motor Driven Power Steering),no_match,D416;D416
+HeadUnit,no_match,8020;8022;8020;8022
+BCU (Body and Connectivity Unit),no_match,BII0
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+MDPS/EPS (Motor Driven Power Steering),no_match,D4T5;D4T5
+MDPS/EPS (Motor Driven Power Steering),no_match,D4T5;D4T5
+DCU (Data Connectivity Unit),no_match,C730;C731;C732;C730;C731;C732
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+BLTN_CAM (Built-in Cam),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4515;4515
+E-Shift,no_match,B6L9;B6L9
+BCU (Body and Connectivity Unit),no_match,BU02;BU02
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+Seat System,no_match,A317;A315;A317
+VPC (Vehicle Platform Controller),no_match,VPCF
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+HeadUnit,no_match,8020;8022;8020;8022
+BLTN_CAM (Built-in Cam),no_match,
+BLTN_CAM (Built-in Cam),no_match,951B;951B
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+MCU (Motor Control Unit),no_match,
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+BLTN_CAM (Built-in Cam),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+BLTN_CAM (Built-in Cam),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D11J;D11J
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+TPMS (Tire Pressure Managment System),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+SAS_R2 (Steering Angle Sensor Redundancy2),no_match,F551
+E-Shift,no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+BLTN_CAM (Built-in Cam),no_match,951B;951B
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+SWRC_RH(Steering Wheel Remocon Switch_Right Hand),no_match,05X0;05X1;1BX0;05X0;05X1;1BX0
+PDIO (Power Door IO),no_match,DBX0;DBX0
+PDIO (Power Door IO),no_match,DAX0;DAX0
+PDIO (Power Door IO),no_match,D9X0;D9X0
+PDIO (Power Door IO),no_match,D8X0;D8X0
+RCU (Redundancy Control Unit),no_match,5A22;5A22
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+E-Shift,no_match,B61G
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+BCU (Body and Connectivity Unit),no_match,BUI0;BUI1;BUI2;BUI0;BUI1;BUI2
+BCU (Body and Connectivity Unit),no_match,BUT0;BUT1;BUT2;BUT3;BUT4;BUT0;BUT1;BUT2;BUT3;BUT4
+BCU (Body and Connectivity Unit),no_match,BUS0;BUS1;BUS3;BUS4;BUS0;BUS1;BUS3;BUS4
+BCU (Body and Connectivity Unit),no_match,BUB0;BUB0
+BCU (Body and Connectivity Unit),no_match,BU20;BU20
+BLTN_CAM (Built-in Cam),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+BMS (Battery Management System),no_match,
+FR_CMR (Front View Camera),no_match,C4H0;C4H0
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+WD_RR_CMR (Wide Rear View Camera),no_match,9613;9613
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+Seat System,no_match,A317;A315;A317
+E-Shift,no_match,B61G
+MCU (Motor Control Unit),no_match,
+Seat System,no_match,A317;A315;A317
+Seat System (29bit),no_match,
+Seat System (29bit),no_match,
+Seat System (29bit),no_match,
+LDC (Low DC/DC Converter),no_match,C570;C570
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+VPC (Vehicle Platform Controller),no_match,VPCF
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+Seat System,no_match,A317;A315;A317
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+GCS (Generic Control Star),no_match,E4X0;E4X0
+GCS (Generic Control Star),no_match,E3X0;E3X0
+Seat System,no_match,A317;A315;A317
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,B7O0
+Seat System,no_match,A317;A315;A317
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+TPMS (Tire Pressure Management System),no_match,
+TCU (Transmission Control Unit),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+E-Shift,no_match,B6L9;B6L9
+SCU (SBW Control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+TPMS (Tire Pressure Managment System),no_match,
+TPMS (Tire Pressure Managment System),no_match,GTC3
+DDU (Dog Clutch Drive Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,B7O0
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+FR_C_RDR (Front Corner Radar) (29bit),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,B7O0
+SBCM (Side Body zone Control Module),no_match,
+SBCM (Side Body zone Control Module),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,B7O0
+Seat System,no_match,ALU0;ALU0
+Seat System,no_match,A317;A315;A317
+GCS (Generic Control Star),no_match,E2X0;E2X0
+HPVC (High Performence Vehicle Computer),no_match,E1X0;E1X0
+SCU (SBW Control Unit),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+MCU (Motor Control Unit),no_match,
+RGW (Redundant Gateway),no_match,A152;A152
+BLTN_CAM (Built-in Cam),no_match,951B;951B
+E-Shift,no_match,B6L9;B6L9
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+TPMS (Tire Pressure Management System),no_match,
+ADAS_DRV 1_CN (ADAS Driving ECU),no_match,
+Seat System,no_match,ALU0;ALU0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+Seat System,no_match,A317;A315;A317
+BLTN_CAM (Built-in Cam),no_match,951B;951B
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,A317;A315;A317
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4514;4514
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+TPMS (Tire Pressure Managment System),no_match,
+Seat System,no_match,A317;A315;A317
+UDS Test,no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+Seat System,no_match,A317;A315;A317
+BLTN_CAM (Built-in Cam),no_match,951B;951B
+HeadUnit,no_match,8020;8022;8020;8022
+Seat System,no_match,A317;A315;A317
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+UDS Test,no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+ALDC (Autonomous Driving Load DC/DC Converter),no_match,5951;5951
+ADAS_PRK_Master (ADAS Parking ECU_Master),no_match,
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,A317;A315;A317
+RGW (Redundant Gateway),no_match,A151;A151
+HeadUnit,no_match,8020;8022;8020;8022
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+UDS Test,no_match,
+Airbag,no_match,
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+F_MCU (Front Motor Control Unit),no_match,HMFC;HMFC
+RODS (Radar based Obstacle Detection Sensor),no_match,14X0;14X0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+CLU (Cluster)_24.09.01 - 삭제 예정,no_match,
+CLU (Cluster)_24.09.01 - 삭제 예정,no_match,
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+Seat System,no_match,A317;A315;A317
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,ALU0;ALU0
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+Seat System,no_match,ALU0;ALU0
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+Seat System,no_match,A317;A315;A317
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,ALU0;ALU0
+Seat System,no_match,ALU0;ALU0
+Seat System (29bit),no_match,E6X0;E6X0
+CDM (Charge Door Module),no_match,
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,ALU0;ALU0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,A317;A315;A317
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+FR_C_LDR (Front Corner Lidar),no_match,1400;1400
+FR_C_LDR (Front Corner Lidar),no_match,1300;1300
+FR_C_LDR (Front Corner Lidar),no_match,1400;1400
+FR_C_LDR (Front Corner Lidar),no_match,1300;1300
+Seat System,no_match,A317;A315;A317
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+ICU (Intergrated Central control Unit),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+Seat System,no_match,A317;A315;A317
+Seat System,no_match,A317;A315;A317
+ICU (Intergrated Central control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+MCU (Motor Control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4516;4516
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+TPMS (Tire Pressure Management System),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,A317;A315;A317
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,ALU0;ALU0
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,ALU0;ALU0
+Seat System,no_match,ALU0;ALU0
+E-Shift,no_match,B615
+TPMS (Tire Pressure Managment System),no_match,
+E-Shift,no_match,B615
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+TPMS (Tire Pressure Managment System),no_match,
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+TPMS (Tire Pressure Management System),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+TPMS (Tire Pressure Management System),no_match,
+TCU (Transmission Control Unit),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D11J;D11J
+TPMS (Tire Pressure Management System),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D11J;D11J
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+E-Shift,no_match,B615
+OBC(On Board Charger),no_match,
+SVM ECU (Surround View Monitor ECU),no_match,93M2
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+Seat System,no_match,A317;A315;A317
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4516;4516
+TCU (Transmission Control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+TCU (Transmission Control Unit),no_match,
+Seat System,no_match,ALU0;ALU0
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+TCU (Transmission Control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+Seat System,no_match,ALU0;ALU0
+MCU (Motor Control Unit),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+FR_CMR (Front View Camera),no_match,
+FR_CMR (Front View Camera),no_match,
+FR_CMR (Front View Camera),no_match,
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+Seat System,no_match,ALU0;ALU0
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+RR_C_RDR (Rear Corner Radar),no_match,B7MC
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+TPMS (Tire Pressure Managment System),no_match,GTC3
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+FR_C_LDR (Front Corner Lidar),no_match,1400;1400
+FR_C_LDR (Front Corner Lidar),no_match,1300;1300
+BMS (Battery Management System),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+E-Shift,no_match,B615
+E-Shift,no_match,B615
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+RR_C_RDR (Rear Corner Radar),no_match,
+RR_C_RDR (Rear Corner Radar),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+RR_C_RDR (Rear Corner Radar),no_match,
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+RR_C_RDR (Rear Corner Radar),no_match,B7MC
+RR_C_RDR (Rear Corner Radar),no_match,B7MC
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,A050;A050
+RR_C_RDR (Rear Corner Radar),no_match,
+FR_CMR (Front View Camera),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+E-Shift,no_match,B61G
+RR_C_RDR (Rear Corner Radar),no_match,B7MC
+RR_C_RDR (Rear Corner Radar),no_match,B7MC
+UWB_BLE (Ultra-wide-band & Bluetooth Low Energe),no_match,8250;8250
+FR_CMR (Front View Camera),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+Seat System,no_match,ALU0;ALU0
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+FR_CMR (Front View Camera),no_match,
+FR_CMR (Front View Camera),no_match,
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+MDPS2(Motor Driven Power Steering-Redundancy),no_match,4511;4511
+TPMS (Tire Pressure Managment System),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+RR_C_RDR (Rear Corner Radar),no_match,B7PH
+RR_C_RDR (Rear Corner Radar),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+RR_C_RDR (Rear Corner Radar),no_match,B7PK;B7PK
+OBC (On Board Charger),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+Seat System,no_match,ALU0;ALU0
+Seat System,no_match,ALU0;ALU0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+FR_CMR (Front View Camera),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+RR_C_RDR (Rear Corner Radar),no_match,B7PH
+RR_C_RDR (Rear Corner Radar),no_match,B7PH
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+FR_CMR (Front View Camera),no_match,
+E-Shift,no_match,B615
+RR_C_RDR (Rear Corner Radar),no_match,B7PH
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+RR_C_RDR (Rear Corner Radar),no_match,B7PH
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+FR_CMR (Front View Camera),no_match,
+FR_CMR (Front View Camera),no_match,
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+FR_CMR (Front View Camera),no_match,
+Seat System,no_match,ALU0;ALU0
+Seat System,no_match,ALU0;ALU0
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+TCU (Transmission Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+TPMS (Tire Pressure Management System),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+AAF (Active Air Flap),no_match,
+E-Shift,no_match,B613;B6L0
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+OBC (On Board Charger),no_match,
+SVM ECU (Surround View Monitor ECU),no_match,93M2
+OBC (On Board Charger),no_match,
+OBC (On Board Charger),no_match,
+OBC (On Board Charger),no_match,
+ABS / ESP (Anti-lock Braking System / Electric Stability Program),no_match,D1C5;D1C6;D1C7;D1V2;D1V4;D1VF;D1VK;D1VN;D1C4;D1C7;D1CA;D1V2;D1V4;D1V9;D1VF;D1VK;D1VN
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+IGPM (Integrated Gateway & Power control Module),no_match,
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+FR_RDR (Front Radar),no_match,D0MT;D0MT
+AVM (Around View Monitoring),no_match,AVM9
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+AVM (Around View Monitoring),no_match,AVM9
+AVM (Around View Monitoring),no_match,AVM9
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+TCU (Transmission Control Unit),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+BSD (Blind Spot Detection),no_match,
+BSD (Blind Spot Detection),no_match,
+TCU (Transmission Control Unit),no_match,
+E-Shift,no_match,B613;B6L0
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+TPMS (Tire Pressure Management System),no_match,
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+TCU (Transmission Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+TCU (Transmission Control Unit),no_match,
+BMS (Battery Management System),no_match,
+E-Shift,no_match,B615
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+BMS (Battery Management System),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+SR_CMR (SVM Camera),no_match,93M1
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+BMS (Battery Management System),no_match,
+MCU (Motor Control Unit),no_match,
+BSD (Blind Spot Detection),no_match,
+E-Shift,no_match,B615
+E-Shift,no_match,B615
+E-Shift,no_match,B615
+TCU (Transmission Control Unit),no_match,
+TCU (Transmission Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+TCU (Transmission Control Unit),no_match,
+TPMS (Tire Pressure Management System),no_match,
+TPMS (Tire Pressure Management System),no_match,
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+NEMS (New Energy Vehicle Monitoring System),no_match,93M1
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+OCS (Occupant Classification System),no_match,C3O3;C3P3;C3O3;C3P3
+MCU (Motor Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+TCU (Transmission Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+TCU (Transmission Control Unit),no_match,AVM9
+Seat System,no_match,
+TPMS (Tire Pressure Management System),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+TPMS (Tire Pressure Management System),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+OCS (Occupant Classification System),no_match,C3O1;C3P0
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+TPMS (Tire Pressure Management System),no_match,
+MCU (Motor Control Unit),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+BCM,no_match,
+SR_CMR (SVM Camera),no_match,93M1
+TPMS (Tire Pressure Management System),no_match,
+TPMS (Tire Pressure Management System),no_match,
+SR_CMR (SVM Camera),no_match,93M1
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AVM (Around View Monitoring),no_match,AVM9
+AVM (Around View Monitoring),no_match,AVM9
+BMS (Battery Management System),no_match,
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+AAF (Active Air Flap),no_match,AAF4;AAF4;AAF5
+BMS (Battery Management System),no_match,
+BMS (Battery Management System),no_match,
+TCU (Transmission Control Unit),no_match,AVM9
+TCU (Transmission Control Unit),no_match,
+TCU (Transmission Control Unit),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+PGS (Parking Guide System),no_match,96M3;96M5;96M3;96M5
+TPMS (Tire Pressure Management System),no_match,
+eCall (Emegency Call),no_match,MM06;MM01;MM06;MM06;MM06
+AVM (Around View Monitoring),no_match,AVM9
+BMS (Battery Management System),no_match,
+BSD (Blind Spot Detection),no_match,
+BSD (Blind Spot Detection),no_match,
+ECS (Electronic Controlled Suspension),no_match,
+TCU (Transmission Control Unit),no_match,AVM9

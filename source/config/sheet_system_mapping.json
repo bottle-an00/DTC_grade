@@ -1,28 +1,100 @@
 {
+  "4WD (4 Wheel Drive)": {
+    "source": "company_db",
+    "system": "4WD"
+  },
+  "4WD ECU - ITCC (4 Wheel Drive)": {
+    "source": "company_db",
+    "system": "4WD,BSD-L"
+  },
   "4WD(4WheelDrive)": {
     "confidence": 0.7804878048780488,
     "hits": 164,
     "system": "4WD"
+  },
+  "AAF (Active Air Flap)": {
+    "source": "company_db",
+    "system": "AAF"
+  },
+  "ABS / ESP (Anti-lock Braking System / Electric Stability Program)": {
+    "source": "company_db",
+    "system": "ABSESP,AFLS,PSB-R"
   },
   "ABSESP(Anti-lockBrakingSystem)": {
     "confidence": 0.6677165354330709,
     "hits": 635,
     "system": "ABSESC,ABSESP,ABSVDC"
   },
+  "ADAS_DRV (ADAS Driving ECU)": {
+    "source": "company_db",
+    "system": "ADAS_DRV,LDC,LDWS"
+  },
   "ADAS_DRV(ADASDrivingECU)": {
     "confidence": 0.5736434108527132,
     "hits": 129,
     "system": "ADAS_DRV"
+  },
+  "ADAS_DRV_Master (ADAS Driving ECU_Master)": {
+    "source": "company_db",
+    "system": "ADAS_DRV2_M,FPM"
+  },
+  "ADAS_DRV_Slave (ADAS Driving ECU Slave)": {
+    "source": "company_db",
+    "system": "ADAS_DRV2_S"
+  },
+  "ADAS_PRK (ADAS Parking ECU)": {
+    "source": "company_db",
+    "system": "ADAS_PRK,PTG"
+  },
+  "ADAS_PRK ECU (ADAS Parking ECU)": {
+    "source": "company_db",
+    "system": "HDM"
   },
   "ADAS_PRK(ADASParkingECU)": {
     "confidence": 0.6486486486486487,
     "hits": 370,
     "system": "ADAS_PRK,ADAS_PRK_MCU"
   },
+  "ADAS_PRK_Master (ADAS Parking ECU_Master)": {
+    "source": "company_db",
+    "system": "ADAS_PRK,ADAS_PRK_VPU,PA"
+  },
+  "ADAS_PRK_Master (ADAS Parking ECU_Master) (29bit)": {
+    "source": "company_db",
+    "system": "ADAS_PRK_MCU"
+  },
+  "ADAS_VP_Master (ADAS Vision Processing ECU_Master)": {
+    "source": "company_db",
+    "system": "ADAS_VP,ODS,SVMS"
+  },
+  "ADP (Acoustic Design Processor)": {
+    "source": "company_db",
+    "system": "ADP,SUBBMS"
+  },
+  "AEB(Autonomous Emergency Braking)": {
+    "source": "company_db",
+    "system": "AEB,CCU_CGW"
+  },
+  "AFCU (Auto Flush handle Control Unit)": {
+    "source": "company_db",
+    "system": "AFCU,AFCU-DRV"
+  },
   "AFCU(AutoFlushhandleControl": {
     "confidence": 0.6,
     "hits": 10,
     "system": "AFCU"
+  },
+  "AFLS (Adaptive Front Lighting System)": {
+    "source": "company_db",
+    "system": "AFLS,ICCU,SMK"
+  },
+  "AHLS (Auto Head lamp Leveling System)": {
+    "source": "company_db",
+    "system": "AHLS"
+  },
+  "AHS (Active Hood System)": {
+    "source": "company_db",
+    "system": "AHS,FCU"
   },
   "AHS(ActiveHoodSystem)": {
     "confidence": 0.6097560975609756,
@@ -34,55 +106,171 @@
     "hits": 415,
     "system": "AIRBAG"
   },
+  "ALDC (Autonomous Driving Load DC/DC Converter)": {
+    "source": "company_db",
+    "system": "ALDC,VMCU"
+  },
+  "AMP (External Amplifier System)": {
+    "source": "company_db",
+    "system": "AMP"
+  },
   "AMP(Aamplifier)": {
     "confidence": 0.813953488372093,
     "hits": 43,
     "system": "AMP"
+  },
+  "ASC (Active Sidestep Controller)": {
+    "source": "company_db",
+    "system": "ASC"
+  },
+  "AVM (Around View Monitoring)": {
+    "source": "company_db",
+    "system": "DAU,SVMS"
   },
   "AVN(AudioVideoNavigation)": {
     "confidence": 0.36363636363636365,
     "hits": 77,
     "system": "AVN"
   },
+  "Airbag": {
+    "source": "company_db",
+    "system": "AIRBAG"
+  },
+  "BCM": {
+    "source": "company_db",
+    "system": "AVN,IBU-BCM,SCM"
+  },
+  "BCM 비통신사양": {
+    "source": "company_db",
+    "system": "BCM,VDC"
+  },
+  "BCM 통신사양-Standard": {
+    "source": "company_db",
+    "system": "BCM"
+  },
+  "BDC (Body Domain Controller)": {
+    "source": "company_db",
+    "system": "BDC-IAU"
+  },
   "BDC(BodyDomainController)": {
     "confidence": 0.5247524752475248,
     "hits": 202,
     "system": "BDC-BCM,BDC-IAU,BDC-IMMO,BDC-SMK,BDC-TPMS"
+  },
+  "BLTN_CAM (Built-in Cam)": {
+    "source": "company_db",
+    "system": "BLTN_CAM,ILCU-LH"
   },
   "BLTN_CAM(Built-inCam)": {
     "confidence": 0.4444444444444444,
     "hits": 36,
     "system": "BLTN_CAM"
   },
+  "BMS (Battery Management System)": {
+    "source": "company_db",
+    "system": "BMS"
+  },
   "BMS(BatteryManagementSys": {
     "confidence": 0.7366071428571429,
     "hits": 224,
     "system": "BMS"
+  },
+  "BMSLDC (Battery Management System Low DCDC Converter)": {
+    "source": "company_db",
+    "system": "BMSLDC"
   },
   "BMSLDC(BatteryManagementSyst": {
     "confidence": 0.7093023255813954,
     "hits": 86,
     "system": "BMSLDC"
   },
+  "BPCM (Body Power Converter Module)": {
+    "source": "company_db",
+    "system": "BPCM"
+  },
+  "BSD (Blind Spot Detection)": {
+    "source": "company_db",
+    "system": "RR_C_RADAR"
+  },
+  "BVM (Blind-spot View Monitor)": {
+    "source": "company_db",
+    "system": "CDM"
+  },
+  "CCM (Charge Control Module)": {
+    "source": "company_db",
+    "system": "CCM,OBC,PCM"
+  },
+  "CCP (Central Control Panel)": {
+    "source": "company_db",
+    "system": "CCP"
+  },
+  "CCSP (Climate Control Switch Pannel)": {
+    "source": "company_db",
+    "system": "CCSP"
+  },
+  "CCU (Central Communication Unit)": {
+    "source": "company_db",
+    "system": "AEB,CCU_CGW"
+  },
   "CCU(CentralCommunicationUnit)": {
     "confidence": 0.3924050632911392,
     "hits": 79,
     "system": "CCU_CGW,CCU_CCNF,CCU2"
+  },
+  "CDCU (Chassis Domain Control Unit)": {
+    "source": "company_db",
+    "system": "CDCU"
   },
   "CDCU(ChassisDomainControl)": {
     "confidence": 0.6140350877192983,
     "hits": 171,
     "system": "CDCU"
   },
+  "CDM (Charge Door Module)": {
+    "source": "company_db",
+    "system": "CDM"
+  },
   "CDM(ChargeDoorModule)": {
     "confidence": 0.42857142857142855,
     "hits": 21,
     "system": "CDM"
   },
+  "CDU (Climate Display Unit)": {
+    "source": "company_db",
+    "system": "CDU"
+  },
+  "CFC (Cockpit Function Controller)": {
+    "source": "company_db",
+    "system": "CFC"
+  },
+  "CLU (Cluster)": {
+    "source": "company_db",
+    "system": "CLU"
+  },
   "CLU(Cluster)": {
     "confidence": 0.631578947368421,
     "hits": 76,
     "system": "CLU"
+  },
+  "CNG (Compressed Natural Gas Controller)": {
+    "source": "company_db",
+    "system": "CNG"
+  },
+  "COD (Cathode Oxygen Depletion)": {
+    "source": "company_db",
+    "system": "COD"
+  },
+  "CSP (Coolant Stack Pump)": {
+    "source": "company_db",
+    "system": "CSP"
+  },
+  "CTS (Console Touch Screen)": {
+    "source": "company_db",
+    "system": "CTS"
+  },
+  "CWC(Connectivity Wireless Controller)": {
+    "source": "company_db",
+    "system": "CNG"
   },
   "CcIC(ConnectedCarIntegratedCoc": {
     "confidence": 0.3671875,
@@ -94,20 +282,44 @@
     "hits": 36,
     "system": "CCRC"
   },
+  "DAU (Driver Door Area Unit)": {
+    "source": "company_db",
+    "system": "AT,AVM"
+  },
   "DAU(DriverDoorAreaUnit)": {
     "confidence": 0.23076923076923078,
     "hits": 13,
     "system": "DAU,DDM"
+  },
+  "DCM(Digital Center Mirror)": {
+    "source": "company_db",
+    "system": "DCM"
+  },
+  "DCU (Data Connectivity Unit)": {
+    "source": "company_db",
+    "system": "DCU,SAS"
   },
   "DCU(DataConnectivityUnit)": {
     "confidence": 0.5238095238095238,
     "hits": 42,
     "system": "DCU"
   },
+  "DHMC (Door Hinge Motion Controller)": {
+    "source": "company_db",
+    "system": "DHMC_RL"
+  },
+  "DHS (Door Handle Sensor Module)": {
+    "source": "company_db",
+    "system": "DHS_FL,ENGINE"
+  },
   "DHS(DoorHandleSensorModule)": {
     "confidence": 0.6,
     "hits": 5,
     "system": "DHS_FL,DHS_FR"
+  },
+  "DSM (Digital Side Mirror)": {
+    "source": "company_db",
+    "system": "BSD,DSM_L"
   },
   "DSM(DigitalSideMirror)": {
     "confidence": 0.22727272727272727,
@@ -120,9 +332,12 @@
     "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
   },
   "E-Shift": {
-    "confidence": 0.3203125,
-    "hits": 128,
-    "system": "ESHIFTER,ESHIFTER (SBW),ESHIFTER_BS"
+    "source": "company_db",
+    "system": "ESHIFTER"
+  },
+  "E-Shift (29bit)": {
+    "source": "company_db",
+    "system": "PRAC"
   },
   "E-shift(29bit)": {
     "confidence": 0.25301204819277107,
@@ -134,65 +349,173 @@
     "hits": 303,
     "system": "ECS,EAS"
   },
+  "ECS (Electronic Controlled Suspension)": {
+    "source": "company_db",
+    "system": "ECS"
+  },
+  "EMCU (Engine Mounting Control Unit)": {
+    "source": "company_db",
+    "system": "EMCU"
+  },
   "EMCU(EngineMountingControlU": {
     "confidence": 0.208955223880597,
     "hits": 67,
     "system": "EMCU"
+  },
+  "EMS-Diesel (Engine Management System)": {
+    "source": "company_db",
+    "system": "AIRCON,SCR"
   },
   "EMS-DieselEngine": {
     "confidence": 0.9739884393063584,
     "hits": 346,
     "system": "ENGINE"
   },
+  "EMS-Gasoline (Engine Management System)": {
+    "source": "company_db",
+    "system": "ENGINE"
+  },
+  "EMS-Gasoline/LPI/LPGi(Engine Management System)": {
+    "source": "company_db",
+    "system": "CCP,ENGINE"
+  },
   "EMS-GasolineEngine": {
     "confidence": 0.923125,
     "hits": 1600,
     "system": "ENGINE"
+  },
+  "EPB (Electronic Parking Brake)": {
+    "source": "company_db",
+    "system": "EPB"
+  },
+  "ESG (Electric Sound Generator)": {
+    "source": "company_db",
+    "system": "ESG,RCU,SVM,VESS"
+  },
+  "ESU (Ethernet Switch Unit)": {
+    "source": "company_db",
+    "system": "ESU,SCU"
   },
   "ESU(EthernetSwitchUnit)": {
     "confidence": 1.0,
     "hits": 21,
     "system": "ESU"
   },
+  "ETCS (Electronic Toll Collection System)": {
+    "source": "company_db",
+    "system": "ETCS"
+  },
   "ETCS(ElectricTollCollectSystem)": {
     "confidence": 0.2727272727272727,
     "hits": 11,
     "system": "ETCS"
+  },
+  "FACM (Fuel cell Aircompressor Control Module)": {
+    "source": "company_db",
+    "system": "FACM"
+  },
+  "FATC (Full-auto Air Temperature Control)": {
+    "source": "company_db",
+    "system": "AIRCON,CODE"
   },
   "FATC(Full-autoAirTemperature": {
     "confidence": 0.9848484848484849,
     "hits": 330,
     "system": "AIRCON"
   },
+  "FCU (Fuel Cell Control)": {
+    "source": "company_db",
+    "system": "FCU"
+  },
+  "FLLR (Front Luggage Lock Reminder)": {
+    "source": "company_db",
+    "system": "FLLR"
+  },
+  "FPM (Fingerprint Module)": {
+    "source": "company_db",
+    "system": "ADAS_DRV2_M,FPM"
+  },
   "FPM(FingerPrintModule)": {
     "confidence": 0.21739130434782608,
     "hits": 23,
     "system": "FPM"
+  },
+  "FRU (Face Recognition Unit)": {
+    "source": "company_db",
+    "system": "FRU,SVMS"
   },
   "FRU(FaceRecognitionUnit)": {
     "confidence": 0.2857142857142857,
     "hits": 35,
     "system": "FRU"
   },
+  "FR_CMR (Front View Camera)": {
+    "source": "company_db",
+    "system": "FR_CMR,RDC"
+  },
+  "FR_CMR (Front View Camera)(29bit)": {
+    "source": "company_db",
+    "system": "FR_CMR"
+  },
   "FR_CMR(FrontViewCamera)": {
     "confidence": 0.3888888888888889,
     "hits": 216,
     "system": "FR_CMR,LDWS,MFC"
+  },
+  "FR_RDR (Front Radar)": {
+    "source": "company_db",
+    "system": "FR_RADAR,SCC"
   },
   "FR_RDR(FrontRadar)": {
     "confidence": 0.4723926380368098,
     "hits": 326,
     "system": "FR_RADAR"
   },
+  "FSVM (Fuel cell Stack Voltage Monitor)": {
+    "source": "company_db",
+    "system": "FSVM"
+  },
+  "F_MCU (Front Motor Control Unit)": {
+    "source": "company_db",
+    "system": "MCU_F"
+  },
   "F_MCU(FrontMotorControlUnit": {
     "confidence": 0.4364406779661017,
     "hits": 472,
     "system": "MCU_F,MCU"
   },
+  "HCU (Hybrid Control Unit)": {
+    "source": "company_db",
+    "system": "I-BOX,PSM-RR"
+  },
+  "HCULDC (HCU/Low DC-DC Converter)": {
+    "source": "company_db",
+    "system": "HCULDC"
+  },
+  "HCULDC (Hybrid Control Unit/Low DC-DC Converter)": {
+    "source": "company_db",
+    "system": "HCULDC"
+  },
   "HCULDC(HybridControlUnit_LowDC": {
     "confidence": 0.32275132275132273,
     "hits": 189,
     "system": "HCULDC,HCU"
+  },
+  "HDM (HDM ECU)": {
+    "source": "company_db",
+    "system": "HDM"
+  },
+  "HMU (Hydrogen system Management Unit)": {
+    "source": "company_db",
+    "system": "HMU"
+  },
+  "HOD (Hands On Detection)": {
+    "source": "company_db",
+    "system": "FPD,HOD,RWPC"
+  },
+  "HUD (HEAD UP DISPLAY)": {
+    "source": "company_db",
+    "system": "HUD"
   },
   "HUD(HeadUpDisplay)": {
     "confidence": 0.23809523809523808,
@@ -200,79 +523,206 @@
     "system": "HUD"
   },
   "HeadUnit": {
-    "confidence": 0.4482758620689655,
-    "hits": 174,
-    "system": "HU"
+    "source": "company_db",
+    "system": "AVN,CCNC,SDC"
   },
   "HoD(HandsOnDetection)": {
     "confidence": 1.0,
     "hits": 3,
     "system": "HOD"
   },
+  "IAU (Identity Authentication Unit)": {
+    "source": "company_db",
+    "system": "IAU"
+  },
   "IAU(IdentityAuthenticationUnit": {
     "confidence": 0.4666666666666667,
     "hits": 90,
     "system": "IAU"
+  },
+  "IBU (Integrated Body Unit)": {
+    "source": "company_db",
+    "system": "IBU-IMMO,PSM"
   },
   "IBU(IntegratedBodyUnit": {
     "confidence": 0.4805194805194805,
     "hits": 154,
     "system": "IBU-BCM,IBU-IMMO,IBU-SMK,IBU-TPMS"
   },
+  "ICC(In-Cabin Camera)": {
+    "source": "company_db",
+    "system": "ICC"
+  },
   "ICC(InCabinCamera)": {
     "confidence": 1.0,
     "hits": 9,
     "system": "ICC"
+  },
+  "ICCU (Integrated Charge Control Unit)": {
+    "source": "company_db",
+    "system": "AFLS,ICCU,SMK"
+  },
+  "ICCU (Integrated Charging Control Unit)": {
+    "source": "company_db",
+    "system": "BLTN_CAM"
   },
   "ICCU(IntegratedChargingCU)": {
     "confidence": 0.5239852398523985,
     "hits": 271,
     "system": "ICCU"
   },
+  "ICM (In-Cabin Monitoring)": {
+    "source": "company_db",
+    "system": "ICMU_MCU"
+  },
+  "ICM (In-Cabin Monitoring) (29bit)": {
+    "source": "company_db",
+    "system": "ICMU_AP"
+  },
+  "ICU (Intergrated Central control Unit)": {
+    "source": "company_db",
+    "system": "ICU,ICU_RGWA"
+  },
   "ICU(IntergratedCentralcontlUnit": {
     "confidence": 0.5423728813559322,
     "hits": 118,
     "system": "ICU"
+  },
+  "IDC (Integrated DC-DC Converter)": {
+    "source": "company_db",
+    "system": "IDC"
+  },
+  "IFS (Intelligent Front-lighting System)": {
+    "source": "company_db",
+    "system": "AFLS,IFS"
   },
   "IFS(IntelligentFront-lighting": {
     "confidence": 0.532258064516129,
     "hits": 62,
     "system": "IFS,IFS-SUB"
   },
+  "IGPM (Integrated Gateway & Power control Module)": {
+    "source": "company_db",
+    "system": "IGPM"
+  },
+  "ILCU (Integrated LED headlamp Control Unit)": {
+    "source": "company_db",
+    "system": "BLTN_CAM,ILCU-LH"
+  },
   "ILCU(IntegratedLEDControlUn": {
     "confidence": 0.5942028985507246,
     "hits": 69,
     "system": "ILCU-LH,ILCU-RH"
+  },
+  "IMON (Integrated Monitor)": {
+    "source": "company_db",
+    "system": "IMON"
+  },
+  "IMS (Integrated Memory System)": {
+    "source": "company_db",
+    "system": "SCM"
+  },
+  "IMS (Integrated Memory System) (29bit)": {
+    "source": "company_db",
+    "system": "IMS_SW_RL"
   },
   "IMS(IntegratedMemorySystem)": {
     "confidence": 0.23684210526315788,
     "hits": 38,
     "system": "APSM,PSM,RLPSM,RRPSM,SCM,IMS"
   },
+  "IRCU (Integrated Rear-Combination-lamp Control Unit)": {
+    "source": "company_db",
+    "system": "IRCU-LH"
+  },
+  "ISCM (Integrated Safety Control Module)": {
+    "source": "company_db",
+    "system": "ISCM"
+  },
+  "ITBC (Integrated Trailer Brake Controller)": {
+    "source": "company_db",
+    "system": "ITBC"
+  },
+  "IWCU (Integreted Washer Cleaning Controller)": {
+    "source": "company_db",
+    "system": "IWCU"
+  },
+  "Immobilizer": {
+    "source": "company_db",
+    "system": "BPCU,CCIC,IBU-IMMO"
+  },
+  "LBM (Lithium Battery Module)": {
+    "source": "company_db",
+    "system": "MCA"
+  },
   "LBM(LithiumBatteryModule)": {
     "confidence": 0.8620689655172413,
     "hits": 29,
     "system": "P_LBM"
+  },
+  "LDC (Low DC-DC Converter)": {
+    "source": "company_db",
+    "system": "ADAS_DRV,LDC"
+  },
+  "LKAS (Lane Keep Assistance)": {
+    "source": "company_db",
+    "system": "DHS_RL"
   },
   "LKAS(LaneKeepingAssistanceSyste": {
     "confidence": 1.0,
     "hits": 5,
     "system": "LKA,LKAS"
   },
+  "LPI - IFB (Stand Alone)": {
+    "source": "company_db",
+    "system": "AIRBAG,ENGINE"
+  },
+  "LSD (Limited Slip Differential)": {
+    "source": "company_db",
+    "system": "ELSD"
+  },
   "LSD(LimitedSlipDifferential)": {
     "confidence": 0.6329113924050633,
     "hits": 79,
     "system": "ELSD"
+  },
+  "L_CC_FD (Local_Cooler Controller)": {
+    "source": "company_db",
+    "system": "L_CC"
+  },
+  "MCA (Modular Clutch Actuator)": {
+    "source": "company_db",
+    "system": "MCA"
   },
   "MCA(ModularClutchActuator)": {
     "confidence": 0.7948717948717948,
     "hits": 39,
     "system": "MCA"
   },
+  "MCU (Motor Control Unit)": {
+    "source": "company_db",
+    "system": "IBU-SMK"
+  },
   "MDPS(MotorDrivenPowerSteering)": {
     "confidence": 0.26126126126126126,
     "hits": 222,
     "system": "EPS"
+  },
+  "MDPS/EPS (Motor Driven Power Steering)": {
+    "source": "company_db",
+    "system": "EPS,SPAS"
+  },
+  "MDPS2(Motor Driven Power Steering-Redundancy)": {
+    "source": "company_db",
+    "system": "EPS2"
+  },
+  "MFC (Multi Function Camera)": {
+    "source": "company_db",
+    "system": "FR_CMR"
+  },
+  "MFSW (Multifunction Switch)": {
+    "source": "company_db",
+    "system": "MCU,MFSW,SMK"
   },
   "MFSW(MultifunctionSwitch)": {
     "confidence": 1.0,
@@ -281,6 +731,14 @@
     "source": "manual",
     "system": "MFSW"
   },
+  "MHSG (Mild Hybrid Start Generator)": {
+    "source": "company_db",
+    "system": "MHSG"
+  },
+  "MKBD (Multimedia Keyboard)": {
+    "source": "company_db",
+    "system": "MKBD"
+  },
   "MKBD(MultimediaKeyboard)": {
     "confidence": 1.0,
     "hits": 9,
@@ -288,20 +746,52 @@
     "source": "manual",
     "system": "MKBD"
   },
+  "MLM (Mood Lamp Module)": {
+    "source": "company_db",
+    "system": "MLM"
+  },
   "MLM(MoodLampModule)": {
     "confidence": 1.0,
     "hits": 66,
     "system": "MLM"
+  },
+  "Multimedia System": {
+    "source": "company_db",
+    "system": "HUD,RRC"
+  },
+  "NEMS (New Energy Vehicle Monitoring System Unit)": {
+    "source": "company_db",
+    "system": "RR_C_RADAR_R"
+  },
+  "OBC (On Board Charger)": {
+    "source": "company_db",
+    "system": "OBC,PCM"
+  },
+  "OBC(On Board Charger)": {
+    "source": "company_db",
+    "system": "OBC"
   },
   "OBC(OnBoardCharger)": {
     "confidence": 0.4420289855072464,
     "hits": 138,
     "system": "OBC"
   },
+  "OCS (Occupant Classification System)": {
+    "source": "company_db",
+    "system": "AIRBAG,OCS,ODS"
+  },
   "OCS(OccupantClassificationSy": {
     "confidence": 0.5416666666666666,
     "hits": 24,
     "system": "OCS,ODS"
+  },
+  "OHCL(Over Head Consol Lamp)": {
+    "source": "company_db",
+    "system": "OHCL"
+  },
+  "OMSW (Outside Mirror Switch)": {
+    "source": "company_db",
+    "system": "IPM,OMSW"
   },
   "OMSW(OutsideMirrorSwitch)": {
     "confidence": 1.0,
@@ -310,15 +800,31 @@
     "source": "manual",
     "system": "OMSW"
   },
+  "OPU (Oil Pump Control Unit)": {
+    "source": "company_db",
+    "system": "OPU"
+  },
+  "PCM (Power transfer Communication Module)": {
+    "source": "company_db",
+    "system": "CCM,OBC,PCM"
+  },
   "PCM(PowerTransferCommunicationM": {
     "confidence": 0.4,
     "hits": 40,
     "system": "PCM"
   },
+  "PDC(Powernet Domain Controller)": {
+    "source": "company_db",
+    "system": "ADAS_DRV,PDC"
+  },
   "PDC(PowernetDomainController)": {
     "confidence": 0.5268817204301075,
     "hits": 93,
     "system": "PDC"
+  },
+  "PDCex (Powernet Domain Controller Extended)": {
+    "source": "company_db",
+    "system": "PDCEX"
   },
   "PDCex(PDCExtended)": {
     "confidence": 1.0,
@@ -327,50 +833,146 @@
     "source": "manual",
     "system": "PDCEX"
   },
+  "PDSM (Power Door System Module)": {
+    "source": "company_db",
+    "system": "PDSM_FL"
+  },
+  "PGS (Parking Guide System)": {
+    "source": "company_db",
+    "system": "PGS,RVM"
+  },
+  "PIM (PBV Interface Module)": {
+    "source": "company_db",
+    "system": "PIM"
+  },
+  "PSB (Pre Safe Seatbelt)": {
+    "source": "company_db",
+    "system": "AHLS,PSB,PSB-L"
+  },
   "PSB(PreSafeSeatbelt)": {
     "confidence": 0.8490566037735849,
     "hits": 53,
     "system": "PSB,PSB-L,PSB-R"
+  },
+  "PSD (Power Sliding Door)": {
+    "source": "company_db",
+    "system": "PSD"
+  },
+  "PTGM (Power Tail Gate Module)": {
+    "source": "company_db",
+    "system": "ADAS_PRK,PTG"
   },
   "PTGM(PowerTailGateModule)": {
     "confidence": 0.46808510638297873,
     "hits": 47,
     "system": "PTG,PTM"
   },
+  "PTM (Power Trunk Module)": {
+    "source": "company_db",
+    "system": "PTM"
+  },
   "PTM(PowerTrunkModule)": {
     "confidence": 0.36666666666666664,
     "hits": 30,
     "system": "PTG,PTM"
+  },
+  "RCM (Roof Control Module)": {
+    "source": "company_db",
+    "system": "RCM"
   },
   "RCM(RoofControlModule)": {
     "confidence": 0.3684210526315789,
     "hits": 19,
     "system": "RCM"
   },
+  "RCU (Redundancy Control Unit)": {
+    "source": "company_db",
+    "system": "RCU,SVM"
+  },
+  "RDC (Rear Door Curtain)": {
+    "source": "company_db",
+    "system": "FR_CMR,RDC"
+  },
   "RDC(RearDoorCurtain)": {
     "confidence": 0.15789473684210525,
     "hits": 19,
     "system": "RDC"
+  },
+  "RGW (Redundant Gateway)": {
+    "source": "company_db",
+    "system": "RGW"
+  },
+  "RKETRX (Remote Keyless Entry Transceiver)": {
+    "source": "company_db",
+    "system": "RKETRX"
+  },
+  "ROA (Rear Occupant Alert)": {
+    "source": "company_db",
+    "system": "BCM,HSWS,IPM,ROA"
   },
   "ROA(RearOccupantAlert)": {
     "confidence": 0.42857142857142855,
     "hits": 7,
     "system": "ROA,ROA_M,ROA_S"
   },
+  "RODS (Radar based Obstacle Detection Sensor)": {
+    "source": "company_db",
+    "system": "RODS_FR"
+  },
+  "RRC (Rear Remote Controller)": {
+    "source": "company_db",
+    "system": "RRC"
+  },
   "RRC(RearRemoteController)": {
     "confidence": 1.0,
     "hits": 1,
     "system": "RRC"
+  },
+  "RR_C_RDR (Rear Corner Radar)": {
+    "source": "company_db",
+    "system": "RR_C_RADAR_L,RWS"
   },
   "RR_C_RDR(RearCornerRadar)": {
     "confidence": 0.4539877300613497,
     "hits": 163,
     "system": "C_RADAR,RR_C_RADAR,RR_C_RADAR_L,RR_C_RADAR_R"
   },
+  "RR_C_RDR_Old (Rear Corner Radar_Old)": {
+    "source": "company_db",
+    "system": "RR_C_RADAR_R"
+  },
+  "RSPA (Remote Smart Parking Assist)": {
+    "source": "company_db",
+    "system": "C_RADAR,RR_C_RADAR"
+  },
+  "RVM (Rear VIew Monitor)": {
+    "source": "company_db",
+    "system": "RVM,SBCM_DRV"
+  },
+  "RWA (Road Wheel Actuator)": {
+    "source": "company_db",
+    "system": "RWA"
+  },
+  "RWA_R2 (Road Wheel Actuator_R2)": {
+    "source": "company_db",
+    "system": "RWA2"
+  },
+  "RWPC (Rear Wireless Charge)": {
+    "source": "company_db",
+    "system": "FPD,HOD,RWPC"
+  },
+  "RWS (Rear Wheel Steering)": {
+    "source": "company_db",
+    "system": "RR_C_RADAR_L,RWS"
+  },
   "RWS(RearWheelSteering)": {
     "confidence": 0.3151515151515151,
     "hits": 165,
     "system": "RWS"
+  },
+  "R_MCU (Rear Motor Control Unit)": {
+    "source": "company_db",
+    "system": "MCU_R"
   },
   "R_MCU(RearMotorControlUnit)": {
     "confidence": 0.369620253164557,
@@ -387,20 +989,72 @@
     "hits": 13,
     "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
   },
+  "SAC (Scalability Assist Controller)": {
+    "source": "company_db",
+    "system": "SAC"
+  },
+  "SAS (Steering Angle Sensor)": {
+    "source": "company_db",
+    "system": "DCU,SAS"
+  },
+  "SAS_R2 (Steering Angle Sensor Redundancy2)": {
+    "source": "company_db",
+    "system": "SAS_R2"
+  },
+  "SBCM (Side Body zone Control Module)": {
+    "source": "company_db",
+    "system": "RVM,SBCM_DRV"
+  },
   "SBCM(SideBodyControlModule)": {
     "confidence": 0.5531914893617021,
     "hits": 47,
     "system": "SBCM_DRV,SBCM_AST,SBCM_RR,SBCM_RL"
+  },
+  "SCC (Smart Cruise Control)": {
+    "source": "company_db",
+    "system": "EPS,FCA,SCC"
+  },
+  "SCCU (Sensor Cleaning Control Unit)": {
+    "source": "company_db",
+    "system": "SCCU"
   },
   "SCR(SelectiveCatalyticReduction": {
     "confidence": 0.9166666666666666,
     "hits": 120,
     "system": "SCR"
   },
+  "SCU (SBW Control Unit)": {
+    "source": "company_db",
+    "system": "ESU,SCU"
+  },
   "SCU(SBWControlUnit)": {
     "confidence": 0.4434389140271493,
     "hits": 221,
     "system": "SCU"
+  },
+  "SDC (Solar DCDC Converter)": {
+    "source": "company_db",
+    "system": "AVN,CCNC,SDC"
+  },
+  "SFA (Steering Feedback Actuator)": {
+    "source": "company_db",
+    "system": "SFA"
+  },
+  "SFA_R2 (Steering Feedback Actuator_R2)": {
+    "source": "company_db",
+    "system": "SFA2"
+  },
+  "SGU (Smart Glass Unit)": {
+    "source": "company_db",
+    "system": "HSCU,RADFAN-L"
+  },
+  "SMK (Smart Key)": {
+    "source": "company_db",
+    "system": "IBU-SMK"
+  },
+  "SPAS (Smart Parking Assist System)": {
+    "source": "company_db",
+    "system": "ADAS_PRK,ADAS_PRK_MCU,RSPA,SPAS"
   },
   "SR_CMR(SVMCamera)": {
     "confidence": 1.0,
@@ -409,55 +1063,159 @@
     "source": "manual",
     "system": "SR_CMR"
   },
+  "SVM ECU (Surround View Monitor ECU)": {
+    "source": "company_db",
+    "system": "FRU,SVMS"
+  },
+  "SVMS (Surround View Monitoring System)": {
+    "source": "company_db",
+    "system": "SVMS"
+  },
+  "SWRC(Steering Wheel Remocon Switch)": {
+    "source": "company_db",
+    "system": "BMS,SWRC"
+  },
   "SWRC(SteeringWheelRemoconSW)": {
     "confidence": 0.23076923076923078,
     "hits": 13,
     "system": "SWRC"
+  },
+  "Seat System": {
+    "source": "company_db",
+    "system": "MCU_F"
+  },
+  "Seat System (29bit)": {
+    "source": "company_db",
+    "system": "SHVU-3RD"
   },
   "SeatSystem": {
     "confidence": 0.23529411764705882,
     "hits": 34,
     "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
   },
+  "Smart PDU (Power Distribution Unit)": {
+    "source": "company_db",
+    "system": "PDU_F"
+  },
   "SmartKeyCodeSaving": {
     "confidence": 1.0,
     "hits": 5,
     "system": "ENGINE"
+  },
+  "SubBMS (Sub Battery Management System)": {
+    "source": "company_db",
+    "system": "ADP,SUBBMS"
+  },
+  "TCM (Trailer Control Module)": {
+    "source": "company_db",
+    "system": "TCM"
+  },
+  "TCU (Transmission Control Unit)": {
+    "source": "company_db",
+    "system": "AT"
   },
   "TCU(TransmissionControlUnit)": {
     "confidence": 0.8526315789473684,
     "hits": 475,
     "system": "AT,CVT,AMT,IMT,DCT"
   },
+  "TPMS (Tire Pressure Management System)": {
+    "source": "company_db",
+    "system": "TPMS,i-TPMS"
+  },
+  "TPMS (Tire Pressure Managment System)": {
+    "source": "company_db",
+    "system": "EPB"
+  },
+  "TPMSRX (TPMS RF Receiver)": {
+    "source": "company_db",
+    "system": "TPMSRX"
+  },
   "UWBBLE(UltraWideBandBluetoothL": {
     "confidence": 0.5151515151515151,
     "hits": 33,
     "system": "UWB_BLE_M,UWB_BLE_S"
+  },
+  "UWB_BLE (Ultra-wide-band & Bluetooth Low Energe)": {
+    "source": "company_db",
+    "system": "UWB_BLE_M"
+  },
+  "V2LC (Vehicle to Load Converter)": {
+    "source": "company_db",
+    "system": "V2LC"
+  },
+  "VCMS (Vehicle Charging Management System)": {
+    "source": "company_db",
+    "system": "SCC,VCMS"
   },
   "VCMS(VehicleChargingManageme": {
     "confidence": 0.4444444444444444,
     "hits": 81,
     "system": "VCMS"
   },
+  "VCU (Vehicle Control Unit)": {
+    "source": "company_db",
+    "system": "AIRBAG,CGW,TPMS,VCU"
+  },
   "VCU(VehicleControlUnit)": {
     "confidence": 0.6351931330472103,
     "hits": 233,
     "system": "VCU"
+  },
+  "VCULDC (VCU_Low DC_DC Converter)": {
+    "source": "company_db",
+    "system": "HMU,VCULDC"
+  },
+  "VDCU (Vehicle Domain Control Unit)": {
+    "source": "company_db",
+    "system": "VDCU"
   },
   "VDCU(VehicleDomainCU)": {
     "confidence": 0.3382352941176471,
     "hits": 272,
     "system": "VDCU"
   },
+  "VESS (Virtual Engine Sound System)": {
+    "source": "company_db",
+    "system": "AHB,VESS"
+  },
   "VESS(VirtualEngineSoundSystem)": {
     "confidence": 1.0,
     "hits": 1,
     "system": "VESS"
   },
+  "VLU (Vehicle to Load Unit)": {
+    "source": "company_db",
+    "system": "HDC,RADFAN-R,VLU"
+  },
+  "VMCU(Vehicle Motor Control Unit)": {
+    "source": "company_db",
+    "system": "ALDC,VMCU"
+  },
+  "VPC (Vehicle Platform Controller)": {
+    "source": "company_db",
+    "system": "VPC"
+  },
+  "VPC (Vehicle Platform Controller) (29bit)": {
+    "source": "company_db",
+    "system": "VPC_AP"
+  },
   "VPC(VehiclePlatformController)": {
     "confidence": 0.33519553072625696,
     "hits": 358,
     "system": "VPC"
+  },
+  "WCCU (Wireless Charging Converter Unit)": {
+    "source": "company_db",
+    "system": "ESHIFTER,IBU-TPMS,WCCU"
+  },
+  "WD_RR_CMR (Wide Rear View Camera)": {
+    "source": "company_db",
+    "system": "RVM"
+  },
+  "WPC (Wireless Power Charger)": {
+    "source": "company_db",
+    "system": "IAP,WPC"
   },
   "WPC(WirelessPowerCharger)": {
     "confidence": 0.14814814814814814,
@@ -468,6 +1226,18 @@
     "confidence": 0.21951219512195122,
     "hits": 41,
     "system": "WD_RR_CMR,RVM"
+  },
+  "ccIC (connected car Integrated Cockpit)": {
+    "source": "company_db",
+    "system": "BPCU,CCIC,IBU-IMMO"
+  },
+  "ccRC (Connected Car Rear Cockpit)": {
+    "source": "company_db",
+    "system": "CCRC"
+  },
+  "eCall (Emegency Call)": {
+    "source": "company_db",
+    "system": "TUNER_AMP"
   },
   "i-TPMS(indirectTPMS)": {
     "confidence": 1.0,
