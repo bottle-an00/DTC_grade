@@ -16,59 +16,37 @@
     },
     {
       "parameters": {
-        "mode": "runOnceForAllItems",
-        "jsCode": "const sheets = $input.first().json.body.sheets;\nreturn sheets.map((entry) => ({ json: entry }));"
-      },
-      "id": "2",
-      "name": "Split Sheets For Review",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [400, 300]
-    },
-    {
-      "parameters": {
         "promptType": "define",
-        "text": "=다음은 자동차 진단기 DTC 마스터 데이터의 Excel 시트명을 진단기 System 코드로 매핑하는 자동 추론 결과인데, 신뢰도가 낮아 검토가 필요합니다.\n\n시트명: {{ $json.sheet }}\n\n후보 System 값과 득표수 (기존 산출물과 대조한 결과, 많은 순):\n{{ JSON.stringify($json.top_candidates) }}\n\n이 시트에 속한 실제 DTC/설명 예시:\n{{ JSON.stringify($json.samples) }}\n\n위 후보들과 예시 DTC 내용을 보고, 어떤 System 값이 이 시트에 맞는지 판단하세요. 시트명 자체와 후보 System 값의 철자/약어가 비슷한 경우(자기참조)는 강한 단서입니다. 확신이 없으면 top_candidates의 1순위를 그대로 제안해도 됩니다.\n\n반드시 아래 JSON 형식으로만 답하세요 (다른 설명 텍스트 없이 JSON 하나만):\n{\"suggested_system\": \"...\", \"reasoning\": \"한 줄 근거\"}",
+        "text": "=다음은 자동차 진단기 DTC 마스터 데이터의 Excel 시트명을 진단기 System 코드로 매핑하는 자동 추론 결과인데, 여러 시트가 신뢰도가 낮아 한꺼번에 검토가 필요합니다.\n\n검토 대상 시트 목록 (각 항목: 시트명, 후보 System 값과 득표수, 실제 DTC/설명 예시):\n{{ JSON.stringify($json.body.sheets) }}\n\n각 시트마다, 후보들과 예시 DTC 내용을 보고 어떤 System 값이 맞는지 판단하세요. 시트명 자체와 후보 System 값의 철자/약어가 비슷한 경우(자기참조)는 강한 단서입니다. 확신이 없으면 그 시트의 top_candidates 1순위를 그대로 제안해도 됩니다.\n\n입력된 시트 목록과 정확히 같은 개수·순서로, 반드시 아래 JSON 배열 형식으로만 답하세요 (다른 설명 텍스트 없이 배열 하나만):\n[{\"sheet\": \"...\", \"suggested_system\": \"...\", \"reasoning\": \"한 줄 근거\"}, ...]",
         "options": {}
       },
       "id": "3",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
-      "position": [620, 300]
+      "position": [420, 300]
     },
     {
       "parameters": {
-        "model": "claude-sonnet-5",
+        "modelName": "models/gemini-3.6-flash",
         "options": {}
       },
       "id": "4",
-      "name": "Chat Model (swap as needed)",
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
-      "position": [620, 480]
-    },
-    {
-      "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "const sheet = $('Split Sheets For Review').item.json.sheet;\nlet parsed;\ntry {\n  const text = $json.output ?? $json.text ?? '';\n  parsed = JSON.parse(text);\n} catch (e) {\n  parsed = { suggested_system: '', reasoning: 'AI 응답을 JSON으로 파싱하지 못함: ' + String($json.output ?? $json.text ?? '') };\n}\nreturn { json: { sheet, suggested_system: parsed.suggested_system || '', reasoning: parsed.reasoning || '' } };"
-      },
-      "id": "5",
-      "name": "Parse AI Suggestion",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [840, 300]
+      "position": [420, 480]
     },
     {
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "const suggestions = $input.all().map((item) => item.json);\nreturn [{ json: { suggestions } }];"
+        "jsCode": "const sheets = $('Webhook').first().json.body.sheets;\nconst text = $json.output ?? $json.text ?? '';\nlet parsed;\ntry {\n  parsed = JSON.parse(text);\n  if (!Array.isArray(parsed)) throw new Error('not an array');\n} catch (e) {\n  // Fall back to an empty suggestion per sheet rather than losing the\n  // whole batch to one malformed response -- a human still reviews every\n  // row in the CSV either way.\n  parsed = sheets.map((s) => ({\n    sheet: s.sheet,\n    suggested_system: '',\n    reasoning: 'AI 응답을 JSON 배열로 파싱하지 못함: ' + text,\n  }));\n}\nreturn [{ json: { suggestions: parsed } }];"
       },
       "id": "6",
-      "name": "Collect Suggestions",
+      "name": "Parse AI Suggestions",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1040, 300]
+      "position": [640, 300]
     },
     {
       "parameters": {
@@ -80,26 +58,20 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1240, 300]
+      "position": [860, 300]
     }
   ],
   "connections": {
     "Webhook": {
-      "main": [[{ "node": "Split Sheets For Review", "type": "main", "index": 0 }]]
-    },
-    "Split Sheets For Review": {
       "main": [[{ "node": "AI Agent", "type": "main", "index": 0 }]]
     },
-    "Chat Model (swap as needed)": {
+    "Google Gemini Chat Model": {
       "ai_languageModel": [[{ "node": "AI Agent", "type": "ai_languageModel", "index": 0 }]]
     },
     "AI Agent": {
-      "main": [[{ "node": "Parse AI Suggestion", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Parse AI Suggestions", "type": "main", "index": 0 }]]
     },
-    "Parse AI Suggestion": {
-      "main": [[{ "node": "Collect Suggestions", "type": "main", "index": 0 }]]
-    },
-    "Collect Suggestions": {
+    "Parse AI Suggestions": {
       "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
     }
   }

@@ -135,23 +135,23 @@ Success       Failure
 워크플로우 2와 목적은 같지만(낮은 신뢰도 매핑에 AI 제안 붙이기), self-hosted 서버 없이 **n8n Cloud만으로** 동작하도록 역할을 나눴다:
 
 - **로컬 Python** (`python -m tools.run_ai_review`, [source/README.md](../README.md#ai-검토-자동화-n8n-서버-없이) 참고) 이 매핑 재계산, 검토 컨텍스트 생성, CSV 갱신, Teams 알림까지 전부 담당
-- **n8n**은 그 중 "AI Agent 호출"만 대행 — Webhook으로 받은 시트별 컨텍스트를 AI Agent에 넘기고, 결과를 동기 응답(Respond to Webhook)으로 돌려줄 뿐 파일이나 셸 명령을 전혀 건드리지 않는다
+- **n8n**은 그 중 "AI Agent 호출"만 대행 — Webhook으로 받은 시트 목록 전체를 **AI Agent에 한 번에 통째로** 넘기고, 결과를 동기 응답(Respond to Webhook)으로 돌려줄 뿐 파일이나 셸 명령을 전혀 건드리지 않는다
 
 이 워크플로우에는 `Execute Command`, `Local File Trigger`, `Manual Trigger`가 전혀 없다 — 그래서 n8n Cloud에서도 물음표 노드 없이 그대로 동작한다.
+
+**시트별로 AI를 따로따로 호출하지 않고 한 번에 묶어서 호출한다** — 무료 LLM API(예: Gemini 무료 티어)는 분당/일일 요청 횟수 제한이 매우 낮은 경우가 많아서, 검토할 시트가 여러 개면 시트 수만큼 호출하는 구조는 금방 쿼터를 초과한다. 대신 검토 대상 시트 전체를 프롬프트 하나에 담아 AI에게 JSON 배열로 한 번에 응답받는 방식이라, 시트가 몇 개든 호출 횟수는 항상 1회다.
 
 ### 흐름
 
 ```
 (로컬 Python: tools.run_ai_review)
-   │  POST 시트별 컨텍스트
+   │  POST 시트 목록 전체
    ▼
 Webhook
    ↓
-Split Sheets For Review
+AI Agent (Chat Model 연결 필요) ──▶ 시트 전체에 대한 제안을 JSON 배열로 한 번에 생성
    ↓
-AI Agent (Chat Model 연결 필요) ──▶ 시트별 제안 생성
-   ↓
-Parse AI Suggestion → Collect Suggestions
+Parse AI Suggestions (배열 파싱, 실패 시 시트별 빈 제안으로 대체)
    ↓
 Respond to Webhook  ──▶ (로컬 Python이 응답을 받아 CSV/Teams 알림 처리)
 ```

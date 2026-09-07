@@ -2,15 +2,18 @@ from dtc_transform.dedup import dedup
 from dtc_transform.models import Row
 
 
-def make_row(system="SYS", dtc="P000000", grade="D", description="desc"):
+def make_row(
+    system="SYS", dtc="P000000", grade="D", description="desc",
+    warning_light="X", warning_message="X", limp_home="X", fail_safe="X",
+):
     return Row(
-        system=system, dtc=dtc, description=description, warning_light="X",
-        warning_message="X", limp_home="X", fail_safe="X", grade=grade,
+        system=system, dtc=dtc, description=description, warning_light=warning_light,
+        warning_message=warning_message, limp_home=limp_home, fail_safe=fail_safe, grade=grade,
         grading_background="bg", sheet="Sheet",
     )
 
 
-def test_same_system_dtc_grade_different_description_keeps_first():
+def test_same_system_dtc_grade_different_description_keeps_first_when_tied_on_o_count():
     rows = [
         make_row(description="Control Unit Supply Voltage Open Circuit"),
         make_row(description="Open Unit Supply Voltage Open Circuit"),
@@ -18,6 +21,25 @@ def test_same_system_dtc_grade_different_description_keeps_first():
     result = dedup(rows)
     assert len(result) == 1
     assert result[0].description == "Control Unit Supply Voltage Open Circuit"
+
+
+def test_same_system_dtc_grade_keeps_the_row_with_more_o_marks():
+    fewer_os = make_row(description="fewer", warning_light="X", limp_home="X", fail_safe="X")
+    more_os = make_row(description="more", warning_light="O", limp_home="O", fail_safe="X")
+    result = dedup([fewer_os, more_os])
+    assert len(result) == 1
+    assert result[0].description == "more"
+
+    # order shouldn't matter
+    result2 = dedup([more_os, fewer_os])
+    assert result2[0].description == "more"
+
+
+def test_unicode_circle_symbol_counts_as_an_o_mark_too():
+    latin_o = make_row(description="latin", warning_light="O")
+    unicode_circle = make_row(description="circle", warning_light="○", limp_home="○")
+    result = dedup([latin_o, unicode_circle])
+    assert result[0].description == "circle"
 
 
 def test_same_system_dtc_different_grade_keeps_more_severe():

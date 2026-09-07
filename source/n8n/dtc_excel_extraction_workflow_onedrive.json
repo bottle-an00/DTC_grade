@@ -1,0 +1,332 @@
+{
+  "name": "DTC Excel Extraction (OneDrive folder queue -- needs an account with OneDrive credential consent)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "id": "1",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [140, 300]
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "operation": "getChildren",
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "REPLACE-WITH-PENDING-FOLDER-ID"
+        }
+      },
+      "id": "15",
+      "name": "List Pending Files",
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [340, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().filter((item) => (item.json.name ?? '').toLowerCase().endsWith('.xlsx'));"
+      },
+      "id": "17",
+      "name": "Filter to Excel Files",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "16",
+      "name": "Loop Over Files",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "getSheets",
+        "workbook": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "returnAll": true
+      },
+      "id": "2",
+      "name": "Get Sheets",
+      "type": "n8n-nodes-base.microsoftExcel",
+      "typeVersion": 2.2,
+      "position": [960, 220]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "getRowsFromSheet",
+        "workbook": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Loop Over Files').item.json.id }}"
+        },
+        "worksheet": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "range": "A3:H2000",
+        "options": {
+          "rawData": true
+        }
+      },
+      "id": "3",
+      "name": "Get Rows From Sheet",
+      "type": "n8n-nodes-base.microsoftExcel",
+      "typeVersion": 2.2,
+      "position": [1180, 220]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const output = [];\nfor (const item of $input.all()) {\n  const sheet = item.json.data.address.split('!')[0].replace(/^'|'$/g, '');\n  const rows = item.json.data.values ?? [];\n  for (const row of rows) {\n    const dtc = row[0];\n    if (!dtc) continue; // skips the leftover sub-header row and blank padding rows within the fixed A3:H5000 range\n    output.push({\n      json: {\n        sheet,\n        dtc,\n        description: row[1],\n        warning_light: row[2],\n        warning_message: row[3],\n        limp_home: row[4],\n        fail_safe: row[5],\n        grade: row[6],\n        grading_background: row[7],\n      },\n    });\n  }\n}\nreturn output;"
+      },
+      "id": "4",
+      "name": "Normalize Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1400, 220]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// REPLACE this object with the current contents of config/sheet_system_mapping.json\n// whenever that file changes (rare -- only when sheets are added/renamed).\n// Kept as a plain literal here because n8n Cloud can't read files from the git repo.\nconst MAPPING = {\n  /* \"SheetName\": { \"system\": \"SYS_CODE\" }, ... */\n};\n\nreturn $input.all().map((item) => {\n  const row = item.json;\n  const entry = MAPPING[row.sheet];\n  return {\n    json: {\n      ...row,\n      system: entry ? entry.system : \"\",\n    },\n  };\n});"
+      },
+      "id": "8",
+      "name": "Attach System",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1620, 220]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "rows",
+        "options": {}
+      },
+      "id": "5",
+      "name": "Aggregate All Rows",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [1840, 140]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "binaryPropertyName": "data",
+        "options": {
+          "fileName": "dtc_extraction.json"
+        }
+      },
+      "id": "6",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2060, 140]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "upload",
+        "parentId": "REPLACE-WITH-ONEDRIVE-OUTPUT-FOLDER-ID",
+        "fileName": "dtc_extraction.json",
+        "binaryData": true,
+        "binaryPropertyName": "data"
+      },
+      "id": "7",
+      "name": "Upload to OneDrive",
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [2280, 140]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE-WITH-TEAMS-WEBHOOK-URL",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  \"@type\": \"MessageCard\",\n  \"@context\": \"http://schema.org/extensions\",\n  \"summary\": \"DTC 매칭 JSON 준비 완료\",\n  \"title\": \"DTC 매칭 JSON 준비 완료\",\n  \"text\": \"매칭된 JSON 다운로드: \" + $json.webUrl + \"\\n행 수: \" + $('Aggregate All Rows').item.json.rows.length + \"건\"\n}) }}"
+      },
+      "id": "9",
+      "name": "Send Teams Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2500, 140]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Collects every row whose sheet wasn't found in the static MAPPING above,\n// shaped to match the AI Agent prompt below: {sheet, top_candidates, samples}\n// with samples as {dtc, description} objects. top_candidates is always []\n// here -- real candidate voting needs the reference sqlite DB\n// (tools/review_context.py's count_sheet_candidates), which n8n Cloud has\n// no access to, so the AI can only go on the sheet name + samples for\n// sheets reached through this path. Outputs 0 items (no AI call, no Teams\n// card) when every sheet was already mapped.\nconst bySheet = {};\nfor (const item of $input.all()) {\n  const row = item.json;\n  if (row.system) continue;\n  if (!bySheet[row.sheet]) bySheet[row.sheet] = [];\n  if (bySheet[row.sheet].length < 8) {\n    bySheet[row.sheet].push({ dtc: row.dtc, description: row.description });\n  }\n}\nconst sheets = Object.entries(bySheet).map(([sheet, samples]) => ({\n  sheet,\n  top_candidates: [],\n  samples,\n}));\nif (sheets.length === 0) return [];\nreturn [{ json: { sheets } }];"
+      },
+      "id": "10",
+      "name": "Build Unmapped Sheets Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1840, 420]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=다음은 자동차 진단기 DTC 마스터 데이터의 Excel 시트명을 진단기 System 코드로 매핑하는 자동 추론 결과인데, 매핑 테이블에 없는 새 시트가 발견되어 검토가 필요합니다.\n\n검토 대상 시트 목록 (각 항목: 시트명, 후보 System 값과 득표수, 실제 DTC/설명 예시):\n{{ JSON.stringify($json.sheets) }}\n\n각 시트마다, 후보들과 예시 DTC 내용을 보고 어떤 System 값이 맞는지 판단하세요. 시트명 자체와 후보 System 값의 철자/약어가 비슷한 경우(자기참조)는 강한 단서입니다. top_candidates가 비어 있으면 시트명과 DTC 설명만으로 판단하세요.\n\n입력된 시트 목록과 정확히 같은 개수·순서로, 반드시 아래 JSON 배열 형식으로만 답하세요 (다른 설명 텍스트 없이 배열 하나만):\n[{\"sheet\": \"...\", \"suggested_system\": \"...\", \"reasoning\": \"한 줄 근거\"}, ...]",
+        "options": {}
+      },
+      "id": "12",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [2060, 420]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.6-flash",
+        "options": {}
+      },
+      "id": "18",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [2060, 600]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const sheets = $('Build Unmapped Sheets Summary').first().json.sheets;\nconst text = $json.output ?? $json.text ?? '';\nlet parsed;\ntry {\n  parsed = JSON.parse(text);\n  if (!Array.isArray(parsed)) throw new Error('not an array');\n} catch (e) {\n  parsed = sheets.map((s) => ({\n    sheet: s.sheet,\n    suggested_system: '',\n    reasoning: 'AI 응답을 JSON 배열로 파싱하지 못함: ' + text,\n  }));\n}\nreturn [{ json: { suggestions: parsed } }];"
+      },
+      "id": "13",
+      "name": "Parse AI Suggestions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2280, 420]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE-WITH-TEAMS-WEBHOOK-URL",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  \"@type\": \"MessageCard\",\n  \"@context\": \"http://schema.org/extensions\",\n  \"summary\": \"DTC 매핑 필요 (AI 검토 완료)\",\n  \"title\": \"DTC 매핑 필요 - 새 시트 발견, AI 추천 포함\",\n  \"text\": \"다음 시트가 매핑 테이블에 없어 AI가 자동으로 추천했습니다. 확인 후 config/sheet_system_mapping.json과 'Attach System' 노드에 반영해주세요:\\n\\n\" + $json.suggestions.map(s => `- ${s.sheet} -> AI 추천: ${s.suggested_system} (${s.reasoning})`).join(\"\\n\")\n}) }}"
+      },
+      "id": "11",
+      "name": "Send Unmapped Sheets Teams Card",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2500, 420]
+    },
+    {
+      "parameters": {
+        "mode": "append"
+      },
+      "id": "19",
+      "name": "Merge Branches",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [2720, 300]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "update",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Loop Over Files').item.json.id }}"
+        },
+        "newParentId": "REPLACE-WITH-COMPLETED-FOLDER-ID"
+      },
+      "id": "20",
+      "name": "Move File to Completed Folder",
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "typeVersion": 1,
+      "position": [2940, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [[{ "node": "List Pending Files", "type": "main", "index": 0 }]]
+    },
+    "List Pending Files": {
+      "main": [[{ "node": "Filter to Excel Files", "type": "main", "index": 0 }]]
+    },
+    "Filter to Excel Files": {
+      "main": [[{ "node": "Loop Over Files", "type": "main", "index": 0 }]]
+    },
+    "Loop Over Files": {
+      "main": [[], [{ "node": "Get Sheets", "type": "main", "index": 0 }]]
+    },
+    "Get Sheets": {
+      "main": [[{ "node": "Get Rows From Sheet", "type": "main", "index": 0 }]]
+    },
+    "Get Rows From Sheet": {
+      "main": [[{ "node": "Normalize Row", "type": "main", "index": 0 }]]
+    },
+    "Normalize Row": {
+      "main": [[{ "node": "Attach System", "type": "main", "index": 0 }]]
+    },
+    "Attach System": {
+      "main": [
+        [
+          { "node": "Aggregate All Rows", "type": "main", "index": 0 },
+          { "node": "Build Unmapped Sheets Summary", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Aggregate All Rows": {
+      "main": [[{ "node": "Convert to File", "type": "main", "index": 0 }]]
+    },
+    "Convert to File": {
+      "main": [[{ "node": "Upload to OneDrive", "type": "main", "index": 0 }]]
+    },
+    "Upload to OneDrive": {
+      "main": [[{ "node": "Send Teams Notification", "type": "main", "index": 0 }]]
+    },
+    "Send Teams Notification": {
+      "main": [[{ "node": "Merge Branches", "type": "main", "index": 0 }]]
+    },
+    "Build Unmapped Sheets Summary": {
+      "main": [[{ "node": "AI Agent", "type": "main", "index": 0 }]]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [[{ "node": "AI Agent", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "AI Agent": {
+      "main": [[{ "node": "Parse AI Suggestions", "type": "main", "index": 0 }]]
+    },
+    "Parse AI Suggestions": {
+      "main": [[{ "node": "Send Unmapped Sheets Teams Card", "type": "main", "index": 0 }]]
+    },
+    "Send Unmapped Sheets Teams Card": {
+      "main": [[{ "node": "Merge Branches", "type": "main", "index": 1 }]]
+    },
+    "Merge Branches": {
+      "main": [[{ "node": "Move File to Completed Folder", "type": "main", "index": 0 }]]
+    },
+    "Move File to Completed Folder": {
+      "main": [[{ "node": "Loop Over Files", "type": "main", "index": 0 }]]
+    }
+  }
+}
