@@ -9,6 +9,7 @@ docs/*.sqlite
 docs/mail_history/
 docs/dtc_master_km_output.sqlite
 docs/dtc_master_run_report.txt
+docs/new_data_for_matching/
 .worktrees/
 
 # PyInstaller build artifacts (the .exe is sent to the user directly, not committed)
