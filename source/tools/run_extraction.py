@@ -4,7 +4,7 @@ import json
 from tools.fetch_extraction import fetch_all_extraction
 from tools.graph_auth import get_access_token
 from tools.json_to_sqlite import convert
-from tools.notify_teams import send_teams_message
+from tools.notify_teams import send_teams_chat_message, send_teams_message
 from tools.resolve_workbook import resolve_workbook_id
 
 DEFAULT_CHUNK_SIZE = 15
@@ -79,6 +79,10 @@ def main() -> None:
     parser.add_argument("--output", required=True, help="Path to write the output sqlite")
     parser.add_argument("--report", required=True, help="Path to write the run report")
     parser.add_argument("--teams-webhook-url", required=True, help="Teams Incoming Webhook URL")
+    parser.add_argument(
+        "--teams-chat-id",
+        help="지정하면 Incoming Webhook 채널 알림과 별도로, Graph API를 통해 이 Teams 채팅(개인 채팅 포함)에도 알림",
+    )
     parser.add_argument("--webhook-timeout", type=float, default=300.0)
     parser.add_argument(
         "--chunk-size", type=int, default=DEFAULT_CHUNK_SIZE, help="Sheets per webhook call, to avoid gateway timeouts"
@@ -90,6 +94,11 @@ def main() -> None:
         help="How many chunk requests to run at once, to speed up large workbooks",
     )
     args = parser.parse_args()
+
+    def notify(title: str, text: str) -> None:
+        send_teams_message(args.teams_webhook_url, title, text)
+        if args.teams_chat_id:
+            send_teams_chat_message(get_access_token(), args.teams_chat_id, f"{title}\n{text}")
 
     try:
         result, stats = run(
@@ -103,22 +112,14 @@ def main() -> None:
             args.max_concurrency,
         )
     except Exception as exc:
-        send_teams_message(args.teams_webhook_url, "DTC 등급 파이프라인 실패", f"오류: {exc}")
+        notify("DTC 등급 파이프라인 실패", f"오류: {exc}")
         raise
 
     if stats["unmapped_sheets"]:
-        send_teams_message(
-            args.teams_webhook_url,
-            "DTC 등급 파이프라인 - 매핑 필요",
-            build_unmapped_alert_message(stats, result),
-        )
+        notify("DTC 등급 파이프라인 - 매핑 필요", build_unmapped_alert_message(stats, result))
         raise SystemExit(1)
 
-    send_teams_message(
-        args.teams_webhook_url,
-        "DTC 등급 sqlite 준비 완료",
-        build_success_message(args.output, args.report, stats),
-    )
+    notify("DTC 등급 sqlite 준비 완료", build_success_message(args.output, args.report, stats))
 
 
 if __name__ == "__main__":

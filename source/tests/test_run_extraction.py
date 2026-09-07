@@ -141,6 +141,73 @@ def test_main_alerts_with_ai_suggestions_and_exits_nonzero_when_unmapped(tmp_pat
     assert "self-match" in text
 
 
+def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, monkeypatch):
+    _patch_resolution(monkeypatch)
+    monkeypatch.setattr(
+        "tools.run_extraction.fetch_all_extraction",
+        lambda url, workbook_id, timeout, chunk_size, max_concurrency: {
+            "rows": [make_row("TCU(TransmissionControlUnit)", "P0AC200", "Desc A", "AT,CVT")]
+        },
+    )
+    monkeypatch.setattr("tools.run_extraction.send_teams_message", lambda url, title, text, timeout=30: None)
+    chat_calls = []
+    monkeypatch.setattr(
+        "tools.run_extraction.send_teams_chat_message",
+        lambda token, chat_id, text, timeout=30: chat_calls.append((token, chat_id, text)),
+    )
+
+    _run_main(
+        monkeypatch,
+        [
+            "run_extraction",
+            "--webhook-url", "https://example.com/n8n",
+            "--workbook-url", "https://onedrive.example/file.xlsx",
+            "--output-json", str(tmp_path / "extraction.json"),
+            "--output", str(tmp_path / "out.sqlite"),
+            "--report", str(tmp_path / "report.txt"),
+            "--teams-webhook-url", "https://example.com/teams",
+            "--teams-chat-id", "19:chat-id@thread.v2",
+        ],
+    )
+
+    assert len(chat_calls) == 1
+    token, chat_id, text = chat_calls[0]
+    assert token == "TOKEN"
+    assert chat_id == "19:chat-id@thread.v2"
+    assert "준비 완료" in text
+
+
+def test_main_skips_teams_chat_message_when_no_chat_id_is_given(tmp_path, monkeypatch):
+    _patch_resolution(monkeypatch)
+    monkeypatch.setattr(
+        "tools.run_extraction.fetch_all_extraction",
+        lambda url, workbook_id, timeout, chunk_size, max_concurrency: {
+            "rows": [make_row("TCU(TransmissionControlUnit)", "P0AC200", "Desc A", "AT,CVT")]
+        },
+    )
+    monkeypatch.setattr("tools.run_extraction.send_teams_message", lambda url, title, text, timeout=30: None)
+    chat_calls = []
+    monkeypatch.setattr(
+        "tools.run_extraction.send_teams_chat_message",
+        lambda token, chat_id, text, timeout=30: chat_calls.append((token, chat_id, text)),
+    )
+
+    _run_main(
+        monkeypatch,
+        [
+            "run_extraction",
+            "--webhook-url", "https://example.com/n8n",
+            "--workbook-url", "https://onedrive.example/file.xlsx",
+            "--output-json", str(tmp_path / "extraction.json"),
+            "--output", str(tmp_path / "out.sqlite"),
+            "--report", str(tmp_path / "report.txt"),
+            "--teams-webhook-url", "https://example.com/teams",
+        ],
+    )
+
+    assert chat_calls == []
+
+
 def test_main_notifies_teams_failure_and_reraises_on_error(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(

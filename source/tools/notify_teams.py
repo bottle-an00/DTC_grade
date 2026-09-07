@@ -23,3 +23,17 @@ def send_teams_message(webhook_url: str, title: str, text: str, timeout: float =
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         response.read()
+
+
+def send_teams_chat_message(access_token: str, chat_id: str, text: str, timeout: float = 30) -> None:
+    """Post into a Teams 1:1/group chat via Graph API. Unlike an Incoming
+    Webhook (channel-only), this can reach a personal chat."""
+    payload = json.dumps({"body": {"content": text}}).encode("utf-8")
+    request = urllib.request.Request(
+        f"https://graph.microsoft.com/v1.0/chats/{chat_id}/messages",
+        data=payload,
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {access_token}"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        response.read()
