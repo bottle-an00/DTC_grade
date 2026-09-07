@@ -37,6 +37,20 @@ python -m tools.derive_mapping \
 
 `--review-report`로 생성되는 CSV는 신뢰도(자동 추론 시 최빈값의 득표 비율)가 임계값(기본 50%) 미만인 시트 목록입니다 — 자동 추론이 틀렸을 가능성이 있으니 사람이 수동으로 확인·보정해야 하는 항목입니다. **`"source": "manual"`로 이미 수동 보정된 시트는 이 CSV에서 자동으로 제외됩니다** (아래 "수동 보정 규칙" 참고). 이 도구를 다시 실행해도 이미 수동 보정된 항목은 덮어써지지 않고 그대로 보존됩니다.
 
+**2026-09-07부로 위 통계적(confidence/hits) 방식은 사내 DB 3종을 조인하는 결정적 방식으로 대체되었다** (근거: [`docs/superpowers/specs/2026-09-07-company-db-system-mapping-design.md`](../docs/superpowers/specs/2026-09-07-company-db-system-mapping-design.md)):
+
+```bash
+cd source
+python -m tools.build_system_mapping \
+  --ecu-doc-csv "<암호 해제된 ECU DOC CSV 경로>" \
+  --diagnostic-db-root "<진단 DB 1 폴더 경로>" \
+  --vehicle-info-xml docs/new_data_for_matching/vehicle_info/*.xml \
+  --mapping-output config/sheet_system_mapping.json \
+  --review-csv config/sheet_system_mapping_review.csv
+```
+
+`--review-csv`로 나온 파일은 매칭 후보가 하나도 없거나(`no_match`) 서로 다른 System을 가리켜(`ambiguous`) 자동으로 값을 못 채운 시트 목록이다 — 사람이 확인 후 `config/sheet_system_mapping.json`에 `"source": "manual"`로 직접 추가한다 (아래 "수동 보정 규칙" 절 참고). 이미 `"source": "manual"`인 항목은 재실행해도 덮어써지지 않는다.
+
 ## AI 검토 자동화 (n8n 서버 없이)
 
 낮은 신뢰도로 자동 추론된 시트 매핑을 AI가 먼저 검토해 제안을 붙여주는 기능은 원래 n8n 워크플로우(`source/n8n/dtc_mapping_ai_review_workflow.json`)로 만들었지만, 이건 `Execute Command`/`Local File Trigger` 노드를 쓰기 때문에 self-hosted n8n에서만 동작합니다. self-hosted n8n 서버를 구할 수 없는 환경(예: n8n Cloud만 접근 가능, 또는 n8n 자체가 아예 없는 환경)에서는 `tools.run_ai_review`를 대신 씁니다:
