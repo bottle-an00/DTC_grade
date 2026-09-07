@@ -30,15 +30,20 @@ def test_reports_no_match_when_no_candidate_is_in_vehicle_info():
     assert unresolved == [{"sheet": "UNKNOWN(Sheet)", "reason": "no_match", "candidates": ["0010D0"]}]
 
 
-def test_reports_ambiguous_when_candidates_disagree():
-    ecu_doc_rows = [("AMBIG(Sheet)", "92710100_ABC_1006101_001")]
+def test_joins_multiple_matching_candidates_with_a_comma():
+    # config/sheet_system_mapping.json already stores multi-value System
+    # strings this way (e.g. "ABSESC,ABSESP,ABSVDC") -- when several
+    # candidates each check out against vehicle_info but disagree, that's
+    # not a failure, it's a multi-system sheet like the ones already in
+    # the mapping table.
+    ecu_doc_rows = [("MULTI(Sheet)", "92710100_ABC_1006101_001")]
     diagnostic_index = {"6101": ["0010D0", "0011A0"]}
-    vehicle_resolved = {"0010D0": "SYS_A", "0011A0": "SYS_B"}
+    vehicle_resolved = {"0010D0": "SYS_B", "0011A0": "SYS_A"}
 
     resolved, unresolved = resolve_system_names(ecu_doc_rows, diagnostic_index, vehicle_resolved)
 
-    assert resolved == {}
-    assert unresolved == [{"sheet": "AMBIG(Sheet)", "reason": "ambiguous", "candidates": ["SYS_A", "SYS_B"]}]
+    assert resolved == {"MULTI(Sheet)": "SYS_A,SYS_B"}
+    assert unresolved == []
 
 
 def test_reports_bad_doc_code_when_compare_code_extraction_fails():

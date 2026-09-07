@@ -27,14 +27,14 @@ def resolve_system_names(
             vehicle_resolved[stem] for stem in candidate_files if stem in vehicle_resolved
         }
 
-        if len(matched_descs) == 1:
-            resolved[system_name] = next(iter(matched_descs))
-        elif len(matched_descs) == 0:
-            unresolved.append({"sheet": system_name, "reason": "no_match", "candidates": candidate_files})
+        if matched_descs:
+            # config/sheet_system_mapping.json already stores multi-value
+            # System strings this way (e.g. "ABSESC,ABSESP,ABSVDC") -- when
+            # several candidates each check out against vehicle_info but
+            # disagree, that's a multi-system sheet, not a failure.
+            resolved[system_name] = ",".join(sorted(matched_descs))
         else:
-            unresolved.append(
-                {"sheet": system_name, "reason": "ambiguous", "candidates": sorted(matched_descs)}
-            )
+            unresolved.append({"sheet": system_name, "reason": "no_match", "candidates": candidate_files})
 
     return resolved, unresolved
 
