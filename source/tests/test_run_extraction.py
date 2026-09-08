@@ -141,6 +141,46 @@ def test_main_alerts_with_ai_suggestions_and_exits_nonzero_when_unmapped(tmp_pat
     assert "self-match" in text
 
 
+def test_main_sends_a_checklist_adaptive_card_when_checklist_webhook_url_is_given(tmp_path, monkeypatch):
+    _patch_resolution(monkeypatch)
+    monkeypatch.setattr(
+        "tools.run_extraction.fetch_all_extraction",
+        lambda url, workbook_id, timeout, chunk_size, max_concurrency: {
+            "rows": [make_row("UNKNOWN(Sheet)", "P111111", "desc", "")],
+            "suggestions": [{"sheet": "UNKNOWN(Sheet)", "suggested_system": "NEW", "reasoning": "self-match"}],
+        },
+    )
+    monkeypatch.setattr("tools.run_extraction.send_teams_message", lambda url, title, text, timeout=30: None)
+    card_calls = []
+    monkeypatch.setattr(
+        "tools.run_extraction.send_teams_adaptive_card",
+        lambda webhook_url, card, timeout=30: card_calls.append((webhook_url, card)),
+    )
+
+    with pytest.raises(SystemExit):
+        _run_main(
+            monkeypatch,
+            [
+                "run_extraction",
+                "--webhook-url", "https://example.com/n8n",
+                "--workbook-url", "https://onedrive.example/file.xlsx",
+                "--output-json", str(tmp_path / "extraction.json"),
+                "--output", str(tmp_path / "out.sqlite"),
+                "--report", str(tmp_path / "report.txt"),
+                "--teams-webhook-url", "https://example.com/teams",
+                "--teams-checklist-webhook-url", "https://example.com/power-automate",
+            ],
+        )
+
+    assert len(card_calls) == 1
+    webhook_url, card = card_calls[0]
+    assert webhook_url == "https://example.com/power-automate"
+    body = card["attachments"][0]["content"]["body"]
+    labels = " ".join(item["items"][0]["text"] for item in body[2:])
+    assert "UNKNOWN(Sheet)" in labels
+    assert "NEW" in labels
+
+
 def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(

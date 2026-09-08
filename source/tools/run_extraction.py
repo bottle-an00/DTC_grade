@@ -4,7 +4,12 @@ import json
 from tools.fetch_extraction import fetch_all_extraction
 from tools.graph_auth import get_access_token
 from tools.json_to_sqlite import convert
-from tools.notify_teams import send_teams_chat_message, send_teams_message
+from tools.notify_teams import (
+    build_unmapped_sheets_adaptive_card,
+    send_teams_adaptive_card,
+    send_teams_chat_message,
+    send_teams_message,
+)
 from tools.resolve_workbook import resolve_workbook_id
 
 DEFAULT_CHUNK_SIZE = 15
@@ -53,15 +58,26 @@ def build_success_message(output_sqlite: str, report_path: str, stats: dict) -> 
     return f"결과 파일: {output_sqlite}\n리포트: {report_path}\n행 수: {stats['after_expand_count']}건"
 
 
-def build_unmapped_alert_message(stats: dict, result: dict) -> str:
+def build_unmapped_alert_items(stats: dict, result: dict) -> list[dict]:
     suggestions = {s["sheet"]: s for s in result.get("suggestions", [])}
-    lines = []
+    items = []
     for sheet in stats["unmapped_sheets"]:
         suggestion = suggestions.get(sheet)
+        item = {"sheet": sheet}
         if suggestion:
-            lines.append(f"- {sheet} -> AI 추천: {suggestion['suggested_system']} ({suggestion['reasoning']})")
+            item["suggested_system"] = suggestion["suggested_system"]
+            item["reasoning"] = suggestion["reasoning"]
+        items.append(item)
+    return items
+
+
+def build_unmapped_alert_message(stats: dict, result: dict) -> str:
+    lines = []
+    for item in build_unmapped_alert_items(stats, result):
+        if "suggested_system" in item:
+            lines.append(f"- {item['sheet']} -> AI 추천: {item['suggested_system']} ({item['reasoning']})")
         else:
-            lines.append(f"- {sheet}")
+            lines.append(f"- {item['sheet']}")
 
     return (
         "다음 시트가 System에 매핑되지 않아 sqlite를 배포하지 않았습니다. 확인 후 "
@@ -85,6 +101,11 @@ def main() -> None:
         "n8n의 'Notify Teams Chat' 워크플로우 웹훅을 통해 이 Teams 채팅(개인 채팅 포함)에도 알림",
     )
     parser.add_argument("--teams-chat-id", help="알림을 받을 Teams 채팅 ID (--teams-chat-webhook-url과 함께 지정)")
+    parser.add_argument(
+        "--teams-checklist-webhook-url",
+        help="지정하면 매핑이 필요한 시트 알림을 시트별 체크박스가 있는 Adaptive Card로 이 Power Automate "
+        "웹훅('Teams 웹후크 요청이 수신된 경우' 트리거)에도 전송",
+    )
     parser.add_argument("--webhook-timeout", type=float, default=300.0)
     parser.add_argument(
         "--chunk-size", type=int, default=DEFAULT_CHUNK_SIZE, help="Sheets per webhook call, to avoid gateway timeouts"
@@ -119,6 +140,13 @@ def main() -> None:
 
     if stats["unmapped_sheets"]:
         notify("DTC 등급 파이프라인 - 매핑 필요", build_unmapped_alert_message(stats, result))
+        if args.teams_checklist_webhook_url:
+            card = build_unmapped_sheets_adaptive_card(
+                "DTC 등급 파이프라인 - 매핑 필요",
+                "다음 시트가 System에 매핑되지 않아 sqlite를 배포하지 않았습니다. 확인 후 체크해주세요:",
+                build_unmapped_alert_items(stats, result),
+            )
+            send_teams_adaptive_card(args.teams_checklist_webhook_url, card)
         raise SystemExit(1)
 
     notify("DTC 등급 sqlite 준비 완료", build_success_message(args.output, args.report, stats))
