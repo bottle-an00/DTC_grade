@@ -25,14 +25,17 @@ def send_teams_message(webhook_url: str, title: str, text: str, timeout: float =
         response.read()
 
 
-def send_teams_chat_message(access_token: str, chat_id: str, text: str, timeout: float = 30) -> None:
-    """Post into a Teams 1:1/group chat via Graph API. Unlike an Incoming
-    Webhook (channel-only), this can reach a personal chat."""
-    payload = json.dumps({"body": {"content": text}}).encode("utf-8")
+def send_teams_chat_message(webhook_url: str, chat_id: str, title: str, text: str, timeout: float = 30) -> None:
+    """POST to the n8n "Notify Teams Chat" webhook (source/n8n/dtc_notify_teams_chat_workflow.json),
+    which uses n8n's own Microsoft Teams credential to post into a specific
+    chat. Unlike an Incoming Webhook (channel-only), this can reach a
+    personal chat -- and unlike calling Graph directly, it needs no Graph
+    permission consent from this script's own login."""
+    payload = json.dumps({"chatId": chat_id, "title": title, "text": text}).encode("utf-8")
     request = urllib.request.Request(
-        f"https://graph.microsoft.com/v1.0/chats/{chat_id}/messages",
+        webhook_url,
         data=payload,
-        headers={"Content-Type": "application/json", "Authorization": f"Bearer {access_token}"},
+        headers={"Content-Type": "application/json"},
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:

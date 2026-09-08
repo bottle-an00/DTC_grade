@@ -80,9 +80,11 @@ def main() -> None:
     parser.add_argument("--report", required=True, help="Path to write the run report")
     parser.add_argument("--teams-webhook-url", required=True, help="Teams Incoming Webhook URL")
     parser.add_argument(
-        "--teams-chat-id",
-        help="지정하면 Incoming Webhook 채널 알림과 별도로, Graph API를 통해 이 Teams 채팅(개인 채팅 포함)에도 알림",
+        "--teams-chat-webhook-url",
+        help="지정하면(--teams-chat-id와 함께) Incoming Webhook 채널 알림과 별도로, "
+        "n8n의 'Notify Teams Chat' 워크플로우 웹훅을 통해 이 Teams 채팅(개인 채팅 포함)에도 알림",
     )
+    parser.add_argument("--teams-chat-id", help="알림을 받을 Teams 채팅 ID (--teams-chat-webhook-url과 함께 지정)")
     parser.add_argument("--webhook-timeout", type=float, default=300.0)
     parser.add_argument(
         "--chunk-size", type=int, default=DEFAULT_CHUNK_SIZE, help="Sheets per webhook call, to avoid gateway timeouts"
@@ -97,8 +99,8 @@ def main() -> None:
 
     def notify(title: str, text: str) -> None:
         send_teams_message(args.teams_webhook_url, title, text)
-        if args.teams_chat_id:
-            send_teams_chat_message(get_access_token(), args.teams_chat_id, f"{title}\n{text}")
+        if args.teams_chat_webhook_url and args.teams_chat_id:
+            send_teams_chat_message(args.teams_chat_webhook_url, args.teams_chat_id, title, text)
 
     try:
         result, stats = run(

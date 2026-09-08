@@ -1,10 +1,11 @@
 # DTC Master n8n 워크플로우 import 가이드
 
-이 폴더에는 워크플로우 3개가 있다:
+이 폴더에는 워크플로우 4개가 있다:
 
 - `dtc_master_workflow.json` — 자동 반복 실행되는 메인 변환 파이프라인
 - `dtc_mapping_ai_review_workflow.json` — 매핑 재생성 + AI 검토를 n8n이 처음부터 끝까지 전부 담당하는 버전
 - `dtc_mapping_ai_review_cloud_workflow.json` — 위와 같은 AI 검토 기능이지만, Python 실행 부분은 로컬 스크립트(`tools.run_ai_review`)가 담당하고 n8n은 AI Agent 호출만 대행하는 버전
+- `dtc_notify_teams_chat_workflow.json` — Python이 보낸 chat ID로 Teams 개인 채팅에 결과를 알려주는 워크플로우 (아래 "워크플로우 4" 참고)
 
 **앞의 두 워크플로우는 self-hosted n8n 전용이다** (`Execute Command`, `Local File Trigger`를 쓰므로 n8n Cloud 관리형 환경에서는 노드 자체가 없어서 동작하지 않는다 — import하면 해당 노드가 물음표 아이콘으로 뜨고 연결도 끊긴 것처럼 보인다). self-hosted n8n 서버가 없다면 (예: n8n Cloud 트라이얼만 있는 경우) **`dtc_mapping_ai_review_cloud_workflow.json`을 대신 쓴다** — 이건 `Webhook`/`Respond to Webhook`/AI Agent 노드만 쓰므로 n8n Cloud에서도 정상 동작한다.
 
@@ -177,3 +178,41 @@ Respond to Webhook  ──▶ (로컬 Python이 응답을 받아 CSV/Teams 알�
 - 사용할 LLM의 API 키
 - `tools.run_ai_review`를 실행할 로컬 PC의 Python 환경 (워크플로우 1과 동일)
 - Teams 채널의 Incoming Webhook URL (n8n이 아니라 Python이 직접 호출)
+
+## 워크플로우 4: 개인 Teams 채팅 알림 (`dtc_notify_teams_chat_workflow.json`)
+
+Teams의 클래식 **Incoming Webhook 커넥터는 채널에만 보낼 수 있고 개인 채팅(1:1)에는 못 보낸다.** 개인 채팅으로 알림을 받으려면 Microsoft Graph의 위임 권한(`Chat.ReadWrite` 등)이 필요한데, 회사 테넌트가 이 스크립트가 쓰는 앱("Microsoft Graph Command Line Tools")에 새 권한을 허용할 때 관리자 승인을 요구하도록 막아둔 경우가 있다 — 이 경우 로컬 스크립트에서 직접 Graph를 호출하는 방식은 막힌다.
+
+이 워크플로우는 그 문제를 피해간다: **n8n이 이미 갖고 있는 Microsoft Teams 자격증명**(n8n 자체의 앱 등록으로 인증되므로, 로컬 스크립트의 "관리자 승인 필요" 문제와 무관하다)을 이용해서, Python이 보낸 채팅 ID로 개인 채팅에 메시지를 대신 보내준다.
+
+### 흐름
+
+```
+(로컬 Python: tools.notify_teams.send_teams_chat_message)
+   │  POST { chatId, title, text }
+   ▼
+Webhook
+   ↓
+Post To Chat (Microsoft Teams 노드, chatMessage.create, chatId=body.chatId)
+   ↓
+Respond to Webhook
+```
+
+### 설치 절차
+
+1. **Workflows > Import from File**로 `dtc_notify_teams_chat_workflow.json`을 불러온다.
+2. **Post To Chat** 노드를 열어 Microsoft Teams credential을 본인이 등록해둔 것으로 선택한다 (Teams 앱 스토어에서 아직 등록 안 했다면 n8n의 credential 관리 화면에서 Microsoft Teams OAuth2 credential을 새로 만든다).
+3. **Webhook** 노드를 열어 Production URL을 복사해둔다 — 이게 `tools.run_extraction --teams-chat-webhook-url` (또는 GUI의 "Teams 웹훅 URL")에 넣을 값이다.
+4. 워크플로우를 **Active**로 전환한다.
+5. 알림을 받을 개인 채팅의 ID를 확인한다: Teams에서 해당 채팅(자기 자신과의 채팅이면 "나에게 메모")을 열고, 웹 버전 URL의 `conversations/` 뒤에 오는 값(`19:...@unq.gbl.spaces` 형태)을 복사한다. 이 값이 `--teams-chat-id`(또는 GUI의 "Teams 채팅 ID")다.
+
+### 테스트
+
+1. `curl`이나 `tools.notify_teams.send_teams_chat_message`로 `{ "chatId": "...", "title": "테스트", "text": "본문" }`을 3번에서 복사한 URL에 직접 POST해본다.
+2. 지정한 채팅에 메시지가 도착하는지 확인한다.
+
+### 환경 요구사항 (워크플로우 4)
+
+- n8n Cloud 계정 (Webhook/Microsoft Teams 노드만 사용, Execute Command류 없음)
+- n8n에 등록된 Microsoft Teams OAuth2 credential
+- 알림 받을 Teams 채팅의 ID

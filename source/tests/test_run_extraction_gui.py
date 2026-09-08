@@ -5,14 +5,15 @@ from tools.run_extraction_gui import parse_max_concurrency, validate_inputs
 
 
 def test_validate_inputs_passes_when_all_fields_present():
-    assert validate_inputs("wh", "teams", "workbook", "out.sqlite") is None
+    assert validate_inputs("wh", "teams-webhook", "chat-id", "workbook", "out.sqlite") is None
 
 
 def test_validate_inputs_fails_when_any_field_is_blank():
-    assert validate_inputs("", "teams", "workbook", "out.sqlite") is not None
-    assert validate_inputs("wh", "", "workbook", "out.sqlite") is not None
-    assert validate_inputs("wh", "teams", "", "out.sqlite") is not None
-    assert validate_inputs("wh", "teams", "workbook", "") is not None
+    assert validate_inputs("", "teams-webhook", "chat-id", "workbook", "out.sqlite") is not None
+    assert validate_inputs("wh", "", "chat-id", "workbook", "out.sqlite") is not None
+    assert validate_inputs("wh", "teams-webhook", "", "workbook", "out.sqlite") is not None
+    assert validate_inputs("wh", "teams-webhook", "chat-id", "", "out.sqlite") is not None
+    assert validate_inputs("wh", "teams-webhook", "chat-id", "workbook", "") is not None
 
 
 def test_parse_max_concurrency_defaults_when_blank():

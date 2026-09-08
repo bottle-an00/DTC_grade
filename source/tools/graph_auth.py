@@ -16,7 +16,7 @@ import msal  # noqa: E402 -- must import after inject_into_ssl() patches ssl
 # script login (https://learn.microsoft.com/en-us/troubleshoot/azure/active-directory/verify-first-party-apps-sign-in).
 CLIENT_ID = "14d82eec-204b-4c2f-b7e8-296a70dab67e"
 AUTHORITY = "https://login.microsoftonline.com/common"
-SCOPES = ["Files.Read", "ChatMessage.Send"]
+SCOPES = ["Files.Read"]
 TOKEN_CACHE_PATH = os.path.join(os.path.expanduser("~"), ".dtc_grade_msal_cache.json")
 
 

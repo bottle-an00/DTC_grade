@@ -1,0 +1,62 @@
+{
+  "name": "DTC Notify Teams Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dtc-notify-teams-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [180, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chatMessage",
+        "operation": "create",
+        "chatId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.body.chatId }}"
+        },
+        "message": "={{ $json.body.title }}\n{{ $json.body.text }}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Post To Chat",
+      "type": "n8n-nodes-base.microsoftTeams",
+      "typeVersion": 2,
+      "position": [420, 300],
+      "credentials": {
+        "microsoftTeamsOAuth2Api": {
+          "id": "REPLACE-WITH-YOUR-TEAMS-CREDENTIAL-ID",
+          "name": "REPLACE-WITH-YOUR-TEAMS-CREDENTIAL-NAME"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": true } }}",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [640, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Post To Chat", "type": "main", "index": 0 }]]
+    },
+    "Post To Chat": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    }
+  }
+}

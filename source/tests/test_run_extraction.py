@@ -153,7 +153,7 @@ def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, mo
     chat_calls = []
     monkeypatch.setattr(
         "tools.run_extraction.send_teams_chat_message",
-        lambda token, chat_id, text, timeout=30: chat_calls.append((token, chat_id, text)),
+        lambda webhook_url, chat_id, title, text, timeout=30: chat_calls.append((webhook_url, chat_id, title, text)),
     )
 
     _run_main(
@@ -166,18 +166,19 @@ def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, mo
             "--output", str(tmp_path / "out.sqlite"),
             "--report", str(tmp_path / "report.txt"),
             "--teams-webhook-url", "https://example.com/teams",
+            "--teams-chat-webhook-url", "https://example.com/n8n-notify-teams-chat",
             "--teams-chat-id", "19:chat-id@thread.v2",
         ],
     )
 
     assert len(chat_calls) == 1
-    token, chat_id, text = chat_calls[0]
-    assert token == "TOKEN"
+    webhook_url, chat_id, title, text = chat_calls[0]
+    assert webhook_url == "https://example.com/n8n-notify-teams-chat"
     assert chat_id == "19:chat-id@thread.v2"
-    assert "준비 완료" in text
+    assert "준비 완료" in title
 
 
-def test_main_skips_teams_chat_message_when_no_chat_id_is_given(tmp_path, monkeypatch):
+def test_main_skips_teams_chat_message_when_chat_id_or_its_webhook_url_is_missing(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(
         "tools.run_extraction.fetch_all_extraction",
@@ -189,7 +190,7 @@ def test_main_skips_teams_chat_message_when_no_chat_id_is_given(tmp_path, monkey
     chat_calls = []
     monkeypatch.setattr(
         "tools.run_extraction.send_teams_chat_message",
-        lambda token, chat_id, text, timeout=30: chat_calls.append((token, chat_id, text)),
+        lambda webhook_url, chat_id, title, text, timeout=30: chat_calls.append((webhook_url, chat_id, title, text)),
     )
 
     _run_main(
