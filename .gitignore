@@ -17,3 +17,6 @@ source/build/
 source/dist/
 source/*.spec
 OUTPUT/
+
+# Internal report-drafting notes - not part of the codebase
+report_notes/
