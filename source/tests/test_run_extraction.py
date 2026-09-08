@@ -141,7 +141,7 @@ def test_main_alerts_with_ai_suggestions_and_exits_nonzero_when_unmapped(tmp_pat
     assert "self-match" in text
 
 
-def test_main_sends_a_checklist_adaptive_card_when_checklist_webhook_url_is_given(tmp_path, monkeypatch):
+def test_main_sends_a_checklist_adaptive_card_when_chat_webhook_url_is_given(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(
         "tools.run_extraction.fetch_all_extraction",
@@ -168,7 +168,7 @@ def test_main_sends_a_checklist_adaptive_card_when_checklist_webhook_url_is_give
                 "--output", str(tmp_path / "out.sqlite"),
                 "--report", str(tmp_path / "report.txt"),
                 "--teams-webhook-url", "https://example.com/teams",
-                "--teams-checklist-webhook-url", "https://example.com/power-automate",
+                "--teams-chat-webhook-url", "https://example.com/power-automate",
             ],
         )
 
@@ -181,7 +181,7 @@ def test_main_sends_a_checklist_adaptive_card_when_checklist_webhook_url_is_give
     assert "NEW" in labels
 
 
-def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, monkeypatch):
+def test_main_also_sends_an_adaptive_card_when_chat_webhook_url_is_given(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(
         "tools.run_extraction.fetch_all_extraction",
@@ -190,10 +190,10 @@ def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, mo
         },
     )
     monkeypatch.setattr("tools.run_extraction.send_teams_message", lambda url, title, text, timeout=30: None)
-    chat_calls = []
+    card_calls = []
     monkeypatch.setattr(
-        "tools.run_extraction.send_teams_chat_message",
-        lambda webhook_url, chat_id, title, text, timeout=30: chat_calls.append((webhook_url, chat_id, title, text)),
+        "tools.run_extraction.send_teams_adaptive_card",
+        lambda webhook_url, card, timeout=30: card_calls.append((webhook_url, card)),
     )
 
     _run_main(
@@ -206,19 +206,18 @@ def test_main_also_sends_a_teams_chat_message_when_chat_id_is_given(tmp_path, mo
             "--output", str(tmp_path / "out.sqlite"),
             "--report", str(tmp_path / "report.txt"),
             "--teams-webhook-url", "https://example.com/teams",
-            "--teams-chat-webhook-url", "https://example.com/n8n-notify-teams-chat",
-            "--teams-chat-id", "19:chat-id@thread.v2",
+            "--teams-chat-webhook-url", "https://example.com/power-automate",
         ],
     )
 
-    assert len(chat_calls) == 1
-    webhook_url, chat_id, title, text = chat_calls[0]
-    assert webhook_url == "https://example.com/n8n-notify-teams-chat"
-    assert chat_id == "19:chat-id@thread.v2"
-    assert "준비 완료" in title
+    assert len(card_calls) == 1
+    webhook_url, card = card_calls[0]
+    assert webhook_url == "https://example.com/power-automate"
+    body = card["attachments"][0]["content"]["body"]
+    assert "준비 완료" in body[0]["text"]
 
 
-def test_main_skips_teams_chat_message_when_chat_id_or_its_webhook_url_is_missing(tmp_path, monkeypatch):
+def test_main_skips_adaptive_card_when_chat_webhook_url_is_missing(tmp_path, monkeypatch):
     _patch_resolution(monkeypatch)
     monkeypatch.setattr(
         "tools.run_extraction.fetch_all_extraction",
@@ -227,10 +226,10 @@ def test_main_skips_teams_chat_message_when_chat_id_or_its_webhook_url_is_missin
         },
     )
     monkeypatch.setattr("tools.run_extraction.send_teams_message", lambda url, title, text, timeout=30: None)
-    chat_calls = []
+    card_calls = []
     monkeypatch.setattr(
-        "tools.run_extraction.send_teams_chat_message",
-        lambda webhook_url, chat_id, title, text, timeout=30: chat_calls.append((webhook_url, chat_id, title, text)),
+        "tools.run_extraction.send_teams_adaptive_card",
+        lambda webhook_url, card, timeout=30: card_calls.append((webhook_url, card)),
     )
 
     _run_main(
@@ -246,7 +245,7 @@ def test_main_skips_teams_chat_message_when_chat_id_or_its_webhook_url_is_missin
         ],
     )
 
-    assert chat_calls == []
+    assert card_calls == []
 
 
 def test_main_notifies_teams_failure_and_reraises_on_error(tmp_path, monkeypatch):

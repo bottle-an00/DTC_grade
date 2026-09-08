@@ -25,35 +25,46 @@ def send_teams_message(webhook_url: str, title: str, text: str, timeout: float =
         response.read()
 
 
-def send_teams_chat_message(webhook_url: str, chat_id: str, title: str, text: str, timeout: float = 30) -> None:
-    """POST to the n8n "Notify Teams Chat" webhook (source/n8n/dtc_notify_teams_chat_workflow.json),
-    which uses n8n's own Microsoft Teams credential to post into a specific
-    chat. Unlike an Incoming Webhook (channel-only), this can reach a
-    personal chat -- and unlike calling Graph directly, it needs no Graph
-    permission consent from this script's own login."""
-    payload = json.dumps({"chatId": chat_id, "title": title, "text": text}).encode("utf-8")
-    request = urllib.request.Request(
-        webhook_url,
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
+def _wrap_adaptive_card(body: list[dict]) -> dict:
+    """Wrap an Adaptive Card body in the Bot Framework "attachments"
+    envelope that the Power Automate "Teams webhook request received"
+    trigger (a modern Incoming-Webhook replacement) expects as its request
+    body -- that trigger relays whatever Adaptive Card it's given straight
+    into Teams, so the caller owns the entire card layout."""
+    return {
+        "type": "message",
+        "attachments": [
+            {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                    "type": "AdaptiveCard",
+                    "version": "1.4",
+                    "body": body,
+                },
+            }
+        ],
+    }
+
+
+def build_simple_adaptive_card(title: str, text: str) -> dict:
+    """A plain title+text Adaptive Card for the Power Automate Teams webhook
+    -- used for the success/failure notifications that don't need a
+    checklist."""
+    return _wrap_adaptive_card(
+        [
+            {"type": "TextBlock", "text": title, "weight": "Bolder", "size": "Medium", "wrap": True},
+            {"type": "TextBlock", "text": text, "wrap": True},
+        ]
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        response.read()
 
 
 def build_unmapped_sheets_adaptive_card(title: str, intro: str, items: list[dict]) -> dict:
     """Build a Teams Adaptive Card checklist -- one entry per unmapped
-    sheet's AI suggestion -- wrapped in the Bot Framework "attachments"
-    envelope that the Power Automate "Teams webhook request received"
-    trigger (a modern Incoming-Webhook replacement) expects as its request
-    body; that trigger relays whatever Adaptive Card it's given straight
-    into Teams, so the caller (this function) owns the entire card layout.
-
-    Each entry renders as two overlapping TextBlocks (plain vs. struck
-    through) with a click handler that swaps which one is visible --
-    Input.Toggle/Action.Submit would need a bot backend to react to a
-    submission, whereas Action.ToggleVisibility does the strike-through
+    sheet's AI suggestion. Each entry renders as two overlapping TextBlocks
+    (plain vs. struck through) with a click handler that swaps which one is
+    visible -- Input.Toggle/Action.Submit would need a bot backend to react
+    to a submission, whereas Action.ToggleVisibility does the strike-through
     entirely client-side with no round trip."""
     body = [
         {"type": "TextBlock", "text": title, "weight": "Bolder", "size": "Medium", "wrap": True},
@@ -82,20 +93,7 @@ def build_unmapped_sheets_adaptive_card(title: str, intro: str, items: list[dict
                 ],
             }
         )
-    return {
-        "type": "message",
-        "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.adaptive",
-                "content": {
-                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                    "type": "AdaptiveCard",
-                    "version": "1.4",
-                    "body": body,
-                },
-            }
-        ],
-    }
+    return _wrap_adaptive_card(body)
 
 
 def send_teams_adaptive_card(webhook_url: str, card: dict, timeout: float = 30) -> None:

@@ -1,10 +1,10 @@
 import json
 
 from tools.notify_teams import (
+    build_simple_adaptive_card,
     build_teams_message,
     build_unmapped_sheets_adaptive_card,
     send_teams_adaptive_card,
-    send_teams_chat_message,
     send_teams_message,
 )
 
@@ -53,36 +53,17 @@ def test_send_teams_message_posts_json_to_webhook_url(monkeypatch):
     assert captured["timeout"] == 15
 
 
-def test_send_teams_chat_message_posts_chat_id_and_text_to_the_n8n_notify_webhook(monkeypatch):
-    captured = {}
+def test_build_simple_adaptive_card_wraps_title_and_text_in_the_bot_framework_envelope():
+    card = build_simple_adaptive_card("제목", "본문")
 
-    class FakeResponse:
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *args):
-            return False
-
-        def read(self):
-            return b"{}"
-
-    def fake_urlopen(request, timeout):
-        captured["url"] = request.full_url
-        captured["method"] = request.get_method()
-        captured["content_type"] = request.get_header("Content-type")
-        captured["body"] = json.loads(request.data.decode("utf-8"))
-        captured["timeout"] = timeout
-        return FakeResponse()
-
-    monkeypatch.setattr("tools.notify_teams.urllib.request.urlopen", fake_urlopen)
-
-    send_teams_chat_message("https://example.com/n8n-notify-teams-chat", "19:chat-id@thread.v2", "제목", "본문", timeout=15)
-
-    assert captured["url"] == "https://example.com/n8n-notify-teams-chat"
-    assert captured["method"] == "POST"
-    assert captured["content_type"] == "application/json"
-    assert captured["body"] == {"chatId": "19:chat-id@thread.v2", "title": "제목", "text": "본문"}
-    assert captured["timeout"] == 15
+    assert card["type"] == "message"
+    content = card["attachments"][0]["content"]
+    assert card["attachments"][0]["contentType"] == "application/vnd.microsoft.card.adaptive"
+    assert content["type"] == "AdaptiveCard"
+    assert content["body"] == [
+        {"type": "TextBlock", "text": "제목", "weight": "Bolder", "size": "Medium", "wrap": True},
+        {"type": "TextBlock", "text": "본문", "wrap": True},
+    ]
 
 
 def test_build_unmapped_sheets_adaptive_card_wraps_a_strike_through_toggle_per_item():

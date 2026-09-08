@@ -5,9 +5,9 @@ from tools.fetch_extraction import fetch_all_extraction
 from tools.graph_auth import get_access_token
 from tools.json_to_sqlite import convert
 from tools.notify_teams import (
+    build_simple_adaptive_card,
     build_unmapped_sheets_adaptive_card,
     send_teams_adaptive_card,
-    send_teams_chat_message,
     send_teams_message,
 )
 from tools.resolve_workbook import resolve_workbook_id
@@ -97,14 +97,8 @@ def main() -> None:
     parser.add_argument("--teams-webhook-url", required=True, help="Teams Incoming Webhook URL")
     parser.add_argument(
         "--teams-chat-webhook-url",
-        help="지정하면(--teams-chat-id와 함께) Incoming Webhook 채널 알림과 별도로, "
-        "n8n의 'Notify Teams Chat' 워크플로우 웹훅을 통해 이 Teams 채팅(개인 채팅 포함)에도 알림",
-    )
-    parser.add_argument("--teams-chat-id", help="알림을 받을 Teams 채팅 ID (--teams-chat-webhook-url과 함께 지정)")
-    parser.add_argument(
-        "--teams-checklist-webhook-url",
-        help="지정하면 매핑이 필요한 시트 알림을 시트별 체크박스가 있는 Adaptive Card로 이 Power Automate "
-        "웹훅('Teams 웹후크 요청이 수신된 경우' 트리거)에도 전송",
+        help="지정하면 Incoming Webhook 채널 알림과 별도로, 이 Power Automate 웹훅('Teams 웹후크 요청이 수신된 경우' "
+        "트리거)을 통해 개인 채팅에도 Adaptive Card로 알림 (매핑 필요 시에는 시트별 체크리스트 카드)",
     )
     parser.add_argument("--webhook-timeout", type=float, default=300.0)
     parser.add_argument(
@@ -120,8 +114,8 @@ def main() -> None:
 
     def notify(title: str, text: str) -> None:
         send_teams_message(args.teams_webhook_url, title, text)
-        if args.teams_chat_webhook_url and args.teams_chat_id:
-            send_teams_chat_message(args.teams_chat_webhook_url, args.teams_chat_id, title, text)
+        if args.teams_chat_webhook_url:
+            send_teams_adaptive_card(args.teams_chat_webhook_url, build_simple_adaptive_card(title, text))
 
     try:
         result, stats = run(
@@ -139,14 +133,15 @@ def main() -> None:
         raise
 
     if stats["unmapped_sheets"]:
-        notify("DTC 등급 파이프라인 - 매핑 필요", build_unmapped_alert_message(stats, result))
-        if args.teams_checklist_webhook_url:
+        title = "DTC 등급 파이프라인 - 매핑 필요"
+        send_teams_message(args.teams_webhook_url, title, build_unmapped_alert_message(stats, result))
+        if args.teams_chat_webhook_url:
             card = build_unmapped_sheets_adaptive_card(
-                "DTC 등급 파이프라인 - 매핑 필요",
+                title,
                 "다음 시트가 System에 매핑되지 않아 sqlite를 배포하지 않았습니다. 확인 후 체크해주세요:",
                 build_unmapped_alert_items(stats, result),
             )
-            send_teams_adaptive_card(args.teams_checklist_webhook_url, card)
+            send_teams_adaptive_card(args.teams_chat_webhook_url, card)
         raise SystemExit(1)
 
     notify("DTC 등급 sqlite 준비 완료", build_success_message(args.output, args.report, stats))

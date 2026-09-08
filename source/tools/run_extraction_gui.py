@@ -4,18 +4,21 @@ from tkinter import filedialog, messagebox
 
 from tools.config_store import DEFAULT_CONFIG_PATH, load_config, save_config
 from tools.graph_auth import get_access_token
-from tools.notify_teams import send_teams_chat_message
+from tools.notify_teams import build_simple_adaptive_card, build_unmapped_sheets_adaptive_card, send_teams_adaptive_card
 from tools.resolve_workbook import list_folder_files
-from tools.run_extraction import DEFAULT_MAX_CONCURRENCY, build_success_message, build_unmapped_alert_message
+from tools.run_extraction import (
+    DEFAULT_MAX_CONCURRENCY,
+    build_success_message,
+    build_unmapped_alert_items,
+    build_unmapped_alert_message,
+)
 from tools.run_extraction import run_with_id as run_extraction_pipeline
 from tools.run_extraction_app import derive_output_paths
 
 
-def validate_inputs(
-    webhook_url: str, teams_notify_webhook_url: str, teams_chat_id: str, workbook_id: str, output_sqlite: str
-) -> str | None:
+def validate_inputs(webhook_url: str, teams_notify_webhook_url: str, workbook_id: str, output_sqlite: str) -> str | None:
     """Returns an error message if any required field is blank/unselected, else None."""
-    if not (webhook_url and teams_notify_webhook_url and teams_chat_id and workbook_id and output_sqlite):
+    if not (webhook_url and teams_notify_webhook_url and workbook_id and output_sqlite):
         return "모든 값을 입력하고, 파일과 저장 위치를 선택해주세요."
     return None
 
@@ -50,38 +53,33 @@ class ExtractionApp:
         self.teams_entry.insert(0, self.config.get("teams_notify_webhook_url", ""))
         self.teams_entry.grid(row=1, column=1, padx=8, pady=4)
 
-        tk.Label(root, text="Teams 채팅 ID").grid(row=2, column=0, sticky="w", padx=8, pady=4)
-        self.teams_chat_id_entry = tk.Entry(root, width=60)
-        self.teams_chat_id_entry.insert(0, self.config.get("teams_chat_id", ""))
-        self.teams_chat_id_entry.grid(row=2, column=1, padx=8, pady=4)
-
-        tk.Label(root, text="OneDrive 폴더 링크").grid(row=3, column=0, sticky="w", padx=8, pady=4)
+        tk.Label(root, text="OneDrive 폴더 링크").grid(row=2, column=0, sticky="w", padx=8, pady=4)
         self.folder_entry = tk.Entry(root, width=60)
         self.folder_entry.insert(0, self.config.get("folder_url", ""))
-        self.folder_entry.grid(row=3, column=1, padx=8, pady=4)
-        tk.Button(root, text="파일 목록 불러오기", command=self.on_load_files).grid(row=3, column=2, padx=8)
+        self.folder_entry.grid(row=2, column=1, padx=8, pady=4)
+        tk.Button(root, text="파일 목록 불러오기", command=self.on_load_files).grid(row=2, column=2, padx=8)
 
-        tk.Label(root, text="처리할 Excel 파일").grid(row=4, column=0, sticky="nw", padx=8, pady=4)
+        tk.Label(root, text="처리할 Excel 파일").grid(row=3, column=0, sticky="nw", padx=8, pady=4)
         self.file_listbox = tk.Listbox(root, height=6, width=60)
-        self.file_listbox.grid(row=4, column=1, padx=8, pady=4, sticky="w")
+        self.file_listbox.grid(row=3, column=1, padx=8, pady=4, sticky="w")
 
-        tk.Label(root, text="저장 위치").grid(row=5, column=0, sticky="w", padx=8, pady=4)
+        tk.Label(root, text="저장 위치").grid(row=4, column=0, sticky="w", padx=8, pady=4)
         self.output_var = tk.StringVar()
         tk.Entry(root, textvariable=self.output_var, width=45, state="readonly").grid(
-            row=5, column=1, sticky="w", padx=8, pady=4
+            row=4, column=1, sticky="w", padx=8, pady=4
         )
-        tk.Button(root, text="찾아보기...", command=self.choose_output).grid(row=5, column=2, padx=8)
+        tk.Button(root, text="찾아보기...", command=self.choose_output).grid(row=4, column=2, padx=8)
 
-        tk.Label(root, text="동시 요청 수").grid(row=6, column=0, sticky="w", padx=8, pady=4)
+        tk.Label(root, text="동시 요청 수").grid(row=5, column=0, sticky="w", padx=8, pady=4)
         self.concurrency_entry = tk.Entry(root, width=10)
         self.concurrency_entry.insert(0, str(self.config.get("max_concurrency", DEFAULT_MAX_CONCURRENCY)))
-        self.concurrency_entry.grid(row=6, column=1, sticky="w", padx=8, pady=4)
+        self.concurrency_entry.grid(row=5, column=1, sticky="w", padx=8, pady=4)
 
         self.run_button = tk.Button(root, text="실행", command=self.on_run)
-        self.run_button.grid(row=7, column=1, pady=12)
+        self.run_button.grid(row=6, column=1, pady=12)
 
         self.status_label = tk.Label(root, text="", fg="blue", justify="left", wraplength=500)
-        self.status_label.grid(row=8, column=0, columnspan=3, padx=8, pady=4)
+        self.status_label.grid(row=7, column=0, columnspan=3, padx=8, pady=4)
 
     def choose_output(self) -> None:
         path = filedialog.asksaveasfilename(
@@ -125,13 +123,12 @@ class ExtractionApp:
     def on_run(self) -> None:
         webhook_url = self.webhook_entry.get().strip()
         teams_notify_webhook_url = self.teams_entry.get().strip()
-        teams_chat_id = self.teams_chat_id_entry.get().strip()
         output_sqlite = self.output_var.get().strip()
 
         selection = self.file_listbox.curselection()
         workbook_id = self._files[selection[0]]["id"] if selection else ""
 
-        error = validate_inputs(webhook_url, teams_notify_webhook_url, teams_chat_id, workbook_id, output_sqlite)
+        error = validate_inputs(webhook_url, teams_notify_webhook_url, workbook_id, output_sqlite)
         if error:
             messagebox.showerror("입력 필요", error)
             return
@@ -144,7 +141,6 @@ class ExtractionApp:
 
         self.config["webhook_url"] = webhook_url
         self.config["teams_notify_webhook_url"] = teams_notify_webhook_url
-        self.config["teams_chat_id"] = teams_chat_id
         self.config["max_concurrency"] = max_concurrency
         save_config(self.config_path, self.config)
 
@@ -153,21 +149,15 @@ class ExtractionApp:
 
         threading.Thread(
             target=self._run_pipeline,
-            args=(webhook_url, teams_notify_webhook_url, teams_chat_id, workbook_id, output_sqlite, max_concurrency),
+            args=(webhook_url, teams_notify_webhook_url, workbook_id, output_sqlite, max_concurrency),
             daemon=True,
         ).start()
 
-    def _notify(self, teams_notify_webhook_url: str, teams_chat_id: str, title: str, text: str) -> None:
-        send_teams_chat_message(teams_notify_webhook_url, teams_chat_id, title, text)
+    def _notify(self, teams_notify_webhook_url: str, title: str, text: str) -> None:
+        send_teams_adaptive_card(teams_notify_webhook_url, build_simple_adaptive_card(title, text))
 
     def _run_pipeline(
-        self,
-        webhook_url: str,
-        teams_notify_webhook_url: str,
-        teams_chat_id: str,
-        workbook_id: str,
-        output_sqlite: str,
-        max_concurrency: int,
+        self, webhook_url: str, teams_notify_webhook_url: str, workbook_id: str, output_sqlite: str, max_concurrency: int
     ) -> None:
         output_json, report_path = derive_output_paths(output_sqlite)
         try:
@@ -181,22 +171,23 @@ class ExtractionApp:
                 max_concurrency=max_concurrency,
             )
         except Exception as exc:
-            self._notify(teams_notify_webhook_url, teams_chat_id, "DTC 등급 파이프라인 실패", f"오류: {exc}")
+            self._notify(teams_notify_webhook_url, "DTC 등급 파이프라인 실패", f"오류: {exc}")
             self.root.after(0, self._on_done, f"실패: {exc}")
             return
 
         if stats["unmapped_sheets"]:
-            self._notify(
-                teams_notify_webhook_url,
-                teams_chat_id,
-                "DTC 등급 파이프라인 - 매핑 필요",
-                build_unmapped_alert_message(stats, result),
+            title = "DTC 등급 파이프라인 - 매핑 필요"
+            self._notify(teams_notify_webhook_url, title, build_unmapped_alert_message(stats, result))
+            card = build_unmapped_sheets_adaptive_card(
+                title,
+                "다음 시트가 System에 매핑되지 않아 sqlite를 배포하지 않았습니다. 확인 후 체크해주세요:",
+                build_unmapped_alert_items(stats, result),
             )
+            send_teams_adaptive_card(teams_notify_webhook_url, card)
             self.root.after(0, self._on_done, f"매핑이 필요한 시트가 있습니다: {stats['unmapped_sheets']}")
         else:
             self._notify(
                 teams_notify_webhook_url,
-                teams_chat_id,
                 "DTC 등급 sqlite 준비 완료",
                 build_success_message(output_sqlite, report_path, stats),
             )
