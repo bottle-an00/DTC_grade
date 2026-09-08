@@ -10,7 +10,6 @@ from tools.run_extraction import (
     DEFAULT_MAX_CONCURRENCY,
     build_success_message,
     build_unmapped_alert_items,
-    build_unmapped_alert_message,
 )
 from tools.run_extraction import run_with_id as run_extraction_pipeline
 from tools.run_extraction_app import derive_output_paths
@@ -177,7 +176,6 @@ class ExtractionApp:
 
         if stats["unmapped_sheets"]:
             title = "DTC 등급 파이프라인 - 매핑 필요"
-            self._notify(teams_notify_webhook_url, title, build_unmapped_alert_message(stats, result))
             card = build_unmapped_sheets_adaptive_card(
                 title,
                 "다음 시트가 System에 매핑되지 않아 sqlite를 배포하지 않았습니다. 확인 후 체크해주세요:",
