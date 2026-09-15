@@ -7,12 +7,24 @@ from tools.graph_auth import get_access_token
 from tools.notify_teams import build_simple_adaptive_card, build_unmapped_sheets_adaptive_card, send_teams_adaptive_card
 from tools.resolve_workbook import list_folder_files
 from tools.run_extraction import (
+    DEFAULT_CHUNK_SIZE,
     DEFAULT_MAX_CONCURRENCY,
     build_success_message,
     build_unmapped_alert_items,
 )
 from tools.run_extraction import run_with_id as run_extraction_pipeline
 from tools.run_extraction_app import derive_output_paths
+
+
+# Shown under the two numeric options when "도움말 표시" is checked. Kept as
+# one string per rendered line so each gets its own Label -- the toggle then
+# hides the whole set with grid_remove() instead of rebuilding text.
+OPTION_HELP_LINES = (
+    "· 분할 크기 : 한 번의 요청에서 처리할 시트 개수입니다. 너무 크면 시간 초과 또는 "
+    "메모리 부족으로 처리가 중단될 수 있습니다. (권장 10~20)",
+    "· 동시 요청 수 : 요청을 동시에 몇 개 보낼지 정합니다. 늘리면 빨라지지만, 미매핑 "
+    "시트가 많을 경우 AI 추천 호출이 한도를 초과해 실패할 수 있습니다. (권장 3~10)",
+)
 
 
 def validate_inputs(webhook_url: str, teams_notify_webhook_url: str, workbook_id: str, output_sqlite: str) -> str | None:
@@ -22,14 +34,14 @@ def validate_inputs(webhook_url: str, teams_notify_webhook_url: str, workbook_id
     return None
 
 
-def parse_max_concurrency(value: str) -> int:
-    """A blank field falls back to DEFAULT_MAX_CONCURRENCY; anything else must be a positive integer."""
+def parse_positive_int(value: str, default: int, label: str) -> int:
+    """A blank field falls back to `default`; anything else must be a positive integer."""
     value = value.strip()
     if not value:
-        return DEFAULT_MAX_CONCURRENCY
+        return default
     parsed = int(value)
     if parsed < 1:
-        raise ValueError("동시 요청 수는 1 이상이어야 합니다.")
+        raise ValueError(f"{label}는 1 이상이어야 합니다.")
     return parsed
 
 
@@ -69,16 +81,47 @@ class ExtractionApp:
         )
         tk.Button(root, text="찾아보기...", command=self.choose_output).grid(row=4, column=2, padx=8)
 
-        tk.Label(root, text="동시 요청 수").grid(row=5, column=0, sticky="w", padx=8, pady=4)
-        self.concurrency_entry = tk.Entry(root, width=10)
+        options = tk.LabelFrame(root, text="처리 옵션 (기본값 권장)", padx=8, pady=6)
+        options.grid(row=5, column=0, columnspan=3, sticky="we", padx=8, pady=6)
+
+        tk.Label(options, text="분할 크기").grid(row=0, column=0, sticky="w")
+        self.chunk_entry = tk.Entry(options, width=8)
+        self.chunk_entry.insert(0, str(self.config.get("chunk_size", DEFAULT_CHUNK_SIZE)))
+        self.chunk_entry.grid(row=0, column=1, sticky="w", padx=(4, 24))
+
+        tk.Label(options, text="동시 요청 수").grid(row=0, column=2, sticky="w")
+        self.concurrency_entry = tk.Entry(options, width=8)
         self.concurrency_entry.insert(0, str(self.config.get("max_concurrency", DEFAULT_MAX_CONCURRENCY)))
-        self.concurrency_entry.grid(row=5, column=1, sticky="w", padx=8, pady=4)
+        self.concurrency_entry.grid(row=0, column=3, sticky="w", padx=(4, 24))
+
+        self.help_var = tk.BooleanVar(value=bool(self.config.get("show_option_help", True)))
+        tk.Checkbutton(options, text="도움말 표시", variable=self.help_var, command=self.toggle_help).grid(
+            row=0, column=4, sticky="w"
+        )
+
+        # One Label per line instead of embedded newlines -- grid places them,
+        # and toggle_help() can show or hide the whole set at once.
+        self.help_labels = [
+            tk.Label(options, text=line, fg="gray30", justify="left", wraplength=620, anchor="w")
+            for line in OPTION_HELP_LINES
+        ]
+        self.toggle_help()
 
         self.run_button = tk.Button(root, text="실행", command=self.on_run)
         self.run_button.grid(row=6, column=1, pady=12)
 
         self.status_label = tk.Label(root, text="", fg="blue", justify="left", wraplength=500)
         self.status_label.grid(row=7, column=0, columnspan=3, padx=8, pady=4)
+
+    def toggle_help(self) -> None:
+        show = self.help_var.get()
+        for offset, label in enumerate(self.help_labels):
+            if show:
+                label.grid(row=1 + offset, column=0, columnspan=5, sticky="w", pady=(4, 0))
+            else:
+                label.grid_remove()
+        self.config["show_option_help"] = show
+        save_config(self.config_path, self.config)
 
     def choose_output(self) -> None:
         path = filedialog.asksaveasfilename(
@@ -133,13 +176,17 @@ class ExtractionApp:
             return
 
         try:
-            max_concurrency = parse_max_concurrency(self.concurrency_entry.get())
-        except ValueError:
-            messagebox.showerror("입력 오류", "동시 요청 수는 1 이상의 정수로 입력해주세요.")
+            chunk_size = parse_positive_int(self.chunk_entry.get(), DEFAULT_CHUNK_SIZE, "분할 크기")
+            max_concurrency = parse_positive_int(
+                self.concurrency_entry.get(), DEFAULT_MAX_CONCURRENCY, "동시 요청 수"
+            )
+        except ValueError as exc:
+            messagebox.showerror("입력 오류", f"{exc}" if str(exc) else "1 이상의 정수로 입력해주세요.")
             return
 
         self.config["webhook_url"] = webhook_url
         self.config["teams_notify_webhook_url"] = teams_notify_webhook_url
+        self.config["chunk_size"] = chunk_size
         self.config["max_concurrency"] = max_concurrency
         save_config(self.config_path, self.config)
 
@@ -148,7 +195,7 @@ class ExtractionApp:
 
         threading.Thread(
             target=self._run_pipeline,
-            args=(webhook_url, teams_notify_webhook_url, workbook_id, output_sqlite, max_concurrency),
+            args=(webhook_url, teams_notify_webhook_url, workbook_id, output_sqlite, chunk_size, max_concurrency),
             daemon=True,
         ).start()
 
@@ -156,7 +203,13 @@ class ExtractionApp:
         send_teams_adaptive_card(teams_notify_webhook_url, build_simple_adaptive_card(title, text))
 
     def _run_pipeline(
-        self, webhook_url: str, teams_notify_webhook_url: str, workbook_id: str, output_sqlite: str, max_concurrency: int
+        self,
+        webhook_url: str,
+        teams_notify_webhook_url: str,
+        workbook_id: str,
+        output_sqlite: str,
+        chunk_size: int,
+        max_concurrency: int,
     ) -> None:
         output_json, report_path = derive_output_paths(output_sqlite)
         try:
@@ -167,6 +220,7 @@ class ExtractionApp:
                 output_sqlite,
                 report_path,
                 timeout=300.0,
+                chunk_size=chunk_size,
                 max_concurrency=max_concurrency,
             )
         except Exception as exc:
