@@ -95,12 +95,24 @@ def test_attach_system_ignores_known_non_system_sheet_name_patterns():
 
 
 # Some non-System sheets (grading-rule legends, etc.) don't fit a generic
-# name pattern -- these are tracked as an explicit exact-name list instead.
-def test_attach_system_ignores_known_documentation_sheets_by_exact_name():
+# name pattern -- these are tracked as an explicit key list instead.
+def test_attach_system_ignores_known_documentation_sheets_by_exact_key():
     data = _load()
     code = _node(data, "Attach System")["parameters"]["jsCode"]
-    assert "IGNORE_EXACT_NAMES" in code
-    assert "dtc grade criteria" in code.lower()
+    assert "IGNORE_EXACT_KEYS" in code
+    assert "dtcgradecriteria" in code
+
+
+# One controller is spelled differently per source ("4WD(4WheelDrive)" in the
+# workbook, "4WD (4 Wheel Drive)" in ECU DOC). Looking the sheet up by its raw
+# name missed those variants, so both sides fold through normKey first -- the
+# JS mirror of dtc_transform.sheet_key.normalize_sheet_key.
+def test_attach_system_looks_up_the_mapping_through_a_normalized_key():
+    data = _load()
+    code = _node(data, "Attach System")["parameters"]["jsCode"]
+    assert "function normKey(" in code
+    assert 'normalize("NFKC")' in code
+    assert "MAPPING[normKey(row.sheet)]" in code
 
 
 def test_attach_system_fans_out_to_the_main_path_and_the_unmapped_branch():

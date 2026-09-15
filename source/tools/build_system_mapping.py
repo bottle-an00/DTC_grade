@@ -27,12 +27,23 @@ def resolve_system_names(
             vehicle_resolved[stem] for stem in candidate_files if stem in vehicle_resolved
         }
 
-        if matched_descs:
-            # config/sheet_system_mapping.json already stores multi-value
-            # System strings this way (e.g. "ABSESC,ABSESP,ABSVDC") -- when
-            # several candidates each check out against vehicle_info but
-            # disagree, that's a multi-system sheet, not a failure.
-            resolved[system_name] = ",".join(sorted(matched_descs))
+        if len(matched_descs) == 1:
+            resolved[system_name] = next(iter(matched_descs))
+        elif matched_descs:
+            # A 4-character compare code is not unique -- unrelated
+            # controllers share one, so the candidate files behind a single
+            # code can belong to different systems (observed: a door-handle
+            # sheet resolving to "DHS_FL,ENGINE"). Unioning them silently
+            # produced wrong mappings, so an ambiguous code is reported for
+            # review instead, matching how vehicle_info already refuses to
+            # pick a winner when one ecucode carries several descriptions.
+            unresolved.append(
+                {
+                    "sheet": system_name,
+                    "reason": "ambiguous_compare_code",
+                    "candidates": sorted(matched_descs),
+                }
+            )
         else:
             unresolved.append({"sheet": system_name, "reason": "no_match", "candidates": candidate_files})
 

@@ -1,0 +1,1668 @@
+{
+  "4wd4wheeldrive": {
+    "aliases": [
+      "4WD (4 Wheel Drive)",
+      "4WD(4WheelDrive)"
+    ],
+    "source": "auto",
+    "system": "4WD"
+  },
+  "4wdecuitcc4wheeldrive": {
+    "aliases": [
+      "4WD ECU - ITCC (4 Wheel Drive)"
+    ],
+    "source": "company_db",
+    "system": "4WD,BSD-L"
+  },
+  "aafactiveairflap": {
+    "aliases": [
+      "AAF (Active Air Flap)"
+    ],
+    "source": "company_db",
+    "system": "AAF"
+  },
+  "absespantilockbrakingsystem": {
+    "aliases": [
+      "ABSESP(Anti-lockBrakingSystem)"
+    ],
+    "source": "auto",
+    "system": "ABSESC,ABSESP,ABSVDC"
+  },
+  "absespantilockbrakingsystemelectricstabilityprogram": {
+    "aliases": [
+      "ABS / ESP (Anti-lock Braking System / Electric Stability Program)"
+    ],
+    "source": "company_db",
+    "system": "ABSESP,AFLS,PSB-R"
+  },
+  "adasdrvadasdrivingecu": {
+    "aliases": [
+      "ADAS_DRV (ADAS Driving ECU)",
+      "ADAS_DRV(ADASDrivingECU)"
+    ],
+    "source": "auto",
+    "system": "ADAS_DRV"
+  },
+  "adasdrvmasteradasdrivingecumaster": {
+    "aliases": [
+      "ADAS_DRV_Master (ADAS Driving ECU_Master)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_DRV2_M,FPM"
+  },
+  "adasdrvslaveadasdrivingecuslave": {
+    "aliases": [
+      "ADAS_DRV_Slave (ADAS Driving ECU Slave)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_DRV2_S"
+  },
+  "adasprkadasparkingecu": {
+    "aliases": [
+      "ADAS_PRK (ADAS Parking ECU)",
+      "ADAS_PRK(ADASParkingECU)"
+    ],
+    "source": "auto",
+    "system": "ADAS_PRK,ADAS_PRK_MCU"
+  },
+  "adasprkecuadasparkingecu": {
+    "aliases": [
+      "ADAS_PRK ECU (ADAS Parking ECU)"
+    ],
+    "source": "company_db",
+    "system": "HDM"
+  },
+  "adasprkmasteradasparkingecumaster": {
+    "aliases": [
+      "ADAS_PRK_Master (ADAS Parking ECU_Master)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_PRK,ADAS_PRK_VPU,PA"
+  },
+  "adasprkmasteradasparkingecumaster29bit": {
+    "aliases": [
+      "ADAS_PRK_Master (ADAS Parking ECU_Master) (29bit)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_PRK_MCU"
+  },
+  "adasvpmasteradasvisionprocessingecumaster": {
+    "aliases": [
+      "ADAS_VP_Master (ADAS Vision Processing ECU_Master)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_VP,ODS,SVMS"
+  },
+  "adpacousticdesignprocessor": {
+    "aliases": [
+      "ADP (Acoustic Design Processor)"
+    ],
+    "source": "company_db",
+    "system": "ADP,SUBBMS"
+  },
+  "aebautonomousemergencybraking": {
+    "aliases": [
+      "AEB(Autonomous Emergency Braking)"
+    ],
+    "source": "company_db",
+    "system": "AEB,CCU_CGW"
+  },
+  "afcuautoflushhandlecontrol": {
+    "aliases": [
+      "AFCU(AutoFlushhandleControl"
+    ],
+    "source": "auto",
+    "system": "AFCU"
+  },
+  "afcuautoflushhandlecontrolunit": {
+    "aliases": [
+      "AFCU (Auto Flush handle Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "AFCU,AFCU-DRV"
+  },
+  "aflsadaptivefrontlightingsystem": {
+    "aliases": [
+      "AFLS (Adaptive Front Lighting System)"
+    ],
+    "source": "company_db",
+    "system": "AFLS,ICCU,SMK"
+  },
+  "ahlsautoheadlamplevelingsystem": {
+    "aliases": [
+      "AHLS (Auto Head lamp Leveling System)"
+    ],
+    "source": "company_db",
+    "system": "AHLS"
+  },
+  "ahsactivehoodsystem": {
+    "aliases": [
+      "AHS (Active Hood System)",
+      "AHS(ActiveHoodSystem)"
+    ],
+    "source": "auto",
+    "system": "AHS"
+  },
+  "airbag": {
+    "aliases": [
+      "AIRBAG",
+      "Airbag"
+    ],
+    "source": "auto",
+    "system": "AIRBAG"
+  },
+  "aldcautonomousdrivingloaddcdcconverter": {
+    "aliases": [
+      "ALDC (Autonomous Driving Load DC/DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "ALDC,VMCU"
+  },
+  "ampaamplifier": {
+    "aliases": [
+      "AMP(Aamplifier)"
+    ],
+    "source": "auto",
+    "system": "AMP"
+  },
+  "ampexternalamplifiersystem": {
+    "aliases": [
+      "AMP (External Amplifier System)"
+    ],
+    "source": "company_db",
+    "system": "AMP"
+  },
+  "ascactivesidestepcontroller": {
+    "aliases": [
+      "ASC (Active Sidestep Controller)"
+    ],
+    "source": "company_db",
+    "system": "ASC"
+  },
+  "avmaroundviewmonitoring": {
+    "aliases": [
+      "AVM (Around View Monitoring)"
+    ],
+    "source": "company_db",
+    "system": "DAU,SVMS"
+  },
+  "avnaudiovideonavigation": {
+    "aliases": [
+      "AVN(AudioVideoNavigation)"
+    ],
+    "source": "auto",
+    "system": "AVN"
+  },
+  "bcm": {
+    "aliases": [
+      "BCM",
+      "BCM 비통신사양"
+    ],
+    "source": "company_db",
+    "system": "AVN,IBU-BCM,SCM"
+  },
+  "bcmstandard": {
+    "aliases": [
+      "BCM 통신사양-Standard"
+    ],
+    "source": "company_db",
+    "system": "BCM"
+  },
+  "bdcbodydomaincontroller": {
+    "aliases": [
+      "BDC (Body Domain Controller)",
+      "BDC(BodyDomainController)"
+    ],
+    "source": "auto",
+    "system": "BDC-BCM,BDC-IAU,BDC-IMMO,BDC-SMK,BDC-TPMS"
+  },
+  "bltncambuiltincam": {
+    "aliases": [
+      "BLTN_CAM (Built-in Cam)",
+      "BLTN_CAM(Built-inCam)"
+    ],
+    "source": "auto",
+    "system": "BLTN_CAM"
+  },
+  "bmsbatterymanagementsys": {
+    "aliases": [
+      "BMS(BatteryManagementSys"
+    ],
+    "source": "auto",
+    "system": "BMS"
+  },
+  "bmsbatterymanagementsystem": {
+    "aliases": [
+      "BMS (Battery Management System)"
+    ],
+    "source": "company_db",
+    "system": "BMS"
+  },
+  "bmsldcbatterymanagementsyst": {
+    "aliases": [
+      "BMSLDC(BatteryManagementSyst"
+    ],
+    "source": "auto",
+    "system": "BMSLDC"
+  },
+  "bmsldcbatterymanagementsystemlowdcdcconverter": {
+    "aliases": [
+      "BMSLDC (Battery Management System Low DCDC Converter)"
+    ],
+    "source": "company_db",
+    "system": "BMSLDC"
+  },
+  "bpcmbodypowerconvertermodule": {
+    "aliases": [
+      "BPCM (Body Power Converter Module)"
+    ],
+    "source": "company_db",
+    "system": "BPCM"
+  },
+  "bsdblindspotdetection": {
+    "aliases": [
+      "BSD (Blind Spot Detection)"
+    ],
+    "source": "company_db",
+    "system": "RR_C_RADAR"
+  },
+  "bvmblindspotviewmonitor": {
+    "aliases": [
+      "BVM (Blind-spot View Monitor)"
+    ],
+    "source": "company_db",
+    "system": "CDM"
+  },
+  "ccicconnectedcarintegratedcoc": {
+    "aliases": [
+      "CcIC(ConnectedCarIntegratedCoc"
+    ],
+    "source": "auto",
+    "system": "CCIC,CCNC"
+  },
+  "ccicconnectedcarintegratedcockpit": {
+    "aliases": [
+      "ccIC (connected car Integrated Cockpit)"
+    ],
+    "source": "company_db",
+    "system": "BPCU,CCIC,IBU-IMMO"
+  },
+  "ccmchargecontrolmodule": {
+    "aliases": [
+      "CCM (Charge Control Module)"
+    ],
+    "source": "company_db",
+    "system": "CCM,OBC,PCM"
+  },
+  "ccpcentralcontrolpanel": {
+    "aliases": [
+      "CCP (Central Control Panel)"
+    ],
+    "source": "company_db",
+    "system": "CCP"
+  },
+  "ccrcconnectedcarrearcockpit": {
+    "aliases": [
+      "CcRC(ConnectedCarRearCockpit)",
+      "ccRC (Connected Car Rear Cockpit)"
+    ],
+    "source": "auto",
+    "system": "CCRC"
+  },
+  "ccspclimatecontrolswitchpannel": {
+    "aliases": [
+      "CCSP (Climate Control Switch Pannel)"
+    ],
+    "source": "company_db",
+    "system": "CCSP"
+  },
+  "ccucentralcommunicationunit": {
+    "aliases": [
+      "CCU (Central Communication Unit)",
+      "CCU(CentralCommunicationUnit)"
+    ],
+    "source": "auto",
+    "system": "CCU_CGW,CCU_CCNF,CCU2"
+  },
+  "cdcuchassisdomaincontrol": {
+    "aliases": [
+      "CDCU(ChassisDomainControl)"
+    ],
+    "source": "auto",
+    "system": "CDCU"
+  },
+  "cdcuchassisdomaincontrolunit": {
+    "aliases": [
+      "CDCU (Chassis Domain Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "CDCU"
+  },
+  "cdmchargedoormodule": {
+    "aliases": [
+      "CDM (Charge Door Module)",
+      "CDM(ChargeDoorModule)"
+    ],
+    "source": "auto",
+    "system": "CDM"
+  },
+  "cduclimatedisplayunit": {
+    "aliases": [
+      "CDU (Climate Display Unit)"
+    ],
+    "source": "company_db",
+    "system": "CDU"
+  },
+  "cfccockpitfunctioncontroller": {
+    "aliases": [
+      "CFC (Cockpit Function Controller)"
+    ],
+    "source": "company_db",
+    "system": "CFC"
+  },
+  "clucluster": {
+    "aliases": [
+      "CLU (Cluster)",
+      "CLU(Cluster)"
+    ],
+    "source": "auto",
+    "system": "CLU"
+  },
+  "cngcompressednaturalgascontroller": {
+    "aliases": [
+      "CNG (Compressed Natural Gas Controller)"
+    ],
+    "source": "company_db",
+    "system": "CNG"
+  },
+  "codcathodeoxygendepletion": {
+    "aliases": [
+      "COD (Cathode Oxygen Depletion)"
+    ],
+    "source": "company_db",
+    "system": "COD"
+  },
+  "cspcoolantstackpump": {
+    "aliases": [
+      "CSP (Coolant Stack Pump)"
+    ],
+    "source": "company_db",
+    "system": "CSP"
+  },
+  "ctsconsoletouchscreen": {
+    "aliases": [
+      "CTS (Console Touch Screen)"
+    ],
+    "source": "company_db",
+    "system": "CTS"
+  },
+  "cwcconnectivitywirelesscontroller": {
+    "aliases": [
+      "CWC(Connectivity Wireless Controller)"
+    ],
+    "source": "company_db",
+    "system": "CNG"
+  },
+  "daudriverdoorareaunit": {
+    "aliases": [
+      "DAU (Driver Door Area Unit)",
+      "DAU(DriverDoorAreaUnit)"
+    ],
+    "source": "auto",
+    "system": "DAU,DDM"
+  },
+  "dcmdigitalcentermirror": {
+    "aliases": [
+      "DCM(Digital Center Mirror)"
+    ],
+    "source": "company_db",
+    "system": "DCM"
+  },
+  "dcudataconnectivityunit": {
+    "aliases": [
+      "DCU (Data Connectivity Unit)",
+      "DCU(DataConnectivityUnit)"
+    ],
+    "source": "auto",
+    "system": "DCU"
+  },
+  "dhmcdoorhingemotioncontroller": {
+    "aliases": [
+      "DHMC (Door Hinge Motion Controller)"
+    ],
+    "source": "company_db",
+    "system": "DHMC_RL"
+  },
+  "dhsdoorhandlesensormodule": {
+    "aliases": [
+      "DHS (Door Handle Sensor Module)",
+      "DHS(DoorHandleSensorModule)"
+    ],
+    "source": "auto",
+    "system": "DHS_FL,DHS_FR"
+  },
+  "driverlumbarbolstercushionu": {
+    "aliases": [
+      "DriverLumbarBolsterCushionU"
+    ],
+    "source": "auto",
+    "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
+  },
+  "dsmdigitalsidemirror": {
+    "aliases": [
+      "DSM (Digital Side Mirror)",
+      "DSM(DigitalSideMirror)"
+    ],
+    "source": "auto",
+    "system": "DSM_L,DSM_R"
+  },
+  "ecallemegencycall": {
+    "aliases": [
+      "eCall (Emegency Call)"
+    ],
+    "source": "company_db",
+    "system": "TUNER_AMP"
+  },
+  "ecseas": {
+    "aliases": [
+      "ECS & EAS"
+    ],
+    "source": "auto",
+    "system": "ECS,EAS"
+  },
+  "ecselectroniccontrolledsuspension": {
+    "aliases": [
+      "ECS (Electronic Controlled Suspension)"
+    ],
+    "source": "company_db",
+    "system": "ECS"
+  },
+  "emcuenginemountingcontrolu": {
+    "aliases": [
+      "EMCU(EngineMountingControlU"
+    ],
+    "source": "auto",
+    "system": "EMCU"
+  },
+  "emcuenginemountingcontrolunit": {
+    "aliases": [
+      "EMCU (Engine Mounting Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "EMCU"
+  },
+  "emsdieselengine": {
+    "aliases": [
+      "EMS-DieselEngine"
+    ],
+    "source": "auto",
+    "system": "ENGINE"
+  },
+  "emsdieselenginemanagementsystem": {
+    "aliases": [
+      "EMS-Diesel (Engine Management System)"
+    ],
+    "source": "company_db",
+    "system": "AIRCON,SCR"
+  },
+  "emsgasolineengine": {
+    "aliases": [
+      "EMS-GasolineEngine"
+    ],
+    "source": "auto",
+    "system": "ENGINE"
+  },
+  "emsgasolineenginemanagementsystem": {
+    "aliases": [
+      "EMS-Gasoline (Engine Management System)"
+    ],
+    "source": "company_db",
+    "system": "ENGINE"
+  },
+  "emsgasolinelpilpgienginemanagementsystem": {
+    "aliases": [
+      "EMS-Gasoline/LPI/LPGi(Engine Management System)"
+    ],
+    "source": "company_db",
+    "system": "CCP,ENGINE"
+  },
+  "epbelectronicparkingbrake": {
+    "aliases": [
+      "EPB (Electronic Parking Brake)"
+    ],
+    "source": "company_db",
+    "system": "EPB"
+  },
+  "esgelectricsoundgenerator": {
+    "aliases": [
+      "ESG (Electric Sound Generator)"
+    ],
+    "source": "company_db",
+    "system": "ESG,RCU,SVM,VESS"
+  },
+  "eshift": {
+    "aliases": [
+      "E-Shift"
+    ],
+    "source": "company_db",
+    "system": "ESHIFTER"
+  },
+  "eshift29bit": {
+    "aliases": [
+      "E-Shift (29bit)",
+      "E-shift(29bit)"
+    ],
+    "source": "auto",
+    "system": "ESHIFTER,ESHIFTER (SBW),ESHIFTER_BS"
+  },
+  "esuethernetswitchunit": {
+    "aliases": [
+      "ESU (Ethernet Switch Unit)",
+      "ESU(EthernetSwitchUnit)"
+    ],
+    "source": "auto",
+    "system": "ESU"
+  },
+  "etcselectrictollcollectsystem": {
+    "aliases": [
+      "ETCS(ElectricTollCollectSystem)"
+    ],
+    "source": "auto",
+    "system": "ETCS"
+  },
+  "etcselectronictollcollectionsystem": {
+    "aliases": [
+      "ETCS (Electronic Toll Collection System)"
+    ],
+    "source": "company_db",
+    "system": "ETCS"
+  },
+  "facmfuelcellaircompressorcontrolmodule": {
+    "aliases": [
+      "FACM (Fuel cell Aircompressor Control Module)"
+    ],
+    "source": "company_db",
+    "system": "FACM"
+  },
+  "fatcfullautoairtemperature": {
+    "aliases": [
+      "FATC(Full-autoAirTemperature"
+    ],
+    "source": "auto",
+    "system": "AIRCON"
+  },
+  "fatcfullautoairtemperaturecontrol": {
+    "aliases": [
+      "FATC (Full-auto Air Temperature Control)"
+    ],
+    "source": "company_db",
+    "system": "AIRCON,CODE"
+  },
+  "fcufuelcellcontrol": {
+    "aliases": [
+      "FCU (Fuel Cell Control)"
+    ],
+    "source": "company_db",
+    "system": "FCU"
+  },
+  "fllrfrontluggagelockreminder": {
+    "aliases": [
+      "FLLR (Front Luggage Lock Reminder)"
+    ],
+    "source": "company_db",
+    "system": "FLLR"
+  },
+  "fmcufrontmotorcontrolunit": {
+    "aliases": [
+      "F_MCU (Front Motor Control Unit)",
+      "F_MCU(FrontMotorControlUnit"
+    ],
+    "source": "auto",
+    "system": "MCU_F,MCU"
+  },
+  "fpmfingerprintmodule": {
+    "aliases": [
+      "FPM (Fingerprint Module)",
+      "FPM(FingerPrintModule)"
+    ],
+    "source": "auto",
+    "system": "FPM"
+  },
+  "frcmrfrontviewcamera": {
+    "aliases": [
+      "FR_CMR (Front View Camera)",
+      "FR_CMR(FrontViewCamera)"
+    ],
+    "source": "auto",
+    "system": "FR_CMR,LDWS,MFC"
+  },
+  "frcmrfrontviewcamera29bit": {
+    "aliases": [
+      "FR_CMR (Front View Camera)(29bit)"
+    ],
+    "source": "company_db",
+    "system": "FR_CMR"
+  },
+  "frrdrfrontradar": {
+    "aliases": [
+      "FR_RDR (Front Radar)",
+      "FR_RDR(FrontRadar)"
+    ],
+    "source": "auto",
+    "system": "FR_RADAR"
+  },
+  "frufacerecognitionunit": {
+    "aliases": [
+      "FRU (Face Recognition Unit)",
+      "FRU(FaceRecognitionUnit)"
+    ],
+    "source": "auto",
+    "system": "FRU"
+  },
+  "fsvmfuelcellstackvoltagemonitor": {
+    "aliases": [
+      "FSVM (Fuel cell Stack Voltage Monitor)"
+    ],
+    "source": "company_db",
+    "system": "FSVM"
+  },
+  "hcuhybridcontrolunit": {
+    "aliases": [
+      "HCU (Hybrid Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "I-BOX,PSM-RR"
+  },
+  "hculdchculowdcdcconverter": {
+    "aliases": [
+      "HCULDC (HCU/Low DC-DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "HCULDC"
+  },
+  "hculdchybridcontrolunitlowdc": {
+    "aliases": [
+      "HCULDC(HybridControlUnit_LowDC"
+    ],
+    "source": "auto",
+    "system": "HCULDC,HCU"
+  },
+  "hculdchybridcontrolunitlowdcdcconverter": {
+    "aliases": [
+      "HCULDC (Hybrid Control Unit/Low DC-DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "HCULDC"
+  },
+  "hdmhdmecu": {
+    "aliases": [
+      "HDM (HDM ECU)"
+    ],
+    "source": "company_db",
+    "system": "HDM"
+  },
+  "headunit": {
+    "aliases": [
+      "HeadUnit"
+    ],
+    "source": "company_db",
+    "system": "AVN,CCNC,SDC"
+  },
+  "hmuhydrogensystemmanagementunit": {
+    "aliases": [
+      "HMU (Hydrogen system Management Unit)"
+    ],
+    "source": "company_db",
+    "system": "HMU"
+  },
+  "hodhandsondetection": {
+    "aliases": [
+      "HOD (Hands On Detection)",
+      "HoD(HandsOnDetection)"
+    ],
+    "source": "auto",
+    "system": "HOD"
+  },
+  "hudheadupdisplay": {
+    "aliases": [
+      "HUD (HEAD UP DISPLAY)",
+      "HUD(HeadUpDisplay)"
+    ],
+    "source": "auto",
+    "system": "HUD"
+  },
+  "iauidentityauthenticationunit": {
+    "aliases": [
+      "IAU (Identity Authentication Unit)",
+      "IAU(IdentityAuthenticationUnit"
+    ],
+    "source": "auto",
+    "system": "IAU"
+  },
+  "ibuintegratedbodyunit": {
+    "aliases": [
+      "IBU (Integrated Body Unit)",
+      "IBU(IntegratedBodyUnit"
+    ],
+    "source": "auto",
+    "system": "IBU-BCM,IBU-IMMO,IBU-SMK,IBU-TPMS"
+  },
+  "iccincabincamera": {
+    "aliases": [
+      "ICC(In-Cabin Camera)",
+      "ICC(InCabinCamera)"
+    ],
+    "source": "auto",
+    "system": "ICC"
+  },
+  "iccuintegratedchargecontrolunit": {
+    "aliases": [
+      "ICCU (Integrated Charge Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "AFLS,ICCU,SMK"
+  },
+  "iccuintegratedchargingcontrolunit": {
+    "aliases": [
+      "ICCU (Integrated Charging Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "BLTN_CAM"
+  },
+  "iccuintegratedchargingcu": {
+    "aliases": [
+      "ICCU(IntegratedChargingCU)"
+    ],
+    "source": "auto",
+    "system": "ICCU"
+  },
+  "icmincabinmonitoring": {
+    "aliases": [
+      "ICM (In-Cabin Monitoring)"
+    ],
+    "source": "company_db",
+    "system": "ICMU_MCU"
+  },
+  "icmincabinmonitoring29bit": {
+    "aliases": [
+      "ICM (In-Cabin Monitoring) (29bit)"
+    ],
+    "source": "company_db",
+    "system": "ICMU_AP"
+  },
+  "icuintergratedcentralcontlunit": {
+    "aliases": [
+      "ICU(IntergratedCentralcontlUnit"
+    ],
+    "source": "auto",
+    "system": "ICU"
+  },
+  "icuintergratedcentralcontrolunit": {
+    "aliases": [
+      "ICU (Intergrated Central control Unit)"
+    ],
+    "source": "company_db",
+    "system": "ICU,ICU_RGWA"
+  },
+  "idcintegrateddcdcconverter": {
+    "aliases": [
+      "IDC (Integrated DC-DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "IDC"
+  },
+  "ifsintelligentfrontlighting": {
+    "aliases": [
+      "IFS(IntelligentFront-lighting"
+    ],
+    "source": "auto",
+    "system": "IFS,IFS-SUB"
+  },
+  "ifsintelligentfrontlightingsystem": {
+    "aliases": [
+      "IFS (Intelligent Front-lighting System)"
+    ],
+    "source": "company_db",
+    "system": "AFLS,IFS"
+  },
+  "igpmintegratedgatewaypowercontrolmodule": {
+    "aliases": [
+      "IGPM (Integrated Gateway & Power control Module)"
+    ],
+    "source": "company_db",
+    "system": "IGPM"
+  },
+  "ilcuintegratedledcontrolun": {
+    "aliases": [
+      "ILCU(IntegratedLEDControlUn"
+    ],
+    "source": "auto",
+    "system": "ILCU-LH,ILCU-RH"
+  },
+  "ilcuintegratedledheadlampcontrolunit": {
+    "aliases": [
+      "ILCU (Integrated LED headlamp Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "BLTN_CAM,ILCU-LH"
+  },
+  "immobilizer": {
+    "aliases": [
+      "Immobilizer"
+    ],
+    "source": "company_db",
+    "system": "BPCU,CCIC,IBU-IMMO"
+  },
+  "imonintegratedmonitor": {
+    "aliases": [
+      "IMON (Integrated Monitor)"
+    ],
+    "source": "company_db",
+    "system": "IMON"
+  },
+  "imsintegratedmemorysystem": {
+    "aliases": [
+      "IMS (Integrated Memory System)",
+      "IMS(IntegratedMemorySystem)"
+    ],
+    "source": "auto",
+    "system": "APSM,PSM,RLPSM,RRPSM,SCM,IMS"
+  },
+  "imsintegratedmemorysystem29bit": {
+    "aliases": [
+      "IMS (Integrated Memory System) (29bit)"
+    ],
+    "source": "company_db",
+    "system": "IMS_SW_RL"
+  },
+  "ircuintegratedrearcombinationlampcontrolunit": {
+    "aliases": [
+      "IRCU (Integrated Rear-Combination-lamp Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "IRCU-LH"
+  },
+  "iscmintegratedsafetycontrolmodule": {
+    "aliases": [
+      "ISCM (Integrated Safety Control Module)"
+    ],
+    "source": "company_db",
+    "system": "ISCM"
+  },
+  "itbcintegratedtrailerbrakecontroller": {
+    "aliases": [
+      "ITBC (Integrated Trailer Brake Controller)"
+    ],
+    "source": "company_db",
+    "system": "ITBC"
+  },
+  "itpmsindirecttpms": {
+    "aliases": [
+      "i-TPMS(indirectTPMS)"
+    ],
+    "source": "manual",
+    "system": "i-TPMS,TPMS"
+  },
+  "iwcuintegretedwashercleaningcontroller": {
+    "aliases": [
+      "IWCU (Integreted Washer Cleaning Controller)"
+    ],
+    "source": "company_db",
+    "system": "IWCU"
+  },
+  "lbmlithiumbatterymodule": {
+    "aliases": [
+      "LBM (Lithium Battery Module)",
+      "LBM(LithiumBatteryModule)"
+    ],
+    "source": "auto",
+    "system": "P_LBM"
+  },
+  "lccfdlocalcoolercontroller": {
+    "aliases": [
+      "L_CC_FD (Local_Cooler Controller)"
+    ],
+    "source": "company_db",
+    "system": "L_CC"
+  },
+  "ldclowdcdcconverter": {
+    "aliases": [
+      "LDC (Low DC-DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_DRV,LDC"
+  },
+  "lkaslanekeepassistance": {
+    "aliases": [
+      "LKAS (Lane Keep Assistance)"
+    ],
+    "source": "company_db",
+    "system": "DHS_RL"
+  },
+  "lkaslanekeepingassistancesyste": {
+    "aliases": [
+      "LKAS(LaneKeepingAssistanceSyste"
+    ],
+    "source": "auto",
+    "system": "LKA,LKAS"
+  },
+  "lpiifbstandalone": {
+    "aliases": [
+      "LPI - IFB (Stand Alone)"
+    ],
+    "source": "company_db",
+    "system": "AIRBAG,ENGINE"
+  },
+  "lsdlimitedslipdifferential": {
+    "aliases": [
+      "LSD (Limited Slip Differential)",
+      "LSD(LimitedSlipDifferential)"
+    ],
+    "source": "auto",
+    "system": "ELSD"
+  },
+  "mcamodularclutchactuator": {
+    "aliases": [
+      "MCA (Modular Clutch Actuator)",
+      "MCA(ModularClutchActuator)"
+    ],
+    "source": "auto",
+    "system": "MCA"
+  },
+  "mcumotorcontrolunit": {
+    "aliases": [
+      "MCU (Motor Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "IBU-SMK"
+  },
+  "mdps2motordrivenpowersteeringredundancy": {
+    "aliases": [
+      "MDPS2(Motor Driven Power Steering-Redundancy)"
+    ],
+    "source": "company_db",
+    "system": "EPS2"
+  },
+  "mdpsepsmotordrivenpowersteering": {
+    "aliases": [
+      "MDPS/EPS (Motor Driven Power Steering)"
+    ],
+    "source": "company_db",
+    "system": "EPS,SPAS"
+  },
+  "mdpsmotordrivenpowersteering": {
+    "aliases": [
+      "MDPS(MotorDrivenPowerSteering)"
+    ],
+    "source": "auto",
+    "system": "EPS"
+  },
+  "mfcmultifunctioncamera": {
+    "aliases": [
+      "MFC (Multi Function Camera)"
+    ],
+    "source": "company_db",
+    "system": "FR_CMR"
+  },
+  "mfswmultifunctionswitch": {
+    "aliases": [
+      "MFSW (Multifunction Switch)",
+      "MFSW(MultifunctionSwitch)"
+    ],
+    "source": "manual",
+    "system": "MFSW"
+  },
+  "mhsgmildhybridstartgenerator": {
+    "aliases": [
+      "MHSG (Mild Hybrid Start Generator)"
+    ],
+    "source": "company_db",
+    "system": "MHSG"
+  },
+  "mkbdmultimediakeyboard": {
+    "aliases": [
+      "MKBD (Multimedia Keyboard)",
+      "MKBD(MultimediaKeyboard)"
+    ],
+    "source": "manual",
+    "system": "MKBD"
+  },
+  "mlmmoodlampmodule": {
+    "aliases": [
+      "MLM (Mood Lamp Module)",
+      "MLM(MoodLampModule)"
+    ],
+    "source": "auto",
+    "system": "MLM"
+  },
+  "multimediasystem": {
+    "aliases": [
+      "Multimedia System"
+    ],
+    "source": "company_db",
+    "system": "HUD,RRC"
+  },
+  "nemsnewenergyvehiclemonitoringsystemunit": {
+    "aliases": [
+      "NEMS (New Energy Vehicle Monitoring System Unit)"
+    ],
+    "source": "company_db",
+    "system": "RR_C_RADAR_R"
+  },
+  "obconboardcharger": {
+    "aliases": [
+      "OBC (On Board Charger)",
+      "OBC(On Board Charger)",
+      "OBC(OnBoardCharger)"
+    ],
+    "source": "auto",
+    "system": "OBC"
+  },
+  "ocsoccupantclassificationsy": {
+    "aliases": [
+      "OCS(OccupantClassificationSy"
+    ],
+    "source": "auto",
+    "system": "OCS,ODS"
+  },
+  "ocsoccupantclassificationsystem": {
+    "aliases": [
+      "OCS (Occupant Classification System)"
+    ],
+    "source": "company_db",
+    "system": "AIRBAG,OCS,ODS"
+  },
+  "ohcloverheadconsollamp": {
+    "aliases": [
+      "OHCL(Over Head Consol Lamp)"
+    ],
+    "source": "company_db",
+    "system": "OHCL"
+  },
+  "omswoutsidemirrorswitch": {
+    "aliases": [
+      "OMSW (Outside Mirror Switch)",
+      "OMSW(OutsideMirrorSwitch)"
+    ],
+    "source": "manual",
+    "system": "OMSW"
+  },
+  "opuoilpumpcontrolunit": {
+    "aliases": [
+      "OPU (Oil Pump Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "OPU"
+  },
+  "pcmpowertransfercommunicationm": {
+    "aliases": [
+      "PCM(PowerTransferCommunicationM"
+    ],
+    "source": "auto",
+    "system": "PCM"
+  },
+  "pcmpowertransfercommunicationmodule": {
+    "aliases": [
+      "PCM (Power transfer Communication Module)"
+    ],
+    "source": "company_db",
+    "system": "CCM,OBC,PCM"
+  },
+  "pdcexpdcextended": {
+    "aliases": [
+      "PDCex(PDCExtended)"
+    ],
+    "source": "manual",
+    "system": "PDCEX"
+  },
+  "pdcexpowernetdomaincontrollerextended": {
+    "aliases": [
+      "PDCex (Powernet Domain Controller Extended)"
+    ],
+    "source": "company_db",
+    "system": "PDCEX"
+  },
+  "pdcpowernetdomaincontroller": {
+    "aliases": [
+      "PDC(Powernet Domain Controller)",
+      "PDC(PowernetDomainController)"
+    ],
+    "source": "auto",
+    "system": "PDC"
+  },
+  "pdsmpowerdoorsystemmodule": {
+    "aliases": [
+      "PDSM (Power Door System Module)"
+    ],
+    "source": "company_db",
+    "system": "PDSM_FL"
+  },
+  "pgsparkingguidesystem": {
+    "aliases": [
+      "PGS (Parking Guide System)"
+    ],
+    "source": "company_db",
+    "system": "PGS,RVM"
+  },
+  "pimpbvinterfacemodule": {
+    "aliases": [
+      "PIM (PBV Interface Module)"
+    ],
+    "source": "company_db",
+    "system": "PIM"
+  },
+  "psbpresafeseatbelt": {
+    "aliases": [
+      "PSB (Pre Safe Seatbelt)",
+      "PSB(PreSafeSeatbelt)"
+    ],
+    "source": "auto",
+    "system": "PSB,PSB-L,PSB-R"
+  },
+  "psdpowerslidingdoor": {
+    "aliases": [
+      "PSD (Power Sliding Door)"
+    ],
+    "source": "company_db",
+    "system": "PSD"
+  },
+  "ptgmpowertailgatemodule": {
+    "aliases": [
+      "PTGM (Power Tail Gate Module)",
+      "PTGM(PowerTailGateModule)"
+    ],
+    "source": "auto",
+    "system": "PTG,PTM"
+  },
+  "ptmpowertrunkmodule": {
+    "aliases": [
+      "PTM (Power Trunk Module)",
+      "PTM(PowerTrunkModule)"
+    ],
+    "source": "auto",
+    "system": "PTG,PTM"
+  },
+  "rcmroofcontrolmodule": {
+    "aliases": [
+      "RCM (Roof Control Module)",
+      "RCM(RoofControlModule)"
+    ],
+    "source": "auto",
+    "system": "RCM"
+  },
+  "rcuredundancycontrolunit": {
+    "aliases": [
+      "RCU (Redundancy Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "RCU,SVM"
+  },
+  "rdcreardoorcurtain": {
+    "aliases": [
+      "RDC (Rear Door Curtain)",
+      "RDC(RearDoorCurtain)"
+    ],
+    "source": "auto",
+    "system": "RDC"
+  },
+  "rearleftheaterventilationun": {
+    "aliases": [
+      "RearLeftHeaterVentilationUn"
+    ],
+    "source": "auto",
+    "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
+  },
+  "rearrightheaterventilationu": {
+    "aliases": [
+      "RearRightHeaterVentilationU"
+    ],
+    "source": "auto",
+    "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
+  },
+  "rgwredundantgateway": {
+    "aliases": [
+      "RGW (Redundant Gateway)"
+    ],
+    "source": "company_db",
+    "system": "RGW"
+  },
+  "rketrxremotekeylessentrytransceiver": {
+    "aliases": [
+      "RKETRX (Remote Keyless Entry Transceiver)"
+    ],
+    "source": "company_db",
+    "system": "RKETRX"
+  },
+  "rmcurearmotorcontrolunit": {
+    "aliases": [
+      "R_MCU (Rear Motor Control Unit)",
+      "R_MCU(RearMotorControlUnit)"
+    ],
+    "source": "auto",
+    "system": "MCU_R"
+  },
+  "roarearoccupantalert": {
+    "aliases": [
+      "ROA (Rear Occupant Alert)",
+      "ROA(RearOccupantAlert)"
+    ],
+    "source": "auto",
+    "system": "ROA,ROA_M,ROA_S"
+  },
+  "rodsradarbasedobstacledetectionsensor": {
+    "aliases": [
+      "RODS (Radar based Obstacle Detection Sensor)"
+    ],
+    "source": "company_db",
+    "system": "RODS_FR"
+  },
+  "rrcrdroldrearcornerradarold": {
+    "aliases": [
+      "RR_C_RDR_Old (Rear Corner Radar_Old)"
+    ],
+    "source": "company_db",
+    "system": "RR_C_RADAR_R"
+  },
+  "rrcrdrrearcornerradar": {
+    "aliases": [
+      "RR_C_RDR (Rear Corner Radar)",
+      "RR_C_RDR(RearCornerRadar)"
+    ],
+    "source": "auto",
+    "system": "C_RADAR,RR_C_RADAR,RR_C_RADAR_L,RR_C_RADAR_R"
+  },
+  "rrcrearremotecontroller": {
+    "aliases": [
+      "RRC (Rear Remote Controller)",
+      "RRC(RearRemoteController)"
+    ],
+    "source": "auto",
+    "system": "RRC"
+  },
+  "rsparemotesmartparkingassist": {
+    "aliases": [
+      "RSPA (Remote Smart Parking Assist)"
+    ],
+    "source": "company_db",
+    "system": "C_RADAR,RR_C_RADAR"
+  },
+  "rvmrearviewmonitor": {
+    "aliases": [
+      "RVM (Rear VIew Monitor)"
+    ],
+    "source": "company_db",
+    "system": "RVM,SBCM_DRV"
+  },
+  "rwar2roadwheelactuatorr2": {
+    "aliases": [
+      "RWA_R2 (Road Wheel Actuator_R2)"
+    ],
+    "source": "company_db",
+    "system": "RWA2"
+  },
+  "rwaroadwheelactuator": {
+    "aliases": [
+      "RWA (Road Wheel Actuator)"
+    ],
+    "source": "company_db",
+    "system": "RWA"
+  },
+  "rwpcrearwirelesscharge": {
+    "aliases": [
+      "RWPC (Rear Wireless Charge)"
+    ],
+    "source": "company_db",
+    "system": "FPD,HOD,RWPC"
+  },
+  "rwsrearwheelsteering": {
+    "aliases": [
+      "RWS (Rear Wheel Steering)",
+      "RWS(RearWheelSteering)"
+    ],
+    "source": "auto",
+    "system": "RWS"
+  },
+  "sacscalabilityassistcontroller": {
+    "aliases": [
+      "SAC (Scalability Assist Controller)"
+    ],
+    "source": "company_db",
+    "system": "SAC"
+  },
+  "sasr2steeringanglesensorredundancy2": {
+    "aliases": [
+      "SAS_R2 (Steering Angle Sensor Redundancy2)"
+    ],
+    "source": "company_db",
+    "system": "SAS_R2"
+  },
+  "sassteeringanglesensor": {
+    "aliases": [
+      "SAS (Steering Angle Sensor)"
+    ],
+    "source": "company_db",
+    "system": "DCU,SAS"
+  },
+  "sbcmsidebodycontrolmodule": {
+    "aliases": [
+      "SBCM(SideBodyControlModule)"
+    ],
+    "source": "auto",
+    "system": "SBCM_DRV,SBCM_AST,SBCM_RR,SBCM_RL"
+  },
+  "sbcmsidebodyzonecontrolmodule": {
+    "aliases": [
+      "SBCM (Side Body zone Control Module)"
+    ],
+    "source": "company_db",
+    "system": "RVM,SBCM_DRV"
+  },
+  "sccsmartcruisecontrol": {
+    "aliases": [
+      "SCC (Smart Cruise Control)"
+    ],
+    "source": "company_db",
+    "system": "EPS,FCA,SCC"
+  },
+  "sccusensorcleaningcontrolunit": {
+    "aliases": [
+      "SCCU (Sensor Cleaning Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "SCCU"
+  },
+  "scrselectivecatalyticreduction": {
+    "aliases": [
+      "SCR(SelectiveCatalyticReduction"
+    ],
+    "source": "auto",
+    "system": "SCR"
+  },
+  "scusbwcontrolunit": {
+    "aliases": [
+      "SCU (SBW Control Unit)",
+      "SCU(SBWControlUnit)"
+    ],
+    "source": "auto",
+    "system": "SCU"
+  },
+  "sdcsolardcdcconverter": {
+    "aliases": [
+      "SDC (Solar DCDC Converter)"
+    ],
+    "source": "company_db",
+    "system": "AVN,CCNC,SDC"
+  },
+  "seatsystem": {
+    "aliases": [
+      "Seat System",
+      "SeatSystem"
+    ],
+    "source": "auto",
+    "system": "3RD_PSU,ALBCU,APSS,APSU,APSU,DLBCU,DPSS,DPSU,DPSU,LUGG_PSS,RLMSS,RLMSU,RLPSS,RLPSU,RLPSU,RRMSS,RRMSU,RRPSS,RRPSU,RRPSU,SHVU-3RD,SHVU-F,SHVU-R,SHVU-R"
+  },
+  "seatsystem29bit": {
+    "aliases": [
+      "Seat System (29bit)"
+    ],
+    "source": "company_db",
+    "system": "SHVU-3RD"
+  },
+  "sfar2steeringfeedbackactuatorr2": {
+    "aliases": [
+      "SFA_R2 (Steering Feedback Actuator_R2)"
+    ],
+    "source": "company_db",
+    "system": "SFA2"
+  },
+  "sfasteeringfeedbackactuator": {
+    "aliases": [
+      "SFA (Steering Feedback Actuator)"
+    ],
+    "source": "company_db",
+    "system": "SFA"
+  },
+  "sgusmartglassunit": {
+    "aliases": [
+      "SGU (Smart Glass Unit)"
+    ],
+    "source": "company_db",
+    "system": "HSCU,RADFAN-L"
+  },
+  "smartkeycodesaving": {
+    "aliases": [
+      "SmartKeyCodeSaving"
+    ],
+    "source": "auto",
+    "system": "ENGINE"
+  },
+  "smartpdupowerdistributionunit": {
+    "aliases": [
+      "Smart PDU (Power Distribution Unit)"
+    ],
+    "source": "company_db",
+    "system": "PDU_F"
+  },
+  "smksmartkey": {
+    "aliases": [
+      "SMK (Smart Key)"
+    ],
+    "source": "company_db",
+    "system": "IBU-SMK"
+  },
+  "spassmartparkingassistsystem": {
+    "aliases": [
+      "SPAS (Smart Parking Assist System)"
+    ],
+    "source": "company_db",
+    "system": "ADAS_PRK,ADAS_PRK_MCU,RSPA,SPAS"
+  },
+  "srcmrsvmcamera": {
+    "aliases": [
+      "SR_CMR(SVMCamera)"
+    ],
+    "source": "manual",
+    "system": "SR_CMR"
+  },
+  "subbmssubbatterymanagementsystem": {
+    "aliases": [
+      "SubBMS (Sub Battery Management System)"
+    ],
+    "source": "company_db",
+    "system": "ADP,SUBBMS"
+  },
+  "svmecusurroundviewmonitorecu": {
+    "aliases": [
+      "SVM ECU (Surround View Monitor ECU)"
+    ],
+    "source": "company_db",
+    "system": "FRU,SVMS"
+  },
+  "svmssurroundviewmonitoringsystem": {
+    "aliases": [
+      "SVMS (Surround View Monitoring System)"
+    ],
+    "source": "company_db",
+    "system": "SVMS"
+  },
+  "swrcsteeringwheelremoconsw": {
+    "aliases": [
+      "SWRC(SteeringWheelRemoconSW)"
+    ],
+    "source": "auto",
+    "system": "SWRC"
+  },
+  "swrcsteeringwheelremoconswitch": {
+    "aliases": [
+      "SWRC(Steering Wheel Remocon Switch)"
+    ],
+    "source": "company_db",
+    "system": "BMS,SWRC"
+  },
+  "tcmtrailercontrolmodule": {
+    "aliases": [
+      "TCM (Trailer Control Module)"
+    ],
+    "source": "company_db",
+    "system": "TCM"
+  },
+  "tcutransmissioncontrolunit": {
+    "aliases": [
+      "TCU (Transmission Control Unit)",
+      "TCU(TransmissionControlUnit)"
+    ],
+    "source": "auto",
+    "system": "AT,CVT,AMT,IMT,DCT"
+  },
+  "tpmsrxtpmsrfreceiver": {
+    "aliases": [
+      "TPMSRX (TPMS RF Receiver)"
+    ],
+    "source": "company_db",
+    "system": "TPMSRX"
+  },
+  "tpmstirepressuremanagementsystem": {
+    "aliases": [
+      "TPMS (Tire Pressure Management System)"
+    ],
+    "source": "company_db",
+    "system": "TPMS,i-TPMS"
+  },
+  "tpmstirepressuremanagmentsystem": {
+    "aliases": [
+      "TPMS (Tire Pressure Managment System)"
+    ],
+    "source": "company_db",
+    "system": "EPB"
+  },
+  "uwbbleultrawidebandbluetoothl": {
+    "aliases": [
+      "UWBBLE(UltraWideBandBluetoothL"
+    ],
+    "source": "auto",
+    "system": "UWB_BLE_M,UWB_BLE_S"
+  },
+  "uwbbleultrawidebandbluetoothlowenerge": {
+    "aliases": [
+      "UWB_BLE (Ultra-wide-band & Bluetooth Low Energe)"
+    ],
+    "source": "company_db",
+    "system": "UWB_BLE_M"
+  },
+  "v2lcvehicletoloadconverter": {
+    "aliases": [
+      "V2LC (Vehicle to Load Converter)"
+    ],
+    "source": "company_db",
+    "system": "V2LC"
+  },
+  "vcmsvehiclechargingmanageme": {
+    "aliases": [
+      "VCMS(VehicleChargingManageme"
+    ],
+    "source": "auto",
+    "system": "VCMS"
+  },
+  "vcmsvehiclechargingmanagementsystem": {
+    "aliases": [
+      "VCMS (Vehicle Charging Management System)"
+    ],
+    "source": "company_db",
+    "system": "SCC,VCMS"
+  },
+  "vculdcvculowdcdcconverter": {
+    "aliases": [
+      "VCULDC (VCU_Low DC_DC Converter)"
+    ],
+    "source": "company_db",
+    "system": "HMU,VCULDC"
+  },
+  "vcuvehiclecontrolunit": {
+    "aliases": [
+      "VCU (Vehicle Control Unit)",
+      "VCU(VehicleControlUnit)"
+    ],
+    "source": "auto",
+    "system": "VCU"
+  },
+  "vdcuvehicledomaincontrolunit": {
+    "aliases": [
+      "VDCU (Vehicle Domain Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "VDCU"
+  },
+  "vdcuvehicledomaincu": {
+    "aliases": [
+      "VDCU(VehicleDomainCU)"
+    ],
+    "source": "auto",
+    "system": "VDCU"
+  },
+  "vessvirtualenginesoundsystem": {
+    "aliases": [
+      "VESS (Virtual Engine Sound System)",
+      "VESS(VirtualEngineSoundSystem)"
+    ],
+    "source": "auto",
+    "system": "VESS"
+  },
+  "vluvehicletoloadunit": {
+    "aliases": [
+      "VLU (Vehicle to Load Unit)"
+    ],
+    "source": "company_db",
+    "system": "HDC,RADFAN-R,VLU"
+  },
+  "vmcuvehiclemotorcontrolunit": {
+    "aliases": [
+      "VMCU(Vehicle Motor Control Unit)"
+    ],
+    "source": "company_db",
+    "system": "ALDC,VMCU"
+  },
+  "vpcvehicleplatformcontroller": {
+    "aliases": [
+      "VPC (Vehicle Platform Controller)",
+      "VPC(VehiclePlatformController)"
+    ],
+    "source": "auto",
+    "system": "VPC"
+  },
+  "vpcvehicleplatformcontroller29bit": {
+    "aliases": [
+      "VPC (Vehicle Platform Controller) (29bit)"
+    ],
+    "source": "company_db",
+    "system": "VPC_AP"
+  },
+  "wccuwirelesschargingconverterunit": {
+    "aliases": [
+      "WCCU (Wireless Charging Converter Unit)"
+    ],
+    "source": "company_db",
+    "system": "ESHIFTER,IBU-TPMS,WCCU"
+  },
+  "wdrrcmrwiderearviewcamera": {
+    "aliases": [
+      "WD_RR_CMR (Wide Rear View Camera)"
+    ],
+    "source": "company_db",
+    "system": "RVM"
+  },
+  "widerearviewcamera": {
+    "aliases": [
+      "WideRearViewCamera"
+    ],
+    "source": "auto",
+    "system": "WD_RR_CMR,RVM"
+  },
+  "wpcwirelesspowercharger": {
+    "aliases": [
+      "WPC (Wireless Power Charger)",
+      "WPC(WirelessPowerCharger)"
+    ],
+    "source": "auto",
+    "system": "WPC,RWPC"
+  }
+}

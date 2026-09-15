@@ -30,19 +30,31 @@ def test_reports_no_match_when_no_candidate_is_in_vehicle_info():
     assert unresolved == [{"sheet": "UNKNOWN(Sheet)", "reason": "no_match", "candidates": ["0010D0"]}]
 
 
-def test_joins_multiple_matching_candidates_with_a_comma():
-    # config/sheet_system_mapping.json already stores multi-value System
-    # strings this way (e.g. "ABSESC,ABSESP,ABSVDC") -- when several
-    # candidates each check out against vehicle_info but disagree, that's
-    # not a failure, it's a multi-system sheet like the ones already in
-    # the mapping table.
+# A 4-character compare code is shared by unrelated controllers, so the
+# files behind one code can resolve to different systems. Unioning them
+# used to yield mappings like "DHS_FL,ENGINE" for a door-handle sheet --
+# wrong, and silent. Ambiguity is now surfaced for review instead.
+def test_disagreeing_candidates_are_reported_as_ambiguous_not_joined():
     ecu_doc_rows = [("MULTI(Sheet)", "92710100_ABC_1006101_001")]
     diagnostic_index = {"6101": ["0010D0", "0011A0"]}
     vehicle_resolved = {"0010D0": "SYS_B", "0011A0": "SYS_A"}
 
     resolved, unresolved = resolve_system_names(ecu_doc_rows, diagnostic_index, vehicle_resolved)
 
-    assert resolved == {"MULTI(Sheet)": "SYS_A,SYS_B"}
+    assert resolved == {}
+    assert unresolved == [
+        {"sheet": "MULTI(Sheet)", "reason": "ambiguous_compare_code", "candidates": ["SYS_A", "SYS_B"]}
+    ]
+
+
+def test_several_candidate_files_agreeing_on_one_system_still_resolve():
+    ecu_doc_rows = [("AGREE(Sheet)", "92710100_ABC_1006101_001")]
+    diagnostic_index = {"6101": ["0010D0", "0010A0"]}
+    vehicle_resolved = {"0010D0": "SYS_A", "0010A0": "SYS_A"}
+
+    resolved, unresolved = resolve_system_names(ecu_doc_rows, diagnostic_index, vehicle_resolved)
+
+    assert resolved == {"AGREE(Sheet)": "SYS_A"}
     assert unresolved == []
 
 
